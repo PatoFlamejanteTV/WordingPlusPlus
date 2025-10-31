@@ -1205,30 +1205,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AppLookDlg.cpp" />
-    <ClCompile Include="buttondi.cpp" />
-    <ClCompile Include="chicdial.cpp" />
-    <ClCompile Include="cntritem.cpp" />
-    <ClCompile Include="datedial.cpp" />
-    <ClCompile Include="ddxm.cpp" />
-    <ClCompile Include="docopt.cpp" />
-    <ClCompile Include="doctype.cpp" />
-    <ClCompile Include="filenewd.cpp" />
-    <ClCompile Include="formatba.cpp" />
-    <ClCompile Include="formatpa.cpp" />
-    <ClCompile Include="formatta.cpp" />
-    <ClCompile Include="ipframe.cpp" />
-    <ClCompile Include="key.cpp" />
-    <ClCompile Include="listdlg.cpp" />
-    <ClCompile Include="mainfrm.cpp" />
-    <ClCompile Include="multconv.cpp" />
-    <ClCompile Include="options.cpp" />
-    <ClCompile Include="optionsh.cpp" />
-    <ClCompile Include="pageset.cpp" />
-    <ClCompile Include="ruler.cpp" />
-    <ClCompile Include="splash.cpp" />
-    <ClCompile Include="srvritem.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="Wording\AppLookDlg.cpp" />
+    <ClCompile Include="Wording\buttondi.cpp" />
+    <ClCompile Include="Wording\chicdial.cpp" />
+    <ClCompile Include="Wording\cntritem.cpp" />
+    <ClCompile Include="Wording\datedial.cpp" />
+    <ClCompile Include="Wording\ddxm.cpp" />
+    <ClCompile Include="Wording\docopt.cpp" />
+    <ClCompile Include="Wording\doctype.cpp" />
+    <ClCompile Include="Wording\filenewd.cpp" />
+    <ClCompile Include="Wording\formatba.cpp" />
+    <ClCompile Include="Wording\formatpa.cpp" />
+    <ClCompile Include="Wording\formatta.cpp" />
+    <ClCompile Include="Wording\ipframe.cpp" />
+    <ClCompile Include="Wording\key.cpp" />
+    <ClCompile Include="Wording\listdlg.cpp" />
+    <ClCompile Include="Wording\mainfrm.cpp" />
+    <ClCompile Include="Wording\multconv.cpp" />
+    <ClCompile Include="Wording\options.cpp" />
+    <ClCompile Include="Wording\optionsh.cpp" />
+    <ClCompile Include="Wording\pageset.cpp" />
+    <ClCompile Include="Wording\ruler.cpp" />
+    <ClCompile Include="Wording\splash.cpp" />
+    <ClCompile Include="Wording\srvritem.cpp" />
+    <ClCompile Include="Wording\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -1254,48 +1254,48 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Release CLR|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Release CLR|X64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="strings.cpp" />
-    <ClCompile Include="TaskPane.cpp" />
-    <ClCompile Include="unitspag.cpp" />
-    <ClCompile Include="wordpad.cpp" />
-    <ClCompile Include="wordpdoc.cpp" />
-    <ClCompile Include="wordpvw.cpp" />
+    <ClCompile Include="Wording\strings.cpp" />
+    <ClCompile Include="Wording\TaskPane.cpp" />
+    <ClCompile Include="Wording\unitspag.cpp" />
+    <ClCompile Include="Wording\wordpad.cpp" />
+    <ClCompile Include="Wording\wordpdoc.cpp" />
+    <ClCompile Include="Wording\wordpvw.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AppLookDlg.h" />
-    <ClInclude Include="buttondi.h" />
-    <ClInclude Include="chicdial.h" />
-    <ClInclude Include="cntritem.h" />
-    <ClInclude Include="datedial.h" />
-    <ClInclude Include="ddxm.h" />
-    <ClInclude Include="docopt.h" />
-    <ClInclude Include="doctype.h" />
-    <ClInclude Include="filenewd.h" />
-    <ClInclude Include="formatba.h" />
-    <ClInclude Include="formatpa.h" />
-    <ClInclude Include="formatta.h" />
-    <ClInclude Include="helpids.h" />
-    <ClInclude Include="ipframe.h" />
-    <ClInclude Include="key.h" />
-    <ClInclude Include="listdlg.h" />
-    <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="mswd6_32.h" />
-    <ClInclude Include="multconv.h" />
-    <ClInclude Include="options.h" />
-    <ClInclude Include="optionsh.h" />
-    <ClInclude Include="pageset.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="ruler.h" />
-    <ClInclude Include="splash.h" />
-    <ClInclude Include="srvritem.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="strings.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="TaskPane.h" />
-    <ClInclude Include="unitspag.h" />
-    <ClInclude Include="wordpad.h" />
-    <ClInclude Include="wordpdoc.h" />
-    <ClInclude Include="wordpvw.h" />
+    <ClInclude Include="Wording\AppLookDlg.h" />
+    <ClInclude Include="Wording\buttondi.h" />
+    <ClInclude Include="Wording\chicdial.h" />
+    <ClInclude Include="Wording\cntritem.h" />
+    <ClInclude Include="Wording\datedial.h" />
+    <ClInclude Include="Wording\ddxm.h" />
+    <ClInclude Include="Wording\docopt.h" />
+    <ClInclude Include="Wording\doctype.h" />
+    <ClInclude Include="Wording\filenewd.h" />
+    <ClInclude Include="Wording\formatba.h" />
+    <ClInclude Include="Wording\formatpa.h" />
+    <ClInclude Include="Wording\formatta.h" />
+    <ClInclude Include="Wording\helpids.h" />
+    <ClInclude Include="Wording\ipframe.h" />
+    <ClInclude Include="Wording\key.h" />
+    <ClInclude Include="Wording\listdlg.h" />
+    <ClInclude Include="Wording\MainFrm.h" />
+    <ClInclude Include="Wording\mswd6_32.h" />
+    <ClInclude Include="Wording\multconv.h" />
+    <ClInclude Include="Wording\options.h" />
+    <ClInclude Include="Wording\optionsh.h" />
+    <ClInclude Include="Wording\pageset.h" />
+    <ClInclude Include="Wording\Resource.h" />
+    <ClInclude Include="Wording\ruler.h" />
+    <ClInclude Include="Wording\splash.h" />
+    <ClInclude Include="Wording\srvritem.h" />
+    <ClInclude Include="Wording\stdafx.h" />
+    <ClInclude Include="Wording\strings.h" />
+    <ClInclude Include="Wording\targetver.h" />
+    <ClInclude Include="Wording\TaskPane.h" />
+    <ClInclude Include="Wording\unitspag.h" />
+    <ClInclude Include="Wording\wordpad.h" />
+    <ClInclude Include="Wording\wordpdoc.h" />
+    <ClInclude Include="Wording\wordpvw.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.htm">
