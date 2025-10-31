@@ -203,7 +203,7 @@ void CFormatTabDlg::UpdateListBox()
 	m_comboBox.ResetContent();
 	for (i=0;i<m_nCount;i++)
 	{
-		theApp.PrintTwips(szT, m_tabarray[i], 2);
+		theApp.PrintTwips(szT, sizeof(szT)/sizeof(TCHAR), m_tabarray[i], 2);
 		m_comboBox.AddString(szT);
 	}
 }

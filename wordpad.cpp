@@ -497,12 +497,21 @@ BOOL CWordPadApp::ParseMeasurement(LPTSTR buf, int& lVal)
 	return FALSE;
 }
 
-void CWordPadApp::PrintTwips(TCHAR* buf, int nValue, int nDec)
+void CWordPadApp::PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDec)
 {
 	ASSERT(nDec == 2);
 	int div = GetTPU();
 
-	_stprintf(buf, _T("%.*f"), nDec, (float)nValue/(float)div);
+	buf[0] = _T('\0');
+
+	if (div == 0)
+	{
+		lstrcpy(buf, _T("0"));
+	}
+	else
+	{
+		_stprintf_s(buf, bufSize, _T("%.*f"), nDec, (float)nValue/(float)div);
+	}
 
 	if (m_units[m_nUnits].m_bSpaceAbbrev)
 		lstrcat(buf, _T(" "));
