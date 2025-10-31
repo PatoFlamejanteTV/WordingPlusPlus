@@ -880,6 +880,7 @@ void CWordPadView::OnRButtonUp(UINT nFlags, CPoint point)
 	if (nEndChar - nStartChar <= 1)
 	{
 		SendMessage (WM_LBUTTONDOWN, nFlags, MAKELPARAM (point.x, point.y));
+		SendMessage (WM_LBUTTONUP, nFlags, MAKELPARAM (point.x, point.y));
 		ReleaseCapture ();
 	}
 
