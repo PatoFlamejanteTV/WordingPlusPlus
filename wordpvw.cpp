@@ -599,6 +599,14 @@ void CWordPadView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		long nStart, nEnd;
 		GetRichEditCtrl().GetSel(nStart, nEnd);
 		CPoint pt = GetRichEditCtrl().GetCharPos(nEnd);
+
+		CRect rect;
+		GetClientRect(▭);
+		if (!rect.PtInRect(pt))
+		{
+		    pt = rect.CenterPoint();
+		}
+
 		ClientToScreen(&pt);
 		SendMessage(WM_CONTEXTMENU, (WPARAM)m_hWnd, MAKELPARAM(pt.x, pt.y));
 	}
