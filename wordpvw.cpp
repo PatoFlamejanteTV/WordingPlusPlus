@@ -598,7 +598,21 @@ void CWordPadView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		long nStart, nEnd;
 		GetRichEditCtrl().GetSel(nStart, nEnd);
-		CPoint pt = GetRichEditCtrl().GetCharPos(nEnd);
+		long nStart, nEnd;
+		GetRichEditCtrl().GetSel(nStart, nEnd);
+
+		// Ensure the index is valid; fallback to caret or (0,0)
+		long nLen = GetRichEditCtrl().GetTextLength();
+		if (nEnd < 0 || nEnd > nLen)
+		    nEnd = nLen;
+
+		CPoint pt;
+		if (nLen > 0)
+		    pt = GetRichEditCtrl().GetCharPos(nEnd);
+		else
+		    pt = GetCaretPos(); // fallback when document is empty
+
+		// Proceed with mapping and bounds checking (not repeated here)
 
 		// Map from RichEdit client to view client before bounds checking
 		GetRichEditCtrl().ClientToScreen(&pt);
