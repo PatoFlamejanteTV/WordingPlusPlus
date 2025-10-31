@@ -600,6 +600,10 @@ void CWordPadView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		GetRichEditCtrl().GetSel(nStart, nEnd);
 		CPoint pt = GetRichEditCtrl().GetCharPos(nEnd);
 
+		// Map from RichEdit client to view client before bounds checking
+		GetRichEditCtrl().ClientToScreen(&pt);
+		ScreenToClient(&pt);
+
 		CRect rect;
 		GetClientRect(▭);
 		if (!rect.PtInRect(pt))
