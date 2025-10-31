@@ -881,7 +881,6 @@ void CWordPadView::OnRButtonUp(UINT nFlags, CPoint point)
 	{
 		SendMessage (WM_LBUTTONDOWN, nFlags, MAKELPARAM (point.x, point.y));
 		SendMessage (WM_LBUTTONUP, nFlags, MAKELPARAM (point.x, point.y));
-		ReleaseCapture ();
 	}
 
 	CPoint ptScreen = point;
