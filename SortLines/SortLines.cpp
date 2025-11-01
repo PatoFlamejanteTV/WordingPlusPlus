@@ -41,9 +41,13 @@ extern "C" __declspec(dllexport) void ExecutePlugin(const wchar_t* text, bool /*
     std::sort(lines.begin(), lines.end());
 
     std::wstringstream sorted_ss;
-    for (const auto& l : lines)
+    for (size_t i = 0; i < lines.size(); ++i)
     {
-        sorted_ss << l << L"\r\n";
+        sorted_ss << lines[i];
+        if (i < lines.size() - 1)
+        {
+            sorted_ss << L"\r\n";
+        }
     }
 
     HWND hwnd = GetFocus();
