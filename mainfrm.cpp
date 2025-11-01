@@ -902,6 +902,15 @@ void CMainFrame::OnPluginClick(UINT nID)
                 MessageBox(strError, _T("Plugin Error"), MB_OK | MB_ICONERROR);
                 break;
             }
+                break;
+
+            default:
+                // Handle unknown plugin result types
+                CString strError;
+                strError.Format(_T("Unhandled plugin result type from '%s'."), CString(plugins[pluginIndex]->GetName().c_str()));
+                MessageBox(strError, _T("Plugin Error"), MB_OK | MB_ICONERROR);
+                break;
+            }
         }
     }
 }
