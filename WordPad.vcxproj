@@ -1205,30 +1205,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AppLookDlg.cpp" />
-    <ClCompile Include="buttondi.cpp" />
-    <ClCompile Include="chicdial.cpp" />
-    <ClCompile Include="cntritem.cpp" />
-    <ClCompile Include="datedial.cpp" />
-    <ClCompile Include="ddxm.cpp" />
-    <ClCompile Include="docopt.cpp" />
-    <ClCompile Include="doctype.cpp" />
-    <ClCompile Include="filenewd.cpp" />
-    <ClCompile Include="formatba.cpp" />
-    <ClCompile Include="formatpa.cpp" />
-    <ClCompile Include="formatta.cpp" />
-    <ClCompile Include="ipframe.cpp" />
-    <ClCompile Include="key.cpp" />
-    <ClCompile Include="listdlg.cpp" />
-    <ClCompile Include="mainfrm.cpp" />
-    <ClCompile Include="multconv.cpp" />
-    <ClCompile Include="options.cpp" />
-    <ClCompile Include="optionsh.cpp" />
-    <ClCompile Include="pageset.cpp" />
-    <ClCompile Include="ruler.cpp" />
-    <ClCompile Include="splash.cpp" />
-    <ClCompile Include="srvritem.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="Wordle\AppLookDlg.cpp" />
+    <ClCompile Include="Wordle\buttondi.cpp" />
+    <ClCompile Include="Wordle\chicdial.cpp" />
+    <ClCompile Include="Wordle\cntritem.cpp" />
+    <ClCompile Include="Wordle\datedial.cpp" />
+    <ClCompile Include="Wordle\ddxm.cpp" />
+    <ClCompile Include="Wordle\docopt.cpp" />
+    <ClCompile Include="Wordle\doctype.cpp" />
+    <ClCompile Include="Wordle\filenewd.cpp" />
+    <ClCompile Include="Wordle\formatba.cpp" />
+    <ClCompile Include="Wordle\formatpa.cpp" />
+    <ClCompile Include="Wordle\formatta.cpp" />
+    <ClCompile Include="Wordle\ipframe.cpp" />
+    <ClCompile Include="Wordle\key.cpp" />
+    <ClCompile Include="Wordle\listdlg.cpp" />
+    <ClCompile Include="Wordle\mainfrm.cpp" />
+    <ClCompile Include="Wordle\multconv.cpp" />
+    <ClCompile Include="Wordle\options.cpp" />
+    <ClCompile Include="Wordle\optionsh.cpp" />
+    <ClCompile Include="Wordle\pageset.cpp" />
+    <ClCompile Include="Wordle\ruler.cpp" />
+    <ClCompile Include="Wordle\splash.cpp" />
+    <ClCompile Include="Wordle\srvritem.cpp" />
+    <ClCompile Include="Wordle\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -1254,51 +1254,51 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Release CLR|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Release CLR|X64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="strings.cpp" />
-    <ClCompile Include="TaskPane.cpp" />
-    <ClCompile Include="unitspag.cpp" />
-    <ClCompile Include="wordpad.cpp" />
-    <ClCompile Include="wordpdoc.cpp" />
-    <ClCompile Include="wordpvw.cpp" />
+    <ClCompile Include="Wordle\strings.cpp" />
+    <ClCompile Include="Wordle\TaskPane.cpp" />
+    <ClCompile Include="Wordle\unitspag.cpp" />
+    <ClCompile Include="Wordle\wordpad.cpp" />
+    <ClCompile Include="Wordle\wordpdoc.cpp" />
+    <ClCompile Include="Wordle\wordpvw.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AppLookDlg.h" />
-    <ClInclude Include="buttondi.h" />
-    <ClInclude Include="chicdial.h" />
-    <ClInclude Include="cntritem.h" />
-    <ClInclude Include="datedial.h" />
-    <ClInclude Include="ddxm.h" />
-    <ClInclude Include="docopt.h" />
-    <ClInclude Include="doctype.h" />
-    <ClInclude Include="filenewd.h" />
-    <ClInclude Include="formatba.h" />
-    <ClInclude Include="formatpa.h" />
-    <ClInclude Include="formatta.h" />
-    <ClInclude Include="helpids.h" />
-    <ClInclude Include="ipframe.h" />
-    <ClInclude Include="key.h" />
-    <ClInclude Include="listdlg.h" />
-    <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="mswd6_32.h" />
-    <ClInclude Include="multconv.h" />
-    <ClInclude Include="options.h" />
-    <ClInclude Include="optionsh.h" />
-    <ClInclude Include="pageset.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="ruler.h" />
-    <ClInclude Include="splash.h" />
-    <ClInclude Include="srvritem.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="strings.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="TaskPane.h" />
-    <ClInclude Include="unitspag.h" />
-    <ClInclude Include="wordpad.h" />
-    <ClInclude Include="wordpdoc.h" />
-    <ClInclude Include="wordpvw.h" />
+    <ClInclude Include="Wordle\AppLookDlg.h" />
+    <ClInclude Include="Wordle\buttondi.h" />
+    <ClInclude Include="Wordle\chicdial.h" />
+    <ClInclude Include="Wordle\cntritem.h" />
+    <ClInclude Include="Wordle\datedial.h" />
+    <ClInclude Include="Wordle\ddxm.h" />
+    <ClInclude Include="Wordle\docopt.h" />
+    <ClInclude Include="Wordle\doctype.h" />
+    <ClInclude Include="Wordle\filenewd.h" />
+    <ClInclude Include="Wordle\formatba.h" />
+    <ClInclude Include="Wordle\formatpa.h" />
+    <ClInclude Include="Wordle\formatta.h" />
+    <ClInclude Include="Wordle\helpids.h" />
+    <ClInclude Include="Wordle\ipframe.h" />
+    <ClInclude Include="Wordle\key.h" />
+    <ClInclude Include="Wordle\listdlg.h" />
+    <ClInclude Include="Wordle\MainFrm.h" />
+    <ClInclude Include="Wordle\mswd6_32.h" />
+    <ClInclude Include="Wordle\multconv.h" />
+    <ClInclude Include="Wordle\options.h" />
+    <ClInclude Include="Wordle\optionsh.h" />
+    <ClInclude Include="Wordle\pageset.h" />
+    <ClInclude Include="Wordle\Resource.h" />
+    <ClInclude Include="Wordle\ruler.h" />
+    <ClInclude Include="Wordle\splash.h" />
+    <ClInclude Include="Wordle\srvritem.h" />
+    <ClInclude Include="Wordle\stdafx.h" />
+    <ClInclude Include="Wordle\strings.h" />
+    <ClInclude Include="Wordle\targetver.h" />
+    <ClInclude Include="Wordle\TaskPane.h" />
+    <ClInclude Include="Wordle\unitspag.h" />
+    <ClInclude Include="Wordle\wordpad.h" />
+    <ClInclude Include="Wordle\wordpdoc.h" />
+    <ClInclude Include="Wordle\wordpvw.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.htm">
+    <None Include="Wordle\ReadMe.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="res\bitmap1.bmp" />
@@ -1331,7 +1331,7 @@
     <None Include="res\write.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="wordpad.rc" />
+    <ResourceCompile Include="Wordle\wordpad.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
