@@ -16,7 +16,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Build the solution with v100 toolset
-      run: msbuild.exe WordPad.sln /p:Configuration="Unicode Release" /p:PlatformToolset=v100 /t:Rebuild /v:diag
+      run: msbuild.exe WordPad.sln /p:Configuration="Unicode Release" /p:PlatformToolset=v141_xp /t:Rebuild /v:diag
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
