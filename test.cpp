@@ -6,6 +6,7 @@
 
 #include "stdafx.h"
 #include "wordpad.h"
+#include "wordpdoc.h"
 #include <cassert>
 #include <iostream>
 
@@ -61,6 +62,26 @@ void TestPrintTwipsBufferOverflow()
     assert(lstrcmp(canary, _T("AAAA")) == 0);
 }
 
+// Test case for the CWordPadDoc::MapType function.
+void TestMapType()
+{
+    CWordPadDoc doc;
+
+    // Test case 1: RD_OEMTEXT should be mapped to RD_TEXT.
+    assert(doc.MapType(RD_OEMTEXT) == RD_TEXT);
+
+    // Test case 2: RD_EMBEDDED should be mapped to RD_RICHTEXT.
+    // This test assumes that IsInPlaceActive() returns FALSE, which is the case
+    // when the document is not being edited in-place in a container application.
+    assert(doc.MapType(RD_EMBEDDED) == RD_RICHTEXT);
+
+    // Test case 3: Other types should remain unchanged.
+    assert(doc.MapType(RD_TEXT) == RD_TEXT);
+    assert(doc.MapType(RD_RICHTEXT) == RD_RICHTEXT);
+    assert(doc.MapType(RD_WRITE) == RD_WRITE);
+    assert(doc.MapType(RD_WINWORD6) == RD_WINWORD6);
+}
+
 // It is not possible to build and run this test file in this environment.
 // To run this test, it would need to be compiled and linked with the rest of the
 // WordPad source code, and a main function would be needed to call RunTest.
@@ -69,6 +90,7 @@ void TestPrintTwipsBufferOverflow()
 // int main()
 // {
 //     RunTest(TestPrintTwipsBufferOverflow, "TestPrintTwipsBufferOverflow");
+//     RunTest(TestMapType, "TestMapType");
 //     return 0;
 // }
 //
