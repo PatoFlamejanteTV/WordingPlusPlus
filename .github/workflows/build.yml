@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019  # Use 2019 runner (closest to VS2010 support)
 
     steps:
     - uses: actions/checkout@v4
@@ -15,8 +15,8 @@ jobs:
     - name: Set up MSBuild
       uses: microsoft/setup-msbuild@v1.1
 
-    - name: Build the solution
-      run: msbuild.exe WordPad.sln /p:Configuration="Unicode Release" /t:Rebuild /v:diag
+    - name: Build the solution with v100 toolset
+      run: msbuild.exe WordPad.sln /p:Configuration="Unicode Release" /p:PlatformToolset=v100 /t:Rebuild /v:diag
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
