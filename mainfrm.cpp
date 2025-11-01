@@ -885,13 +885,22 @@ void CMainFrame::OnPluginClick(UINT nID)
 
             PluginResult result = plugins[pluginIndex]->Execute(text, info.wantsFormatted);
 
-            if (result.type == PluginResult::Type::TextReplacement)
+            switch (result.type)
             {
+            case PluginResult::Type::TextReplacement:
                 pView->GetRichEditCtrl().ReplaceSel(result.content.c_str(), TRUE);
-            }
-            else if (result.type == PluginResult::Type::Information)
-            {
+                break;
+
+            case PluginResult::Type::Information:
                 MessageBox(result.content.c_str(), plugins[pluginIndex]->GetName().c_str(), MB_OK | MB_ICONINFORMATION);
+                break;
+
+            default:
+                // Handle unknown plugin result types
+                CString strError;
+                strError.Format(_T("Unhandled plugin result type from '%s'."), CString(plugins[pluginIndex]->GetName().c_str()));
+                MessageBox(strError, _T("Plugin Error"), MB_OK | MB_ICONERROR);
+                break;
             }
         }
     }
