@@ -70,10 +70,31 @@ void TestMapType()
     // Test case 1: RD_OEMTEXT should be mapped to RD_TEXT.
     assert(doc.MapType(RD_OEMTEXT) == RD_TEXT);
 
-    // Test case 2: RD_EMBEDDED should be mapped to RD_RICHTEXT.
-    // This test assumes that IsInPlaceActive() returns FALSE, which is the case
-    // when the document is not being edited in-place in a container application.
-    assert(doc.MapType(RD_EMBEDDED) == RD_RICHTEXT);
+    // A test-specific document class to control the in-place active state.
+    class CTestWordPadDoc : public CWordPadDoc
+    {
+    public:
+        CTestWordPadDoc() { m_pInPlaceFrame = NULL; } // Ensure clean initial state
+        ~CTestWordPadDoc() { m_pInPlaceFrame = NULL; } // Avoid base destructor issues with dummy pointer
+
+        void SetInPlaceActive(BOOL bActive)
+        {
+            // Set m_pInPlaceFrame to a non-NULL dummy value to simulate in-place activation.
+            // IsInPlaceActive() just checks if this pointer is NULL.
+            m_pInPlaceFrame = bActive ? (CFrameWnd*)1 : NULL;
+        }
+    };
+
+    // Test case 2: RD_EMBEDDED behavior based on in-place activation.
+    CTestWordPadDoc testDoc;
+
+    // Case 2a: Not in-place active. Should map to RD_RICHTEXT.
+    testDoc.SetInPlaceActive(FALSE);
+    assert(testDoc.MapType(RD_EMBEDDED) == RD_RICHTEXT);
+
+    // Case 2b: In-place active. Should remain RD_EMBEDDED.
+    testDoc.SetInPlaceActive(TRUE);
+    assert(testDoc.MapType(RD_EMBEDDED) == RD_EMBEDDED);
 
     // Test case 3: Other types should remain unchanged.
     assert(doc.MapType(RD_TEXT) == RD_TEXT);
