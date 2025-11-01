@@ -537,8 +537,10 @@ void CWordPadApp::PrintTwips(TCHAR* buf, int nValue, int nDec)
 	_stprintf_s(buf, buf_cch, _T("%.*f"), nDec, (float)nValue / (float)div);
 
 	int unit_idx = GetUnits();
-	if (unit_idx >= 0 && unit_idx < m_nUnits)
-	{
+	// Assuming caller provides capacity via 'buf_cch'
+	if (m_units[GetUnits()].m_bSpaceAbbrev)
+	    _tcscat_s(buf, buf_cch, _T(" "));
+	_tcscat_s(buf, buf_cch, GetAbbrev());
 	    if (m_units[unit_idx].m_bSpaceAbbrev)
 	}
 		lstrcat(buf, _T(" "));
