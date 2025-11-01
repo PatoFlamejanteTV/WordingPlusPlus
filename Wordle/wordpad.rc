@@ -463,7 +463,7 @@ END
 IDD_FORMAT_PARA DIALOG  0, 0, 185, 112
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Paragraph"
-FONT 8, "MS Sans Serif"
+FONT 8, "Arial MT"
 BEGIN
     GROUPBOX        "Indentation",IDC_BOX,7,7,114,75
     LTEXT           "&Left:",IDC_STATIC,13,21,29,8
@@ -481,7 +481,7 @@ END
 IDD_FORMAT_TAB DIALOG  0, 0, 186, 119
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Tabs"
-FONT 8, "MS Sans Serif"
+FONT 8, "Arial MT"
 BEGIN
     GROUPBOX        "&Tab stop position",IDC_BOX,7,7,114,103
     COMBOBOX        IDC_COMBO1,13,18,101,68,CBS_SIMPLE | WS_VSCROLL | WS_TABSTOP
@@ -495,7 +495,7 @@ END
 IDD_PAGE_SETUP_DIALOG DIALOG  0, 0, 185, 112
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Page Setup"
-FONT 8, "MS Sans Serif"
+FONT 8, "Arial MT"
 BEGIN
     GROUPBOX        "Page Margins",IDC_BOX,7,7,114,98
     LTEXT           "&Top:",IDC_STATIC,13,21,31,8
@@ -513,7 +513,7 @@ END
 IDD_DATEDIALOG DIALOG  0, 0, 185, 112
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Date and Time"
-FONT 8, "MS Sans Serif"
+FONT 8, "Arial MT"
 BEGIN
     LTEXT           "&Available formats:",IDC_STATIC_HEADING,7,7,111,8,NOT WS_GROUP
     LISTBOX         IDC_DATEDIALOG_LIST,7,17,113,87,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
@@ -523,7 +523,7 @@ END
 
 IDD_SPLASH DIALOG  0, 0, 253, 92
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP// | DS_SHELLFONT
-FONT 8, "MS Sans Serif" //"Comic Sans MS"
+FONT 8, "Arial MT" //"Comic Sans MS"
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,6,6,38,40
     LTEXT           "Wordle Version 0.1",IDC_STATIC,60,6,164,8,NOT WS_GROUP
@@ -542,7 +542,7 @@ END
 IDD_OPTIONS_UNITS DIALOG  0, 0, 280, 86
 STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
 CAPTION "Options"
-FONT 8, "MS Sans Serif"
+FONT 8, "Arial MT"
 BEGIN
     CONTROL         "&Inches",IDC_UNITS_IN,"Button",BS_AUTORADIOBUTTON | WS_GROUP,13,21,54,10
     CONTROL         "&Centimeters",IDC_UNITS_CM,"Button",BS_AUTORADIOBUTTON,74,21,68,10
@@ -554,7 +554,7 @@ END
 
 IDD_OPTIONS_WRAP DIALOG  0, 0, 280, 86
 STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
-FONT 8, "MS Sans Serif"
+FONT 8, "Arial MT"
 BEGIN
     GROUPBOX        "Word wrap",IDC_BOX,7,7,128,72
     CONTROL         "&No wrap",IDC_WRAP_NONE,"Button",BS_AUTORADIOBUTTON | WS_GROUP,13,21,81,10
@@ -570,7 +570,7 @@ END
 IDD_FILENEWDIALOG DIALOG  0, 0, 185, 112
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "New"
-FONT 8, "MS Sans Serif"
+FONT 8, "Arial MT"
 BEGIN
     LTEXT           "New document type:",IDC_STATIC_HEADING,7,7,111,8,NOT WS_GROUP
     LISTBOX         IDC_DATEDIALOG_LIST,7,17,114,87,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
@@ -581,7 +581,7 @@ END
 IDD_APP_LOOK DIALOGEX 0, 0, 292, 160
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Application Look"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "Arial MT", 0, 0, 0x1
 BEGIN
     LTEXT           "Welcome to the MFC Library! The library supports various application looks such as Microsoft® Office XP/2003/2007, Microsoft® Visual Studio® 2005 and more.",IDC_STATIC,7,7,278,19
     LTEXT           "Please choose the preferred look and click OK to continue.",IDC_STATIC,17,31,214,8
@@ -793,7 +793,7 @@ BEGIN
     IDS_RICHED_LOAD_FAIL    "Could not load the RichEdit control DLL.  The file RICHED32.DLL may be missing or corrupt."
     IDS_DEFAULTFONT         "Times New Roman"
     IDS_TF_BUTTONS          "&Word 6.0 Document\n&Rich Text Document\n&Text Document\nCancel"
-    IDS_DEFAULTTEXTFONT     "Courier New"
+    IDS_DEFAULTTEXTFONT     "Arial MT"
 END
 
 STRINGTABLE 
@@ -1015,6 +1015,7 @@ BEGIN
     IDS_CM_ABBREV           "cm"
     IDS_POINT_ABBREV        "pt"
     IDS_PICA_ABBREV         "pi"
+//  fun fact, pica means penis in potuguese.
 END
 
 STRINGTABLE 
@@ -1044,6 +1045,7 @@ BEGIN
     IDS_ABOUT_INFO          "Copyright © 1992-2008 UltimateQuack & Microsoft Corporation. All rights reserved."
 END
 
+// i laughted at ts
 STRINGTABLE 
 BEGIN
     ID_VIEW_CUSTOMIZE       "Customizes the menus and toolbars\nCustomize"
