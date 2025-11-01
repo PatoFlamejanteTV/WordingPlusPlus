@@ -6,6 +6,7 @@
 
 #include "stdafx.h"
 #include "wordpad.h"
+#include "wordpdoc.h"
 #include <cassert>
 #include <iostream>
 
@@ -61,6 +62,50 @@ void TestPrintTwipsBufferOverflow()
     assert(lstrcmp(canary, _T("AAAA")) == 0);
 }
 
+// Test case for the CWordPadDoc::MapType function.
+void TestMapType()
+{
+    // Use the test-specific document consistently for all checks.
+    class CTestWordPadDoc : public CWordPadDoc
+    {
+    public:
+        CTestWordPadDoc() { m_pInPlaceFrame = NULL; }
+        ~CTestWordPadDoc() { m_pInPlaceFrame = NULL; }
+        void SetInPlaceActive(BOOL bActive)
+        {
+            static CFrameWnd s_dummyFrame;
+            m_pInPlaceFrame = bActive ? &s_dummyFrame : NULL;
+        }
+    };
+
+    CTestWordPadDoc doc;
+
+    // Test case 1: RD_OEMTEXT should be mapped to RD_TEXT.
+    assert(doc.MapType(RD_OEMTEXT) == RD_TEXT);
+
+    // Test case 2: RD_EMBEDDED behavior based on in-place activation.
+    doc.SetInPlaceActive(FALSE);
+    assert(doc.MapType(RD_EMBEDDED) == RD_RICHTEXT);
+
+    doc.SetInPlaceActive(TRUE);
+    assert(doc.MapType(RD_EMBEDDED) == RD_EMBEDDED);
+    CTestWordPadDoc testDoc;
+
+    // Case 2a: Not in-place active. Should map to RD_RICHTEXT.
+    testDoc.SetInPlaceActive(FALSE);
+    assert(testDoc.MapType(RD_EMBEDDED) == RD_RICHTEXT);
+
+    // Case 2b: In-place active. Should remain RD_EMBEDDED.
+    testDoc.SetInPlaceActive(TRUE);
+    assert(testDoc.MapType(RD_EMBEDDED) == RD_EMBEDDED);
+
+    // Test case 3: Other types should remain unchanged.
+    assert(doc.MapType(RD_TEXT) == RD_TEXT);
+    assert(doc.MapType(RD_RICHTEXT) == RD_RICHTEXT);
+    assert(doc.MapType(RD_WRITE) == RD_WRITE);
+    assert(doc.MapType(RD_WINWORD6) == RD_WINWORD6);
+}
+
 // It is not possible to build and run this test file in this environment.
 // To run this test, it would need to be compiled and linked with the rest of the
 // WordPad source code, and a main function would be needed to call RunTest.
@@ -69,6 +114,7 @@ void TestPrintTwipsBufferOverflow()
 // int main()
 // {
 //     RunTest(TestPrintTwipsBufferOverflow, "TestPrintTwipsBufferOverflow");
+//     RunTest(TestMapType, "TestMapType");
 //     return 0;
 // }
 //
