@@ -29,7 +29,7 @@
 
 extern BOOL AFXAPI AfxFullPath(LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
 static BOOL RegisterHelper(LPCTSTR* rglpszRegister, LPCTSTR* rglpszSymbols,
-	BOOL bReplace);
+    BOOL bReplace);
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -60,65 +60,65 @@ CUnit(1440, 180,        720,    1440,       90,         IDS_INCH4_ABBREV,   FALS
 
 static UINT DoRegistry(LPVOID lpv)
 {
-	ASSERT(lpv != NULL);
-	if (lpv != NULL)
-	{
-		((CWordPadApp*)lpv)->UpdateRegistry();
-	}
-	return 0;
+    ASSERT(lpv != NULL);
+    if (lpv != NULL)
+    {
+        ((CWordPadApp*)lpv)->UpdateRegistry();
+    }
+    return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CWordPadApp
 
 BEGIN_MESSAGE_MAP(CWordPadApp, CWinAppEx)
-	//{{AFX_MSG_MAP(CWordPadApp)
-	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-	ON_COMMAND(ID_FILE_NEW, OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
-	ON_COMMAND(ID_VIEW_APP_LOOK, OnViewAppLook)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(CWordPadApp)
+    ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+    ON_COMMAND(ID_FILE_NEW, OnFileNew)
+    ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
+    ON_COMMAND(ID_VIEW_APP_LOOK, OnViewAppLook)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 void CWordPadCommandLineInfo::ParseParam(const char* pszParam,BOOL bFlag,BOOL bLast)
 {
-	if (bFlag)
-	{
-		if (lstrcmpA(pszParam, "t") == 0)
-		{
-			m_bForceTextMode = TRUE;
-			return;
-		}
-	}
-	CCommandLineInfo::ParseParam(pszParam, bFlag, bLast);
+    if (bFlag)
+    {
+        if (lstrcmpA(pszParam, "t") == 0)
+        {
+            m_bForceTextMode = TRUE;
+            return;
+        }
+    }
+    CCommandLineInfo::ParseParam(pszParam, bFlag, bLast);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CWordPadApp construction
 
 CWordPadApp::CWordPadApp() : 
-	CWinAppEx (TRUE),
-	m_optionsText(0), m_optionsRTF(1),
-	m_optionsWord(2), m_optionsWrite(2), m_optionsIP(2), m_optionsNull(0)
+    CWinAppEx (TRUE),
+    m_optionsText(0), m_optionsRTF(1),
+    m_optionsWord(2), m_optionsWrite(2), m_optionsIP(2), m_optionsNull(0)
 {
-	_tsetlocale(LC_ALL, _T(""));
+    _tsetlocale(LC_ALL, _T(""));
 
-	m_nFilterIndex = 1;
-	DWORD dwVersion = ::GetVersion();
-	m_bWin4 = (BYTE)dwVersion >= 4;
+    m_nFilterIndex = 1;
+    DWORD dwVersion = ::GetVersion();
+    m_bWin4 = (BYTE)dwVersion >= 4;
 #ifndef _UNICODE
-	m_bWin31 = (dwVersion > 0x80000000 && !m_bWin4);
+    m_bWin31 = (dwVersion > 0x80000000 && !m_bWin4);
 #endif
-	m_nDefFont = (m_bWin4) ? DEFAULT_GUI_FONT : ANSI_VAR_FONT;
-	m_dcScreen.Attach(::GetDC(NULL));
-	m_bForceOEM = FALSE;
-	m_bHiColorIcons = FALSE;
+    m_nDefFont = (m_bWin4) ? DEFAULT_GUI_FONT : ANSI_VAR_FONT;
+    m_dcScreen.Attach(::GetDC(NULL));
+    m_bForceOEM = FALSE;
+    m_bHiColorIcons = FALSE;
 }
 
 CWordPadApp::~CWordPadApp()
 {
-	if (m_dcScreen.m_hDC != NULL)
-		::ReleaseDC(NULL, m_dcScreen.Detach());
+    if (m_dcScreen.m_hDC != NULL)
+        ::ReleaseDC(NULL, m_dcScreen.Detach());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -129,10 +129,10 @@ CWordPadApp theApp;
 // Register the application's document templates.  Document templates
 //  serve as the connection between documents, frame windows and views.
 static CSingleDocTemplate DocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CWordPadDoc),
-		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
-		RUNTIME_CLASS(CWordPadView));
+        IDR_MAINFRAME,
+        RUNTIME_CLASS(CWordPadDoc),
+        RUNTIME_CLASS(CMainFrame),       // main SDI frame window
+        RUNTIME_CLASS(CWordPadView));
 
 // This identifier was generated to be statistically unique for your app.
 // You may change it if you prefer to choose a specific identifier.
@@ -144,361 +144,373 @@ static const CLSID BASED_CODE clsid =
 
 BOOL CWordPadApp::InitInstance()
 {
-	ParseCommandLine(cmdInfo);
+    ParseCommandLine(cmdInfo);
 
-	if (::FindWindow(szWordPadClass, NULL) && IsDocOpen(cmdInfo.m_strFileName))
-		return FALSE;
+    if (::FindWindow(szWordPadClass, NULL) && IsDocOpen(cmdInfo.m_strFileName))
+        return FALSE;
 
-	SetRegistryKey(szRegKey);
-	LoadOptions();
+    SetRegistryKey(szRegKey);
+    LoadOptions();
 
-	Enable3dControls();
-	CSplashWnd splash;
-	BOOL bSplash = cmdInfo.m_bShowSplash;
-	if (!cmdInfo.m_bRunEmbedded)
-	{
-		switch (m_nCmdShow)
-		{
-			case SW_HIDE:
-			case SW_SHOWMINIMIZED:
-			case SW_MINIMIZE:
-			case SW_SHOWMINNOACTIVE:
-				bSplash = FALSE;
-				break;
-			case SW_RESTORE:
-			case SW_SHOW:
-			case SW_SHOWDEFAULT:
-			case SW_SHOWNA:
-			case SW_SHOWNOACTIVATE:
-			case SW_SHOWNORMAL:
-			case SW_SHOWMAXIMIZED:
-				if (m_bMaximized)
-					m_nCmdShow = SW_SHOWMAXIMIZED;
-				break;
-		}
-	}
-	else
-	{
-		//Excel 4 will start OLE servers minimized
-		m_nCmdShow = SW_SHOWNORMAL;
-	}
-	int nCmdShow = m_nCmdShow;
+    Enable3dControls();
+    CSplashWnd splash;
+    BOOL bSplash = cmdInfo.m_bShowSplash;
+    if (!cmdInfo.m_bRunEmbedded)
+    {
+        switch (m_nCmdShow)
+        {
+            case SW_HIDE:
+            case SW_SHOWMINIMIZED:
+            case SW_MINIMIZE:
+            case SW_SHOWMINNOACTIVE:
+                bSplash = FALSE;
+                break;
+            case SW_RESTORE:
+            case SW_SHOW:
+            case SW_SHOWDEFAULT:
+            case SW_SHOWNA:
+            case SW_SHOWNOACTIVATE:
+            case SW_SHOWNORMAL:
+            case SW_SHOWMAXIMIZED:
+                if (m_bMaximized)
+                    m_nCmdShow = SW_SHOWMAXIMIZED;
+                break;
+        }
+    }
+    else
+    {
+        //Excel 4 will start OLE servers minimized
+        m_nCmdShow = SW_SHOWNORMAL;
+    }
+    int nCmdShow = m_nCmdShow;
 
-	if (bSplash)
-	{
-		// only show splash if not embedded
-		splash.Create(NULL);
-		splash.ShowWindow(SW_SHOW);
-		splash.UpdateWindow();
-	}
+    if (bSplash)
+    {
+        // only show splash if not embedded
+        splash.Create(NULL);
+        splash.ShowWindow(SW_SHOW);
+        splash.UpdateWindow();
+    }
 
-	m_pluginManager.LoadPlugins(L"plugins");
+    m_pluginManager.LoadPlugins(L"plugins");
 
-	LoadAbbrevStrings();
+    LoadAbbrevStrings();
 
 #ifdef CREATE_DEV_NAMES
-	m_hDevNames = CreateDevNames();
+    m_hDevNames = CreateDevNames();
 #else
-	m_hDevNames = NULL;
+    m_hDevNames = NULL;
 #endif
-	NotifyPrinterChanged((m_hDevNames == NULL));
+    NotifyPrinterChanged((m_hDevNames == NULL));
 
-	free((void*)m_pszHelpFilePath);
-	m_pszHelpFilePath = _T("WORDPAD.HLP");
+    free((void*)m_pszHelpFilePath);
+    m_pszHelpFilePath = _T("WORDPAD.HLP");
 
-	// Initialize OLE libraries
-	if (!AfxOleInit())
-	{
-		AfxMessageBox(IDP_OLE_INIT_FAILED);
-		return FALSE;
-	}
-	RegisterFormats();
+    // Initialize OLE libraries
+    if (!AfxOleInit())
+    {
+        AfxMessageBox(IDP_OLE_INIT_FAILED);
+        return FALSE;
+    }
+    RegisterFormats();
 
-	// Initialize RichEdit control
-	if (LoadLibrary(_T("RICHED32.DLL")) == NULL)
-	{
-		AfxMessageBox(IDS_RICHED_LOAD_FAIL, MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;
-	}
+    // Initialize RichEdit control
+    if (LoadLibrary(_T("RICHED32.DLL")) == NULL)
+    {
+        AfxMessageBox(IDS_RICHED_LOAD_FAIL, MB_OK|MB_ICONEXCLAMATION);
+        return FALSE;
+    }
 
-	// Standard initialization
-	// If you are not using these features and wish to reduce the size
-	//  of your final executable, you should remove from the following
-	//  the specific initialization routines you do not need.
+    // Standard initialization
+    // If you are not using these features and wish to reduce the size
+    //  of your final executable, you should remove from the following
+    //  the specific initialization routines you do not need.
 
-	LoadStdProfileSettings();  // Load standard INI file options (including MRU)
+    LoadStdProfileSettings();  // Load standard INI file options (including MRU)
 
-	// Initialize all Managers for usage. They are automatically constructed
-	// if not yet present
-	SetRegistryBase (_T("SettingsPro"));
+    // Initialize all Managers for usage. They are automatically constructed
+    // if not yet present
+    SetRegistryBase (_T("SettingsPro"));
 
-	InitContextMenuManager();
-	InitKeyboardManager();
+    InitContextMenuManager();
+    InitKeyboardManager();
 
-	InitTooltipManager();
+    InitTooltipManager();
 
-	CMFCToolTipInfo params;
-	params.m_bVislManagerTheme = TRUE;
+    CMFCToolTipInfo params;
+    params.m_bVislManagerTheme = TRUE;
 
-	theApp.GetTooltipManager ()->SetTooltipParams (
-		0xFFFF,
-		RUNTIME_CLASS (CMFCToolTipCtrl),
-		&params);
+    theApp.GetTooltipManager ()->SetTooltipParams (
+        0xFFFF,
+        RUNTIME_CLASS (CMFCToolTipCtrl),
+        &params);
 
-	EnableTearOffMenus (NULL, ID_FREE_TEAROFF1, ID_FREE_TEAROFF2);
+    EnableTearOffMenus (NULL, ID_FREE_TEAROFF1, ID_FREE_TEAROFF2);
 
-	// Register the application's document templates.  Document templates
-	//  serve as the connection between documents, frame windows and views.
+    // Register the application's document templates.  Document templates
+    //  serve as the connection between documents, frame windows and views.
 
-	DocTemplate.SetContainerInfo(IDR_CNTR_INPLACE);
-	DocTemplate.SetServerInfo(
-		IDR_SRVR_EMBEDDED, IDR_SRVR_INPLACE,
-		RUNTIME_CLASS(CInPlaceFrame));
+    DocTemplate.SetContainerInfo(IDR_CNTR_INPLACE);
+    DocTemplate.SetServerInfo(
+        IDR_SRVR_EMBEDDED, IDR_SRVR_INPLACE,
+        RUNTIME_CLASS(CInPlaceFrame));
 
-	// Connect the COleTemplateServer to the document template.
-	//  The COleTemplateServer creates new documents on behalf
-	//  of requesting OLE containers by using information
-	//  specified in the document template.
-	m_server.ConnectTemplate(clsid, &DocTemplate, TRUE);
-		// Note: SDI applications register server objects only if /Embedding
-		//   or /Automation is present on the command line.
+    // Connect the COleTemplateServer to the document template.
+    //  The COleTemplateServer creates new documents on behalf
+    //  of requesting OLE containers by using information
+    //  specified in the document template.
+    m_server.ConnectTemplate(clsid, &DocTemplate, TRUE);
+        // Note: SDI applications register server objects only if /Embedding
+        //   or /Automation is present on the command line.
 
-	// Check to see if launched as OLE server
-	if (cmdInfo.m_bRunEmbedded || cmdInfo.m_bRunAutomated)
-	{
-		// Register all OLE server (factories) as running.  This enables the
-		//  OLE libraries to create objects from other applications.
-		COleTemplateServer::RegisterAll();
-		AfxOleSetUserCtrl(FALSE);
+    // Check to see if launched as OLE server
+    if (cmdInfo.m_bRunEmbedded || cmdInfo.m_bRunAutomated)
+    {
+        // Register all OLE server (factories) as running.  This enables the
+        //  OLE libraries to create objects from other applications.
+        COleTemplateServer::RegisterAll();
+        AfxOleSetUserCtrl(FALSE);
 
-		// Application was run with /Embedding or /Automation.  Don't show the
-		//  main window in this case.
-		return TRUE;
-	}
+        // Application was run with /Embedding or /Automation.  Don't show the
+        //  main window in this case.
+        return TRUE;
+    }
 
-	// make sure the main window is showing
-	m_bPromptForType = FALSE;
-	OnFileNew();
-	m_bPromptForType = TRUE;
-	// destroy splash window
-	if (cmdInfo.m_bShowSplash)
-		splash.DestroyWindow();
-	m_nCmdShow = -1;
-	if (m_pMainWnd == NULL) // i.e. OnFileNew failed
-		return FALSE;
+    // make sure the main window is showing
+    m_bPromptForType = FALSE;
+    OnFileNew();
+    m_bPromptForType = TRUE;
+    // destroy splash window
+    if (cmdInfo.m_bShowSplash)
+        splash.DestroyWindow();
+    m_nCmdShow = -1;
+    if (m_pMainWnd == NULL) // i.e. OnFileNew failed
+        return FALSE;
 
-	if (!cmdInfo.m_strFileName.IsEmpty())   // open an existing document
-		m_nCmdShow = nCmdShow;
-	
-	// Dispatch commands specified on the command line
-	if (cmdInfo.m_nShellCommand != CCommandLineInfo::FileNew &&
-		!ProcessShellCommand(cmdInfo))
-	{
-		return FALSE;
-	}
+    if (!cmdInfo.m_strFileName.IsEmpty())   // open an existing document
+        m_nCmdShow = nCmdShow;
+    
+    // Dispatch commands specified on the command line
+    if (cmdInfo.m_nShellCommand != CCommandLineInfo::FileNew &&
+        !ProcessShellCommand(cmdInfo))
+    {
+        return FALSE;
+    }
 
-	LoadCustomState ();
+    LoadCustomState ();
 
-	// Enable File Manager drag/drop open
-	m_pMainWnd->DragAcceptFiles();
+    // Enable File Manager drag/drop open
+    m_pMainWnd->DragAcceptFiles();
 
-	// When a server application is launched stand-alone, it is a good idea
-	//  to update the system registry in case it has been damaged.
-	// do registry stuff in separate thread
+    // When a server application is launched stand-alone, it is a good idea
+    //  to update the system registry in case it has been damaged.
+    // do registry stuff in separate thread
 #ifndef _UNICODE
-	if (m_bWin31) // no threads on Win32s
-		UpdateRegistry();
-	else
+    if (m_bWin31) // no threads on Win32s
+        UpdateRegistry();
+    else
 #endif
-		AfxBeginThread(DoRegistry, this, THREAD_PRIORITY_IDLE);
+        AfxBeginThread(DoRegistry, this, THREAD_PRIORITY_IDLE);
 
-	if (afxGlobalData.m_nBitsPerPixel < 16)
-	{
-		AfxMessageBox(IDS_WRONG_DISPLAY_SETTINGS);
-	}
+    if (afxGlobalData.m_nBitsPerPixel < 16)
+    {
+        AfxMessageBox(IDS_WRONG_DISPLAY_SETTINGS);
+    }
 
-	// Set application general look:
-	CAppLookDlg dlg (TRUE);
-	dlg.DoModal ();
+    // Set application general look:
+    CAppLookDlg dlg (TRUE);
+    dlg.DoModal ();
 
-	return TRUE;
+    return TRUE;
 }
 
 BOOL CWordPadApp::IsDocOpen(LPCTSTR lpszFileName)
 {
-	if (lpszFileName[0] == NULL)
-		return FALSE;
-	TCHAR szPath[_MAX_PATH];
-	AfxFullPath(szPath, lpszFileName);
-	ATOM atom = GlobalAddAtom(szPath);
-	ASSERT(atom != NULL);
-	if (atom == NULL)
-		return FALSE;
-	EnumWindows(StaticEnumProc, (LPARAM)&atom);
-	if (atom == NULL)
-		return TRUE;
-	DeleteAtom(atom);
-	return FALSE;
+    if (lpszFileName[0] == NULL)
+        return FALSE;
+    TCHAR szPath[_MAX_PATH];
+    AfxFullPath(szPath, lpszFileName);
+    ATOM atom = GlobalAddAtom(szPath);
+    ASSERT(atom != NULL);
+    if (atom == NULL)
+        return FALSE;
+    EnumWindows(StaticEnumProc, (LPARAM)&atom);
+    if (atom == NULL)
+        return TRUE;
+    DeleteAtom(atom);
+    return FALSE;
 }
 
 BOOL CALLBACK CWordPadApp::StaticEnumProc(HWND hWnd, LPARAM lParam)
 {
-	TCHAR szClassName[30];
-	GetClassName(hWnd, szClassName, 30);
-	if (lstrcmp(szClassName, szWordPadClass) != 0)
-		return TRUE;
+    TCHAR szClassName[30];
+    GetClassName(hWnd, szClassName, 30);
+    if (lstrcmp(szClassName, szWordPadClass) != 0)
+        return TRUE;
 
-	ATOM* pAtom = (ATOM*)lParam;
-	ASSERT(pAtom != NULL);
-	DWORD_PTR dw = NULL;
-	::SendMessageTimeout(hWnd, m_nOpenMsg, NULL, (LPARAM)*pAtom,
-		SMTO_ABORTIFHUNG, 500, &dw);
-	if (dw)
-	{
-		::SetForegroundWindow(hWnd);
-		DeleteAtom(*pAtom);
-		*pAtom = NULL;
-		return FALSE;
-	}
-	return TRUE;
+    ATOM* pAtom = (ATOM*)lParam;
+    ASSERT(pAtom != NULL);
+    DWORD_PTR dw = NULL;
+    ::SendMessageTimeout(hWnd, m_nOpenMsg, NULL, (LPARAM)*pAtom,
+        SMTO_ABORTIFHUNG, 500, &dw);
+    if (dw)
+    {
+        ::SetForegroundWindow(hWnd);
+        DeleteAtom(*pAtom);
+        *pAtom = NULL;
+        return FALSE;
+    }
+    return TRUE;
 }
 
 void CWordPadApp::RegisterFormats()
 {
-	cfEmbeddedObject = (CLIPFORMAT)::RegisterClipboardFormat(_T("Embedded Object"));
-	cfRTF = (CLIPFORMAT)::RegisterClipboardFormat(CF_RTF);
-	cfRTO = (CLIPFORMAT)::RegisterClipboardFormat(CF_RETEXTOBJ);
+    cfEmbeddedObject = (CLIPFORMAT)::RegisterClipboardFormat(_T("Embedded Object"));
+    cfRTF = (CLIPFORMAT)::RegisterClipboardFormat(CF_RTF);
+    cfRTO = (CLIPFORMAT)::RegisterClipboardFormat(CF_RETEXTOBJ);
 }
 
 CDocOptions& CWordPadApp::GetDocOptions(int nDocType)
 {
-	switch (nDocType)
-	{
-		case RD_WINWORD6:
-		case RD_WORDPAD:
-			return m_optionsWord;
-		case RD_RICHTEXT:
-			return m_optionsRTF;
-		case RD_TEXT:
-		case RD_OEMTEXT:
-			return m_optionsText;
-		case RD_WRITE:
-			return m_optionsWrite;
-		case RD_EMBEDDED:
-			return m_optionsIP;
-	}
-	ASSERT(FALSE);
-	return m_optionsNull;
+    switch (nDocType)
+    {
+        case RD_WINWORD6:
+        case RD_WORDPAD:
+            return m_optionsWord;
+        case RD_RICHTEXT:
+            return m_optionsRTF;
+        case RD_TEXT:
+        case RD_OEMTEXT:
+            return m_optionsText;
+        case RD_WRITE:
+            return m_optionsWrite;
+        case RD_EMBEDDED:
+            return m_optionsIP;
+    }
+    ASSERT(FALSE);
+    return m_optionsNull;
 }
 
 CDockState& CWordPadApp::GetDockState(int nDocType, BOOL bPrimary)
 {
-	return GetDocOptions(nDocType).GetDockState(bPrimary);
+    return GetDocOptions(nDocType).GetDockState(bPrimary);
 }
 
 void CWordPadApp::SaveOptions()
 {
-	WriteProfileInt(szSection, szWordSel, m_bWordSel);
-	WriteProfileInt(szSection, szUnits, GetUnits());
-	WriteProfileInt(szSection, szMaximized, m_bMaximized);
-	WriteProfileBinary(szSection, szFrameRect, (BYTE*)&m_rectInitialFrame,
-		sizeof(CRect));
-	WriteProfileBinary(szSection, szPageMargin, (BYTE*)&m_rectPageMargin,
-		sizeof(CRect));
-	m_optionsText.SaveOptions(szTextSection);
-	m_optionsRTF.SaveOptions(szRTFSection);
-	m_optionsWord.SaveOptions(szWordSection);
-	m_optionsWrite.SaveOptions(szWriteSection);
-	m_optionsIP.SaveOptions(szIPSection);
+    WriteProfileInt(szSection, szWordSel, m_bWordSel);
+    WriteProfileInt(szSection, szUnits, GetUnits());
+    WriteProfileInt(szSection, szMaximized, m_bMaximized);
+    WriteProfileBinary(szSection, szFrameRect, (BYTE*)&m_rectInitialFrame,
+        sizeof(CRect));
+    WriteProfileBinary(szSection, szPageMargin, (BYTE*)&m_rectPageMargin,
+        sizeof(CRect));
+    m_optionsText.SaveOptions(szTextSection);
+    m_optionsRTF.SaveOptions(szRTFSection);
+    m_optionsWord.SaveOptions(szWordSection);
+    m_optionsWrite.SaveOptions(szWriteSection);
+    m_optionsIP.SaveOptions(szIPSection);
 }
 
 void CWordPadApp::LoadOptions()
 {
-	BYTE* pb = NULL;
-	UINT nLen = 0;
+    BYTE* pb = NULL;
+    UINT nLen = 0;
 
-	HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-	if (hFont == NULL)
-		hFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
-	VERIFY(::GetObject(hFont, sizeof(LOGFONT), &m_lf));
+    HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+    if (hFont == NULL)
+        hFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
+    VERIFY(::GetObject(hFont, sizeof(LOGFONT), &m_lf));
 
-	m_bWordSel = GetProfileInt(szSection, szWordSel, TRUE);
-	TCHAR buf[2];
-	buf[0] = NULL;
-	GetLocaleInfo(GetUserDefaultLCID(), LOCALE_IMEASURE, buf, 2);
-	int nDefUnits = buf[0] == '1' ? 0 : 1;
-	SetUnits(GetProfileInt(szSection, szUnits, nDefUnits));
-	m_bMaximized = GetProfileInt(szSection, szMaximized, (int)FALSE);
+    m_bWordSel = GetProfileInt(szSection, szWordSel, TRUE);
+    TCHAR buf[2];
+    buf[0] = NULL;
+    GetLocaleInfo(GetUserDefaultLCID(), LOCALE_IMEASURE, buf, 2);
+    int nDefUnits = buf[0] == '1' ? 0 : 1;
+    SetUnits(GetProfileInt(szSection, szUnits, nDefUnits));
+    m_bMaximized = GetProfileInt(szSection, szMaximized, (int)FALSE);
 
-	if (GetProfileBinary(szSection, szFrameRect, &pb, &nLen))
-	{
-		ASSERT(nLen == sizeof(CRect));
-		memcpy(&m_rectInitialFrame, pb, sizeof(CRect));
-		delete pb;
-	}
-	else
-		m_rectInitialFrame.SetRect(0,0,0,0);
+    if (GetProfileBinary(szSection, szFrameRect, &pb, &nLen))
+    {
+        ASSERT(nLen == sizeof(CRect));
+        memcpy(&m_rectInitialFrame, pb, sizeof(CRect));
+        delete pb;
+    }
+    else
+        m_rectInitialFrame.SetRect(0,0,0,0);
 
-	CRect rectScreen(0, 0, GetSystemMetrics(SM_CXSCREEN),
-		GetSystemMetrics(SM_CYSCREEN));
-	CRect rectInt;
-	rectInt.IntersectRect(&rectScreen, &m_rectInitialFrame);
-	if (rectInt.Width() < 10 || rectInt.Height() < 10)
-		m_rectInitialFrame.SetRect(0, 0, 0, 0);
+    CRect rectScreen(0, 0, GetSystemMetrics(SM_CXSCREEN),
+        GetSystemMetrics(SM_CYSCREEN));
+    CRect rectInt;
+    rectInt.IntersectRect(&rectScreen, &m_rectInitialFrame);
+    if (rectInt.Width() < 10 || rectInt.Height() < 10)
+        m_rectInitialFrame.SetRect(0, 0, 0, 0);
 
-	if (GetProfileBinary(szSection, szPageMargin, &pb, &nLen))
-	{
-		ASSERT(nLen == sizeof(CRect));
-		memcpy(&m_rectPageMargin, pb, sizeof(CRect));
-		delete pb;
-	}
-	else
-		m_rectPageMargin.SetRect(1800, 1440, 1800, 1440);
+    if (GetProfileBinary(szSection, szPageMargin, &pb, &nLen))
+    {
+        ASSERT(nLen == sizeof(CRect));
+        memcpy(&m_rectPageMargin, pb, sizeof(CRect));
+        delete pb;
+    }
+    else
+        m_rectPageMargin.SetRect(1800, 1440, 1800, 1440);
 
-	m_optionsText.LoadOptions(szTextSection);
-	m_optionsRTF.LoadOptions(szRTFSection);
-	m_optionsWord.LoadOptions(szWordSection);
-	m_optionsWrite.LoadOptions(szWriteSection);
-	m_optionsIP.LoadOptions(szIPSection);
+    m_optionsText.LoadOptions(szTextSection);
+    m_optionsRTF.LoadOptions(szRTFSection);
+    m_optionsWord.LoadOptions(szWordSection);
+    m_optionsWrite.LoadOptions(szWriteSection);
+    m_optionsIP.LoadOptions(szIPSection);
 }
 
 void CWordPadApp::LoadAbbrevStrings()
 {
-	for (int i=0;i<m_nNumUnits;i++)
-	{
-		BOOL bValidString;
-		bValidString = m_units[i].m_strAbbrev.LoadString(m_units[i].m_nAbbrevID);
-		ASSERT(bValidString);
-	}
+    for (int i=0;i<m_nNumUnits;i++)
+    {
+        BOOL bValidString;
+        bValidString = m_units[i].m_strAbbrev.LoadString(m_units[i].m_nAbbrevID);
+        ASSERT(bValidString);
+    }
 }
 
 BOOL CWordPadApp::ParseMeasurement(LPTSTR buf, int& lVal)
 {
-	TCHAR* pch;
-	if (buf[0] == NULL)
-		return FALSE;
-	float f = (float)_tcstod(buf,&pch);
+    TCHAR* pch;
+    if (buf[0] == NULL)
+        return FALSE;
+    float f = (float)_tcstod(buf,&pch);
 
-	// eat white space, if any
-	while (isspace(*pch))
-		pch++;
+    // eat white space, if any
+    while (isspace(*pch))
+        pch++;
 
-	if (pch[0] == NULL) // default
-	{
-		lVal = (f < 0.f) ? (int)(f*GetTPU()-0.5f) : (int)(f*GetTPU()+0.5f);
-		return TRUE;
-	}
-	for (int i=0;i<m_nNumUnits;i++)
-	{
-		if (lstrcmpi(pch, GetAbbrev(i)) == 0)
-		{
-			lVal = (f < 0.f) ? (int)(f*GetTPU(i)-0.5f) : (int)(f*GetTPU(i)+0.5f);
-			return TRUE;
-		}
-	}
-	return FALSE;
+    if (pch[0] == NULL) // default
+    {
+        lVal = (f < 0.f) ? (int)(f*GetTPU()-0.5f) : (int)(f*GetTPU()+0.5f);
+        return TRUE;
+    }
+    for (int i=0;i<m_nNumUnits;i++)
+    {
+        if (lstrcmpi(pch, GetAbbrev(i)) == 0)
+        {
+            lVal = (f < 0.f) ? (int)(f*GetTPU(i)-0.5f) : (int)(f*GetTPU(i)+0.5f);
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
+// --- Added helper: GetAbbrev implementation ---
+// Returns the abbreviation string for the given unit index.
+// If unitIndex is out of range or negative, use current units.
+LPCTSTR CWordPadApp::GetAbbrev(int unitIndex /*= -1*/)
+{
+    if (unitIndex < 0 || unitIndex >= m_nNumUnits)
+        unitIndex = GetUnits();
+    return m_units[unitIndex].m_strAbbrev;
+}
+
+// --- Fixed PrintTwips ---
+// Safe formatting, trimming trailing zeros, and appending unit abbreviation.
 void CWordPadApp::PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDec)
 {
     ASSERT(nDec == 2);
@@ -508,19 +520,28 @@ void CWordPadApp::PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDec)
     float val = (float)nValue / (float)div;
     LPCTSTR abbrev = GetAbbrev(unit_idx);
 
-    // Format number with decimals
+    // Format number with decimals into buffer
     _stprintf_s(buf, bufSize, _T("%.*f"), nDec, val);
 
     // Trim trailing zeros after decimal point
-    TCHAR* p = buf + _tcslen(buf) - 1;
-    while (p > buf && *p == _T('0'))
-        *p-- = _T('\0');
-    if (p > buf && *p == _T('.'))
-        *p = _T('\0'); // remove decimal if all decimals are zero
+    size_t len = _tcslen(buf);
+    if (len > 0)
+    {
+        TCHAR* p = buf + len - 1;
+        while (p > buf && *p == _T('0'))
+        {
+            *p = _T('\0');
+            --p;
+        }
+        if (p > buf && *p == _T('.'))
+            *p = _T('\0'); // remove decimal if all decimals are zero
+    }
 
     // Add space if unit requires it
     if (m_units[unit_idx].m_bSpaceAbbrev)
+    {
         _tcscat_s(buf, bufSize, _T(" "));
+    }
 
     // Append unit abbreviation
     _tcscat_s(buf, bufSize, abbrev);
@@ -530,140 +551,140 @@ void CWordPadApp::PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDec)
 
 void CWordPadApp::OnAppAbout()
 {
-	BOOL bValidString;
+    BOOL bValidString;
 
-	CString strTitle;
-	bValidString = strTitle.LoadString(AFX_IDS_APP_TITLE);
-	ASSERT(bValidString);
+    CString strTitle;
+    bValidString = strTitle.LoadString(AFX_IDS_APP_TITLE);
+    ASSERT(bValidString);
 
-	CString strInfo;
-	bValidString = strInfo.LoadString (IDS_ABOUT_INFO);
-	ASSERT(bValidString);
+    CString strInfo;
+    bValidString = strInfo.LoadString (IDS_ABOUT_INFO);
+    ASSERT(bValidString);
 
-	ShellAbout(m_pMainWnd->GetSafeHwnd(), strTitle, strInfo, LoadIcon(IDR_MAINFRAME));
+    ShellAbout(m_pMainWnd->GetSafeHwnd(), strTitle, strInfo, LoadIcon(IDR_MAINFRAME));
 }
 
 int CWordPadApp::ExitInstance()
 {
-	m_pszHelpFilePath = NULL;
+    m_pszHelpFilePath = NULL;
 
-	HMODULE h = GetModuleHandle(_T("RICHED32.DLL"));
-	if (h != NULL)
-	{
-		FreeLibrary(h);
-	}
+    HMODULE h = GetModuleHandle(_T("RICHED32.DLL"));
+    if (h != NULL)
+    {
+        FreeLibrary(h);
+    }
 
-	SaveOptions();
+    SaveOptions();
 
-	return CWinAppEx::ExitInstance();
+    return CWinAppEx::ExitInstance();
 }
 
 void CWordPadApp::OnFileNew()
 {
-	int nDocType = -1;
-	if (!m_bPromptForType)
-	{
-		if (cmdInfo.m_bForceTextMode)
-			nDocType = RD_TEXT;
-		else if (!cmdInfo.m_strFileName.IsEmpty())
-		{
-			CFileException fe;
-			nDocType = GetDocTypeFromName(cmdInfo.m_strFileName, fe);
-		}
-		if (nDocType == -1)
-			nDocType = RD_DEFAULT;
-	}
-	else
-	{
-		CFileNewDialog dlg;
-		if (dlg.DoModal() == IDCANCEL)
-			return;
+    int nDocType = -1;
+    if (!m_bPromptForType)
+    {
+        if (cmdInfo.m_bForceTextMode)
+            nDocType = RD_TEXT;
+        else if (!cmdInfo.m_strFileName.IsEmpty())
+        {
+            CFileException fe;
+            nDocType = GetDocTypeFromName(cmdInfo.m_strFileName, fe);
+        }
+        if (nDocType == -1)
+            nDocType = RD_DEFAULT;
+    }
+    else
+    {
+        CFileNewDialog dlg;
+        if (dlg.DoModal() == IDCANCEL)
+            return;
 
-		nDocType = (dlg.m_nSel == 0) ? RD_DEFAULT:  //Word 6
-					(dlg.m_nSel == 1) ? RD_RICHTEXT :   //RTF
-					RD_TEXT ;                   //text
+        nDocType = (dlg.m_nSel == 0) ? RD_DEFAULT:  //Word 6
+                    (dlg.m_nSel == 1) ? RD_RICHTEXT :   //RTF
+                    RD_TEXT ;                   //text
 
-		if (nDocType != RD_TEXT)
-			cmdInfo.m_bForceTextMode = FALSE;
-	}
-	m_nNewDocType = nDocType;
-	DocTemplate.OpenDocumentFile(NULL);
-		// if returns NULL, the user has already been alerted
+        if (nDocType != RD_TEXT)
+            cmdInfo.m_bForceTextMode = FALSE;
+    }
+    m_nNewDocType = nDocType;
+    DocTemplate.OpenDocumentFile(NULL);
+        // if returns NULL, the user has already been alerted
 }
 
 // prompt for file name - used for open and save as
 // static function called from app
 BOOL CWordPadApp::PromptForFileName(CString& fileName, UINT nIDSTitle,
-	DWORD dwFlags, BOOL bOpenFileDialog, int* pType)
+    DWORD dwFlags, BOOL bOpenFileDialog, int* pType)
 {
-	ScanForConverters();
-	CFileDialog dlgFile(bOpenFileDialog);
-	CString title;
+    ScanForConverters();
+    CFileDialog dlgFile(bOpenFileDialog);
+    CString title;
 
-	VERIFY(title.LoadString(nIDSTitle));
+    VERIFY(title.LoadString(nIDSTitle));
 
-	dlgFile.m_ofn.Flags |= dwFlags;
+    dlgFile.m_ofn.Flags |= dwFlags;
 //  dlgFile.m_ofn.Flags &= ~OFN_SHOWHELP;
 
-	int nIndex = m_nFilterIndex;
-	if (!bOpenFileDialog)
-	{
-		int nDocType = (pType != NULL) ? *pType : RD_DEFAULT;
-		nIndex = GetIndexFromType(nDocType, bOpenFileDialog);
-		if (nIndex == -1)
-			nIndex = GetIndexFromType(RD_DEFAULT, bOpenFileDialog);
-		if (nIndex == -1)
-			nIndex = GetIndexFromType(RD_NATIVE, bOpenFileDialog);
-		ASSERT(nIndex != -1);
-		nIndex++;
-	}
-	dlgFile.m_ofn.nFilterIndex = nIndex;
-	// strDefExt is necessary to hold onto the memory from GetExtFromType
-	CString strDefExt = GetExtFromType(GetTypeFromIndex(nIndex-1, bOpenFileDialog));
-	dlgFile.m_ofn.lpstrDefExt = strDefExt;
+    int nIndex = m_nFilterIndex;
+    if (!bOpenFileDialog)
+    {
+        int nDocType = (pType != NULL) ? *pType : RD_DEFAULT;
+        nIndex = GetIndexFromType(nDocType, bOpenFileDialog);
+        if (nIndex == -1)
+            nIndex = GetIndexFromType(RD_DEFAULT, bOpenFileDialog);
+        if (nIndex == -1)
+            nIndex = GetIndexFromType(RD_NATIVE, bOpenFileDialog);
+        ASSERT(nIndex != -1);
+        nIndex++;
+    }
+    dlgFile.m_ofn.nFilterIndex = nIndex;
+    // strDefExt is necessary to hold onto the memory from GetExtFromType
+    CString strDefExt = GetExtFromType(GetTypeFromIndex(nIndex-1, bOpenFileDialog));
+    dlgFile.m_ofn.lpstrDefExt = strDefExt;
 
 
-	CString strFilter = GetFileTypes(bOpenFileDialog);
-	dlgFile.m_ofn.lpstrFilter = strFilter;
-	dlgFile.m_ofn.lpstrTitle = title;
-	dlgFile.m_ofn.lpstrFile = fileName.GetBuffer(_MAX_PATH);
+    CString strFilter = GetFileTypes(bOpenFileDialog);
+    dlgFile.m_ofn.lpstrFilter = strFilter;
+    dlgFile.m_ofn.lpstrTitle = title;
+    dlgFile.m_ofn.lpstrFile = fileName.GetBuffer(_MAX_PATH);
 
-	BOOL bRet = (dlgFile.DoModal() == IDOK) ? TRUE : FALSE;
-	fileName.ReleaseBuffer();
-	if (bRet)
-	{
-		if (bOpenFileDialog)
-			m_nFilterIndex = dlgFile.m_ofn.nFilterIndex;
-		if (pType != NULL)
-		{
-			int nIndex2 = (int)dlgFile.m_ofn.nFilterIndex - 1;
-			ASSERT(nIndex2 >= 0);
-			*pType = GetTypeFromIndex(nIndex2, bOpenFileDialog);
-		}
-	}
+    BOOL bRet = (dlgFile.DoModal() == IDOK) ? TRUE : FALSE;
+    fileName.ReleaseBuffer();
+    if (bRet)
+    {
+        if (bOpenFileDialog)
+            m_nFilterIndex = dlgFile.m_ofn.nFilterIndex;
+        if (pType != NULL)
+        {
+            int nIndex2 = (int)dlgFile.m_ofn.nFilterIndex - 1;
+            ASSERT(nIndex2 >= 0);
+            *pType = GetTypeFromIndex(nIndex2, bOpenFileDialog);
+        }
+    }
 
-	return bRet;
+    return bRet;
 }
 
 void CWordPadApp::OnFileOpen()
 {
-	// prompt the user (with all document templates)
-	CString newName;
-	int nType = RD_DEFAULT;
-	if (!PromptForFileName(newName, AFX_IDS_OPENFILE,
-	  OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, TRUE, &nType))
-		return; // open cancelled
+    // prompt the user (with all document templates)
+    CString newName;
+    int nType = RD_DEFAULT;
+    if (!PromptForFileName(newName, AFX_IDS_OPENFILE,
+      OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, TRUE, &nType))
+        return; // open cancelled
 
-	if (nType == RD_OEMTEXT)
-		m_bForceOEM = TRUE;
-	OpenDocumentFile(newName);
-	m_bForceOEM = FALSE;
-	// if returns NULL, the user has already been alerted
+    if (nType == RD_OEMTEXT)
+        m_bForceOEM = TRUE;
+    OpenDocumentFile(newName);
+    m_bForceOEM = FALSE;
+    // if returns NULL, the user has already been alerted
 }
 
 BOOL CWordPadApp::OnDDECommand(LPTSTR /*lpszCommand*/)
 {
-	return FALSE;
+    return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -748,216 +769,216 @@ static const LPCTSTR rglpszDocRegister[] =
 {sz00, sz01, sz16, sz17, sz20, sz21, NULL};
 
 static void RegisterExt(LPCTSTR lpszExt, LPCTSTR lpszProgID, UINT nIDTypeName,
-	LPCTSTR* rglpszSymbols, LPCTSTR* rglpszExtRegister,
-	LPCTSTR* rglpszRegister, int nIcon)
+    LPCTSTR* rglpszSymbols, LPCTSTR* rglpszExtRegister,
+    LPCTSTR* rglpszRegister, int nIcon)
 {
-	// don't overwrite anything with the extensions
-	CString strWhole;
-	VERIFY(strWhole.LoadString(nIDTypeName));
-	CString str;
-	AfxExtractSubString(str, strWhole, DOCTYPE_PROGID);
+    // don't overwrite anything with the extensions
+    CString strWhole;
+    VERIFY(strWhole.LoadString(nIDTypeName));
+    CString str;
+    AfxExtractSubString(str, strWhole, DOCTYPE_PROGID);
 
-	rglpszSymbols[1] = lpszProgID;
-	rglpszSymbols[4] = str;
-	rglpszSymbols[6] = lpszExt;
-	TCHAR buf[10];
-	wsprintf(buf, _T("%d"), nIcon);
-	rglpszSymbols[7] = buf;
-	// check for .ext and progid
-	CKey key;
-	if (!key.Open(HKEY_CLASSES_ROOT, lpszExt)) // .ext doesn't exist
-		RegisterHelper(rglpszExtRegister, rglpszSymbols, TRUE);
-	key.Close();
-	if (!key.Open(HKEY_CLASSES_ROOT, lpszProgID)) // ProgID doesn't exist (i.e. txtfile)
-		RegisterHelper(rglpszRegister, rglpszSymbols, TRUE);
+    rglpszSymbols[1] = lpszProgID;
+    rglpszSymbols[4] = str;
+    rglpszSymbols[6] = lpszExt;
+    TCHAR buf[10];
+    wsprintf(buf, _T("%d"), nIcon);
+    rglpszSymbols[7] = buf;
+    // check for .ext and progid
+    CKey key;
+    if (!key.Open(HKEY_CLASSES_ROOT, lpszExt)) // .ext doesn't exist
+        RegisterHelper(rglpszExtRegister, rglpszSymbols, TRUE);
+    key.Close();
+    if (!key.Open(HKEY_CLASSES_ROOT, lpszProgID)) // ProgID doesn't exist (i.e. txtfile)
+        RegisterHelper(rglpszRegister, rglpszSymbols, TRUE);
 }
 
 void CWordPadApp::UpdateRegistry()
 {
-	USES_CONVERSION;
-	LPOLESTR lpszClassID = NULL;
-	CDocTemplate* pDocTemplate = &DocTemplate;
+    USES_CONVERSION;
+    LPOLESTR lpszClassID = NULL;
+    CDocTemplate* pDocTemplate = &DocTemplate;
 
-	// get registration info from doc template string
-	CString strServerName;
-	CString strLocalServerName;
-	CString strLocalShortName;
+    // get registration info from doc template string
+    CString strServerName;
+    CString strLocalServerName;
+    CString strLocalShortName;
 
-	if (!pDocTemplate->GetDocString(strServerName,
-	   CDocTemplate::regFileTypeId) || strServerName.IsEmpty())
-	{
-		TRACE0("Error: not enough information in DocTemplate to register OLE server.\n");
-		return;
-	}
-	if (!pDocTemplate->GetDocString(strLocalServerName,
-	   CDocTemplate::regFileTypeName))
-		strLocalServerName = strServerName;     // use non-localized name
-	if (!pDocTemplate->GetDocString(strLocalShortName,
-		CDocTemplate::fileNewName))
-		strLocalShortName = strLocalServerName; // use long name
+    if (!pDocTemplate->GetDocString(strServerName,
+       CDocTemplate::regFileTypeId) || strServerName.IsEmpty())
+    {
+        TRACE0("Error: not enough information in DocTemplate to register OLE server.\n");
+        return;
+    }
+    if (!pDocTemplate->GetDocString(strLocalServerName,
+       CDocTemplate::regFileTypeName))
+        strLocalServerName = strServerName;     // use non-localized name
+    if (!pDocTemplate->GetDocString(strLocalShortName,
+        CDocTemplate::fileNewName))
+        strLocalShortName = strLocalServerName; // use long name
 
-	ASSERT(strServerName.Find(' ') == -1);  // no spaces allowed
+    ASSERT(strServerName.Find(' ') == -1);  // no spaces allowed
 
-	::StringFromCLSID(clsid, &lpszClassID);
-	ASSERT (lpszClassID != NULL);
+    ::StringFromCLSID(clsid, &lpszClassID);
+    ASSERT (lpszClassID != NULL);
 
-	// get path name to server
-	TCHAR szLongPathName[_MAX_PATH];
-	TCHAR szShortPathName[_MAX_PATH];
-	::GetModuleFileName(AfxGetInstanceHandle(), szLongPathName, _MAX_PATH);
-	::GetShortPathName(szLongPathName, szShortPathName, _MAX_PATH);
+    // get path name to server
+    TCHAR szLongPathName[_MAX_PATH];
+    TCHAR szShortPathName[_MAX_PATH];
+    ::GetModuleFileName(AfxGetInstanceHandle(), szLongPathName, _MAX_PATH);
+    ::GetShortPathName(szLongPathName, szShortPathName, _MAX_PATH);
 
-	LPCTSTR rglpszSymbols[NUM_REG_ARGS];
-	rglpszSymbols[0] = OLE2CT(lpszClassID);
-	rglpszSymbols[1] = strServerName;
-	rglpszSymbols[2] = szShortPathName;
-	rglpszSymbols[3] = strLocalShortName;
-	rglpszSymbols[4] = strLocalServerName;
-	rglpszSymbols[5] = m_pszAppName;    // will usually be long, readable name
-	rglpszSymbols[6] = NULL;
+    LPCTSTR rglpszSymbols[NUM_REG_ARGS];
+    rglpszSymbols[0] = OLE2CT(lpszClassID);
+    rglpszSymbols[1] = strServerName;
+    rglpszSymbols[2] = szShortPathName;
+    rglpszSymbols[3] = strLocalShortName;
+    rglpszSymbols[4] = strLocalServerName;
+    rglpszSymbols[5] = m_pszAppName;    // will usually be long, readable name
+    rglpszSymbols[6] = NULL;
 
-	if (RegisterHelper((LPCTSTR*)rglpszWordPadRegister, rglpszSymbols, FALSE))
-		RegisterHelper((LPCTSTR*)rglpszWordPadOverwrite, rglpszSymbols, TRUE);
+    if (RegisterHelper((LPCTSTR*)rglpszWordPadRegister, rglpszSymbols, FALSE))
+        RegisterHelper((LPCTSTR*)rglpszWordPadOverwrite, rglpszSymbols, TRUE);
 
 //  RegisterExt(_T(".txt"), _T("txtfile"), IDS_TEXT_DOC, rglpszSymbols,
 //      (LPCTSTR*)rglpszTxtExtRegister, (LPCTSTR*)rglpszTxtRegister, 3);
-	RegisterExt(_T(".rtf"), _T("rtffile"), IDS_RICHTEXT_DOC, rglpszSymbols,
-		(LPCTSTR*)rglpszRtfExtRegister, (LPCTSTR*)rglpszRtfRegister, 1);
-	RegisterExt(_T(".wri"), _T("wrifile"), IDS_WRITE_DOC, rglpszSymbols,
-		(LPCTSTR*)rglpszWriExtRegister, (LPCTSTR*)rglpszWriRegister, 2);
-	RegisterExt(_T(".doc"), _T("WordPad.Document.1"), IDS_WINWORD6_DOC, rglpszSymbols,
-		(LPCTSTR*)rglpszDocExtRegister, (LPCTSTR*)rglpszDocRegister, 1);
+    RegisterExt(_T(".rtf"), _T("rtffile"), IDS_RICHTEXT_DOC, rglpszSymbols,
+        (LPCTSTR*)rglpszRtfExtRegister, (LPCTSTR*)rglpszRtfRegister, 1);
+    RegisterExt(_T(".wri"), _T("wrifile"), IDS_WRITE_DOC, rglpszSymbols,
+        (LPCTSTR*)rglpszWriExtRegister, (LPCTSTR*)rglpszWriRegister, 2);
+    RegisterExt(_T(".doc"), _T("WordPad.Document.1"), IDS_WINWORD6_DOC, rglpszSymbols,
+        (LPCTSTR*)rglpszDocExtRegister, (LPCTSTR*)rglpszDocRegister, 1);
 
-	// free memory for class ID
-	ASSERT(lpszClassID != NULL);
-	CoTaskMemFree(lpszClassID);
+    // free memory for class ID
+    ASSERT(lpszClassID != NULL);
+    CoTaskMemFree(lpszClassID);
 }
 
 BOOL RegisterHelper(LPCTSTR* rglpszRegister, LPCTSTR* rglpszSymbols,
-	BOOL bReplace)
+    BOOL bReplace)
 {
-	ASSERT(rglpszRegister != NULL);
-	ASSERT(rglpszSymbols != NULL);
-	if (rglpszRegister == NULL || rglpszSymbols == NULL)
-		return FALSE;
+    ASSERT(rglpszRegister != NULL);
+    ASSERT(rglpszSymbols != NULL);
+    if (rglpszRegister == NULL || rglpszSymbols == NULL)
+        return FALSE;
 
-	CString strKey;
-	CString strValueName;
-	CString strValue;
+    CString strKey;
+    CString strValueName;
+    CString strValue;
 
-	// keeping a key open makes this go a bit faster
-	CKey keyTemp;
-	VERIFY(keyTemp.Create(HKEY_CLASSES_ROOT, _T("CLSID")));
+    // keeping a key open makes this go a bit faster
+    CKey keyTemp;
+    VERIFY(keyTemp.Create(HKEY_CLASSES_ROOT, _T("CLSID")));
 
-	BOOL bResult = TRUE;
-	while (*rglpszRegister != NULL)
-	{
-		LPCTSTR lpszKey = *rglpszRegister++;
-		if (*lpszKey == '\0')
-			continue;
+    BOOL bResult = TRUE;
+    while (*rglpszRegister != NULL)
+    {
+        LPCTSTR lpszKey = *rglpszRegister++;
+        if (*lpszKey == '\0')
+            continue;
 
-		LPCTSTR lpszValueName = lpszKey + lstrlen(lpszKey) + 1;
-		LPCTSTR lpszValue = lpszValueName + lstrlen(lpszValueName) + 1;
+        LPCTSTR lpszValueName = lpszKey + lstrlen(lpszKey) + 1;
+        LPCTSTR lpszValue = lpszValueName + lstrlen(lpszValueName) + 1;
 
-		strKey.ReleaseBuffer(
-			FormatMessage(FORMAT_MESSAGE_FROM_STRING |
-			FORMAT_MESSAGE_ARGUMENT_ARRAY, lpszKey, NULL,   NULL,
-			strKey.GetBuffer(256), 256, (va_list*) rglpszSymbols));
-		strValueName = lpszValueName;
-		strValue.ReleaseBuffer(
-			FormatMessage(FORMAT_MESSAGE_FROM_STRING |
-			FORMAT_MESSAGE_ARGUMENT_ARRAY, lpszValue, NULL, NULL,
-			strValue.GetBuffer(256), 256, (va_list*) rglpszSymbols));
+        strKey.ReleaseBuffer(
+            FormatMessage(FORMAT_MESSAGE_FROM_STRING |
+            FORMAT_MESSAGE_ARGUMENT_ARRAY, lpszKey, NULL,   NULL,
+            strKey.GetBuffer(256), 256, (va_list*) rglpszSymbols));
+        strValueName = lpszValueName;
+        strValue.ReleaseBuffer(
+            FormatMessage(FORMAT_MESSAGE_FROM_STRING |
+            FORMAT_MESSAGE_ARGUMENT_ARRAY, lpszValue, NULL, NULL,
+            strValue.GetBuffer(256), 256, (va_list*) rglpszSymbols));
 
-		if (strKey.IsEmpty())
-		{
-			TRACE1("Warning: skipping empty key '%s'.\n", lpszKey);
-			continue;
-		}
+        if (strKey.IsEmpty())
+        {
+            TRACE1("Warning: skipping empty key '%s'.\n", lpszKey);
+            continue;
+        }
 
-		CKey key;
-		if (key.Create(HKEY_CLASSES_ROOT, strKey))
-		{
-			if (!bReplace)
-			{
-				CString str;
-				if (key.GetStringValue(str, strValueName) && !str.IsEmpty())
-					continue;
-			}
+        CKey key;
+        if (key.Create(HKEY_CLASSES_ROOT, strKey))
+        {
+            if (!bReplace)
+            {
+                CString str;
+                if (key.GetStringValue(str, strValueName) && !str.IsEmpty())
+                    continue;
+            }
 
-			if (!key.SetStringValue(strValue, strValueName))
-			{
-				TRACE2("Error: failed setting key '%s' to value '%s'.\n",
-					(LPCTSTR)strKey, (LPCTSTR)strValue);
-				bResult = FALSE;
-				break;
-			}
-		}
-	}
+            if (!key.SetStringValue(strValue, strValueName))
+            {
+                TRACE2("Error: failed setting key '%s' to value '%s'.\n",
+                    (LPCTSTR)strKey, (LPCTSTR)strValue);
+                bResult = FALSE;
+                break;
+            }
+        }
+    }
 
-	return bResult;
+    return bResult;
 }
 
 void CWordPadApp::WinHelp(DWORD dwData, UINT nCmd)
 {
-	if (nCmd == HELP_INDEX)
-		nCmd = HELP_FINDER;
-	CWinApp::WinHelp(dwData, nCmd);
+    if (nCmd == HELP_INDEX)
+        nCmd = HELP_FINDER;
+    CWinApp::WinHelp(dwData, nCmd);
 }
 
 BOOL CWordPadApp::PreTranslateMessage(MSG* pMsg)
 {
-	if (pMsg->message == WM_PAINT)
-		return FALSE;
-	// CWinApp::PreTranslateMessage does nothing but call base
-	return CWinThread::PreTranslateMessage(pMsg);
+    if (pMsg->message == WM_PAINT)
+        return FALSE;
+    // CWinApp::PreTranslateMessage does nothing but call base
+    return CWinThread::PreTranslateMessage(pMsg);
 }
 
 void CWordPadApp::NotifyPrinterChanged(BOOL bUpdatePrinterSelection)
 {
-	if (bUpdatePrinterSelection)
-		UpdatePrinterSelection(FALSE);
-	POSITION pos = m_listPrinterNotify.GetHeadPosition();
-	while (pos != NULL)
-	{
-		HWND hWnd = m_listPrinterNotify.GetNext(pos);
-		::SendMessage(hWnd, m_nPrinterChangedMsg, 0, 0);
-	}
+    if (bUpdatePrinterSelection)
+        UpdatePrinterSelection(FALSE);
+    POSITION pos = m_listPrinterNotify.GetHeadPosition();
+    while (pos != NULL)
+    {
+        HWND hWnd = m_listPrinterNotify.GetNext(pos);
+        ::SendMessage(hWnd, m_nPrinterChangedMsg, 0, 0);
+    }
 }
 
 BOOL CWordPadApp::IsIdleMessage(MSG* pMsg)
 {
-	if (pMsg->message == WM_MOUSEMOVE || pMsg->message == WM_NCMOUSEMOVE)
-		return FALSE;
-	return CWinApp::IsIdleMessage(pMsg);
+    if (pMsg->message == WM_MOUSEMOVE || pMsg->message == WM_NCMOUSEMOVE)
+        return FALSE;
+    return CWinApp::IsIdleMessage(pMsg);
 }
 
 #ifdef CREATE_DEV_NAMES
 HGLOBAL CWordPadApp::CreateDevNames()
 {
-	HGLOBAL hDev = NULL;
-	if (!cmdInfo.m_strDriverName.IsEmpty() && !cmdInfo.m_strPrinterName.IsEmpty() && !cmdInfo.m_strPortName.IsEmpty())
-	{
-		hDev = GlobalAlloc(GPTR, 4 * sizeof(WORD) + ((cmdInfo.m_strDriverName.GetLength() + 1 + cmdInfo.m_strPrinterName.GetLength() + 1 + cmdInfo.m_strPortName.GetLength() + 1) * sizeof(TCHAR)));
-		if (hDev != NULL)
-		{
-			LPDEVNAMES lpDev = (LPDEVNAMES)GlobalLock(hDev);
-			if (lpDev != NULL)
-			{
-				lpDev->wDriverOffset = sizeof(WORD)*4;
-				lstrcpy((TCHAR*)lpDev + lpDev->wDriverOffset, cmdInfo.m_strDriverName);
+    HGLOBAL hDev = NULL;
+    if (!cmdInfo.m_strDriverName.IsEmpty() && !cmdInfo.m_strPrinterName.IsEmpty() && !cmdInfo.m_strPortName.IsEmpty())
+    {
+        hDev = GlobalAlloc(GPTR, 4 * sizeof(WORD) + ((cmdInfo.m_strDriverName.GetLength() + 1 + cmdInfo.m_strPrinterName.GetLength() + 1 + cmdInfo.m_strPortName.GetLength() + 1) * sizeof(TCHAR)));
+        if (hDev != NULL)
+        {
+            LPDEVNAMES lpDev = (LPDEVNAMES)GlobalLock(hDev);
+            if (lpDev != NULL)
+            {
+                lpDev->wDriverOffset = sizeof(WORD)*4;
+                lstrcpy((TCHAR*)lpDev + lpDev->wDriverOffset, cmdInfo.m_strDriverName);
 
-				lpDev->wDeviceOffset = (WORD)(lpDev->wDriverOffset + ((cmdInfo.m_strDriverName.GetLength() + 1) * sizeof(TCHAR)));
-				lstrcpy((TCHAR*)lpDev + lpDev->wDeviceOffset, cmdInfo.m_strPrinterName);
+                lpDev->wDeviceOffset = (WORD)(lpDev->wDriverOffset + ((cmdInfo.m_strDriverName.GetLength() + 1) * sizeof(TCHAR)));
+                lstrcpy((TCHAR*)lpDev + lpDev->wDeviceOffset, cmdInfo.m_strPrinterName);
 
-				lpDev->wOutputOffset = (WORD)(lpDev->wDeviceOffset + ((cmdInfo.m_strPrinterName.GetLength()+1) * sizeof(TCHAR)));
-				lstrcpy((TCHAR*)lpDev + lpDev->wOutputOffset, cmdInfo.m_strPortName);
+                lpDev->wOutputOffset = (WORD)(lpDev->wDeviceOffset + ((cmdInfo.m_strPrinterName.GetLength()+1) * sizeof(TCHAR)));
+                lstrcpy((TCHAR*)lpDev + lpDev->wOutputOffset, cmdInfo.m_strPortName);
 
-				lpDev->wDefault = 0;
-			}
-		}
-	}
-	return hDev;
+                lpDev->wDefault = 0;
+            }
+        }
+    }
+    return hDev;
 }
 #endif
 
@@ -966,11 +987,11 @@ HGLOBAL CWordPadApp::CreateDevNames()
 
 void CWordPadApp::PreLoadState ()
 {
-	GetContextMenuManager()->AddMenu (_T("Context menu"), IDR_TEXT_POPUP);
+    GetContextMenuManager()->AddMenu (_T("Context menu"), IDR_TEXT_POPUP);
 }
 
 void CWordPadApp::OnViewAppLook() 
 {
-	CAppLookDlg dlg (FALSE);
-	dlg.DoModal ();
+    CAppLookDlg dlg (FALSE);
+    dlg.DoModal ();
 }
