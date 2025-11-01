@@ -192,6 +192,8 @@ BOOL CWordPadApp::InitInstance()
 		splash.UpdateWindow();
 	}
 
+	m_pluginManager.LoadPlugins(L"plugins");
+
 	LoadAbbrevStrings();
 
 #ifdef CREATE_DEV_NAMES
