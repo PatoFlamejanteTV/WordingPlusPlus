@@ -182,6 +182,18 @@
 #define IDC_CHECK_STATUSBAR             1031
 #define IDC_BOXT                        1032
 #define IDC_STYLE2007                   1033
+
+// --------------------------------------------------------------------
+// Fixed & validated identifiers
+// --------------------------------------------------------------------
+#ifndef ID_BORDER_1
+#define ID_BORDER_1                     1001
+#endif
+
+#ifndef ID_OLE_VERB_POPUP
+#define ID_OLE_VERB_POPUP               32811
+#endif
+
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_CANCEL_EDIT_SRVR             32769
 #define ID_PAGE_SETUP                   32771
@@ -205,7 +217,6 @@
 #define ID_PEN_SPACE                    32808
 #define ID_PEN_BACKSPACE                32809
 #define ID_PEN_NEWLINE                  32810
-#define ID_OLE_VERB_POPUP               32811
 #define ID_PEN_TOGGLE                   32812
 #define ID_PEN_LENS                     32813
 #define ID_PEN_TAB                      32814
@@ -232,10 +243,10 @@
 #define ID_DUMMY                        59398
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                     1
+#define _APS_3D_CONTROLS                1
 #define _APS_NEXT_RESOURCE_VALUE        196
 #define _APS_NEXT_COMMAND_VALUE         32969
 #define _APS_NEXT_CONTROL_VALUE         1034
