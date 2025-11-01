@@ -2,6 +2,29 @@
 //
 #include "resource.h"
 
+
+
+/////////////////////////////////////////////////////////////////////////////
+// NOTES
+//
+//
+// So... i've used .rc files very long ago but i forgot almost everything/how
+// to use or modify .RC files.
+//
+// TL;DR: Here you can modify stirng and icons, i recommend you to ONLY modify
+// this file with Notepad++, since Visual Studio ALWAYS gives me a shitload of errors
+// about missing stuff.
+//
+// Anyways, here you can raname titles, labels, buttons, change icons, small UI/UX
+// elements, pretty much you can change the fornt-end from here without having to
+// ever touch C++ code.
+//
+//
+// - UltimateQuack
+/////////////////////////////////////////////////////////////////////////////
+
+
+
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
