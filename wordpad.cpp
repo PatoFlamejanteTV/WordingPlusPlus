@@ -505,7 +505,7 @@ BOOL CWordPadApp::ParseMeasurement(LPTSTR buf, int& lVal)
 /*LPCTSTR CWordPadApp::GetAbbrev(int unitIndex /*= -1*/)
 {
     if (unitIndex < 0 || unitIndex >= m_nNumUnits)
-        unitIndex = GetUnits();
+        unitIndex = theapp.GetUnits();
     return m_units[unitIndex].m_strAbbrev;
 }
 */
