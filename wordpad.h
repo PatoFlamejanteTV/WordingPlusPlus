@@ -98,7 +98,7 @@ public:
 		BOOL bOpenFileDialog, int* pType = NULL);
 
 	BOOL ParseMeasurement(TCHAR* buf, int& lVal);
-	void PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDecimal);
+	void PrintTwips(TCHAR* buf, int nValue, int nDecimal);
 	void SaveOptions();
 	void LoadOptions();
 	void LoadAbbrevStrings();

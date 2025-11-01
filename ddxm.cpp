@@ -32,7 +32,7 @@ void PASCAL DDX_Twips(CDataExchange* pDX, int nIDC, int& value)
 				AfxMessageBox(IDS_INVALID_MEASUREMENT,MB_OK|MB_ICONINFORMATION);
 				pDX->Fail();            // throws exception
 			}
-			theApp.PrintTwips(szT, sizeof(szT)/sizeof(TCHAR), value, 2);
+			theApp.PrintTwips(szT, value, 2);
 			theApp.ParseMeasurement(szT, value);
 		}
 		else // empty
@@ -43,7 +43,7 @@ void PASCAL DDX_Twips(CDataExchange* pDX, int nIDC, int& value)
 		// convert from twips to default units
 		if (value != INT_MAX)
 		{
-			theApp.PrintTwips(szT, sizeof(szT)/sizeof(TCHAR), value, 2);
+			theApp.PrintTwips(szT, value, 2);
 			SetWindowText(hWndCtrl, szT);
 		}
 	}
@@ -62,8 +62,8 @@ void PASCAL DDV_MinMaxTwips(CDataExchange* pDX, int value, int minVal, int maxVa
 		}
 		TCHAR szMin[32];
 		TCHAR szMax[32];
-		theApp.PrintTwips(szMin, sizeof(szMin)/sizeof(TCHAR), minVal, 2);
-		theApp.PrintTwips(szMax, sizeof(szMax)/sizeof(TCHAR), maxVal, 2);
+		theApp.PrintTwips(szMin, minVal, 2);
+		theApp.PrintTwips(szMax, maxVal, 2);
 		CString prompt;
 		AfxFormatString2(prompt, IDS_MEASUREMENT_RANGE, szMin, szMax);
 		AfxMessageBox(prompt, MB_ICONEXCLAMATION, AFX_IDS_APP_TITLE);

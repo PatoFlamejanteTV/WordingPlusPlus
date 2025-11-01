@@ -616,7 +616,7 @@ void CWordPadView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		ScreenToClient(&pt);
 
 		CRect rect;
-		GetClientRect(▭);
+		GetClientRect(&rect);
 		if (!rect.PtInRect(pt))
 		{
 		    pt = rect.CenterPoint();
