@@ -501,40 +501,30 @@ BOOL CWordPadApp::ParseMeasurement(LPTSTR buf, int& lVal)
 
 void CWordPadApp::PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDec)
 {
-	ASSERT(nDec == 2);
-	int div = GetTPU();
-	float val = (float)nValue/(float)div;
-	LPCTSTR abbrev = GetAbbrev();
+    ASSERT(nDec == 2);
 
-	if (m_units[m_nUnits].m_bSpaceAbbrev)
-	{
-		_stprintf_s(buf, bufSize, _T("%.*f %s"), nDec, val, abbrev);
-	}
-	else
-	{
-		_stprintf_s(buf, bufSize, _T("%.*f%s"), nDec, val, abbrev);
-	}
+    int unit_idx = GetUnits();
+    int div = GetTPU(unit_idx);
+    float val = (float)nValue / (float)div;
+    LPCTSTR abbrev = GetAbbrev(unit_idx);
 
-	while (nDec && pVal[nDec] == 0)
-		nDec--;
+    // Format number with decimals
+    _stprintf_s(buf, bufSize, _T("%.*f"), nDec, val);
 
-	// Assuming caller provides capacity via an added parameter 'buf_cch'
-	_stprintf_s(buf, buf_cch, _T("%.*f"), nDec, (float)nValue / (float)div);
+    // Trim trailing zeros after decimal point
+    TCHAR* p = buf + _tcslen(buf) - 1;
+    while (p > buf && *p == _T('0'))
+        *p-- = _T('\0');
+    if (p > buf && *p == _T('.'))
+        *p = _T('\0'); // remove decimal if all decimals are zero
 
-	int unit_idx = GetUnits();
-	// Assuming caller provides capacity via 'buf_cch'
+    // Add space if unit requires it
     if (m_units[unit_idx].m_bSpaceAbbrev)
-    {
-        lstrcat(buf, _T(" "));
-    }
-}
-lstrcat(buf, GetAbbrev());
-	}
-		lstrcat(buf, _T(" "));
-	lstrcat(buf, GetAbbrev());
-	delete []pVal;
-}
+        _tcscat_s(buf, bufSize, _T(" "));
 
+    // Append unit abbreviation
+    _tcscat_s(buf, bufSize, abbrev);
+}
 /////////////////////////////////////////////////////////////////////////////
 // CWordPadApp commands
 
