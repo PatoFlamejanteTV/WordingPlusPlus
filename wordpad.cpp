@@ -502,12 +502,13 @@ BOOL CWordPadApp::ParseMeasurement(LPTSTR buf, int& lVal)
 // --- Added helper: GetAbbrev implementation ---
 // Returns the abbreviation string for the given unit index.
 // If unitIndex is out of range or negative, use current units.
-LPCTSTR CWordPadApp::GetAbbrev(int unitIndex /*= -1*/)
+/*LPCTSTR CWordPadApp::GetAbbrev(int unitIndex /*= -1*/)
 {
     if (unitIndex < 0 || unitIndex >= m_nNumUnits)
         unitIndex = GetUnits();
     return m_units[unitIndex].m_strAbbrev;
 }
+*/
 
 // --- Fixed PrintTwips ---
 // Safe formatting, trimming trailing zeros, and appending unit abbreviation.
