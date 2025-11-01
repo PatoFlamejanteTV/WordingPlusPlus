@@ -19,6 +19,7 @@
 #include "splash.h"
 #include "options.h"
 #include "afxtempl.h"
+#include "PluginManager.h"
 
 #define WPM_BARSTATE WM_USER
 
@@ -45,6 +46,7 @@ public:
 
 //Attributes
 	CWordPadCommandLineInfo cmdInfo;
+	PluginManager m_pluginManager;
 	CDC m_dcScreen;
 	LOGFONT m_lf;
 	int m_nDefFont;
@@ -98,7 +100,7 @@ public:
 		BOOL bOpenFileDialog, int* pType = NULL);
 
 	BOOL ParseMeasurement(TCHAR* buf, int& lVal);
-	void PrintTwips(TCHAR* buf, int nValue, int nDecimal);
+	void PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDecimal);
 	void SaveOptions();
 	void LoadOptions();
 	void LoadAbbrevStrings();

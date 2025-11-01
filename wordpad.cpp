@@ -192,6 +192,8 @@ BOOL CWordPadApp::InitInstance()
 		splash.UpdateWindow();
 	}
 
+	m_pluginManager.LoadPlugins(L"plugins");
+
 	LoadAbbrevStrings();
 
 #ifdef CREATE_DEV_NAMES
@@ -497,45 +499,37 @@ BOOL CWordPadApp::ParseMeasurement(LPTSTR buf, int& lVal)
 	return FALSE;
 }
 
-void CWordPadApp::PrintTwips(TCHAR* buf, int nValue, int nDec)
+void CWordPadApp::PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDec)
 {
 	ASSERT(nDec == 2);
 	int div = GetTPU();
-	int lval = nValue;
-	BOOL bNeg = FALSE;
+	float val = (float)nValue/(float)div;
+	LPCTSTR abbrev = GetAbbrev();
 
-	int* pVal = new int[nDec+1];
-
-	if (lval < 0)
+	if (m_units[m_nUnits].m_bSpaceAbbrev)
 	{
-		bNeg = TRUE;
-		lval = -lval;
+		_stprintf_s(buf, bufSize, _T("%.*f %s"), nDec, val, abbrev);
 	}
-
-	int i = 0;
-
-	for (i=0;i<=nDec;i++)
+	else
 	{
-		pVal[i] = lval/div; //integer number
-		lval -= pVal[i]*div;
-		lval *= 10;
-	}
-	i--;
-	if (lval >= div/2)
-		pVal[i]++;
-
-	while ((pVal[i] == 10) && (i != 0))
-	{
-		pVal[i] = 0;
-		pVal[--i]++;
+		_stprintf_s(buf, bufSize, _T("%.*f%s"), nDec, val, abbrev);
 	}
 
 	while (nDec && pVal[nDec] == 0)
 		nDec--;
 
-	_stprintf_s(buf, 10, _T("%.*f"), nDec, (float)nValue/(float)div);
+	// Assuming caller provides capacity via an added parameter 'buf_cch'
+	_stprintf_s(buf, buf_cch, _T("%.*f"), nDec, (float)nValue / (float)div);
 
-	if (m_units[m_nUnits].m_bSpaceAbbrev)
+	int unit_idx = GetUnits();
+	// Assuming caller provides capacity via 'buf_cch'
+    if (m_units[unit_idx].m_bSpaceAbbrev)
+    {
+        lstrcat(buf, _T(" "));
+    }
+}
+lstrcat(buf, GetAbbrev());
+	}
 		lstrcat(buf, _T(" "));
 	lstrcat(buf, GetAbbrev());
 	delete []pVal;
