@@ -1,4 +1,4 @@
-name: Build and Test WordPad (v100)
+name: Build and Test WordPad
 
 on:
   push:
@@ -12,31 +12,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # Step 1: Download VS2010 Build Tools (v100)
-    - name: Download VS2010 Build Tools
-      run: |
-        $url = "https://download.microsoft.com/download/1/9/4/194F6B7B-1F4B-4C87-8C3C-4B6DE3E5B9B7/VS2010_Express.exe"
-        $output = "$env:TEMP\VS2010_Express.exe"
-        Invoke-WebRequest -Uri $url -OutFile $output
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1.1
 
-    # Step 2: Install silently in a temporary path
-    - name: Install VS2010 Build Tools
-      run: |
-        $installPath = "$env:TEMP\VS2010"
-        Start-Process "$env:TEMP\VS2010_Express.exe" -ArgumentList "/q /norestart /log $env:TEMP\vs2010.log /InstallDir $installPath" -Wait
-
-    # Step 3: Set environment variables to point to v100 tools
-    - name: Set MSBuild environment
-      shell: powershell
-      run: |
-        $env:VS100COMNTOOLS = "$env:TEMP\VS2010\Common7\Tools"
-        $env:PATH = "$env:TEMP\VS2010\VC\bin;$env:PATH"
-
-    # Step 4: Build the solution using v100 toolset
     - name: Build the solution
-      run: msbuild.exe WordPad.sln /p:Configuration="Unicode Release" /p:PlatformToolset=v100 /t:Rebuild /v:diag
+      run: msbuild.exe WordPad.sln /p:Configuration="Unicode Release" /p:PlatformToolset=v143 /t:Rebuild /v:diag
 
-    # Step 5: Upload artifact
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
