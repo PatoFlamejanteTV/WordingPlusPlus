@@ -277,9 +277,10 @@ BOOL CMainFrame::CreateToolBar()
 	const auto& plugins = theApp.m_pluginManager.GetPlugins();
 	if (!plugins.empty())
 	{
-		m_wndToolBar.InsertSeparator();
-		for (size_t i = 0; i < plugins.size(); ++i)
-		{
+	    m_wndToolBar.InsertSeparator();
+	    const size_t max_plugins_in_toolbar = 101;
+	    for (size_t i = 0; i < plugins.size() && i < max_plugins_in_toolbar; ++i)
+	    {
 			UINT uiCmdID = ID_FIRST_PLUGIN + i;
 			// Using -1 for the image index as we don't have icons for plugins
 			CMFCToolBarButton button(uiCmdID, -1, plugins[i]->GetName().c_str());
