@@ -1274,7 +1274,7 @@
     <ClInclude Include="Wording\formatba.h" />
     <ClInclude Include="Wording\formatpa.h" />
     <ClInclude Include="Wording\formatta.h" />
-    <ClInclude Include="Wording\helpids.h" />
+    <ClInclude Include="helpids.h" />
     <ClInclude Include="Wording\ipframe.h" />
     <ClInclude Include="Wording\key.h" />
     <ClInclude Include="Wording\listdlg.h" />
