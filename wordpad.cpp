@@ -538,10 +538,12 @@ void CWordPadApp::PrintTwips(TCHAR* buf, int nValue, int nDec)
 
 	int unit_idx = GetUnits();
 	// Assuming caller provides capacity via 'buf_cch'
-	if (m_units[GetUnits()].m_bSpaceAbbrev)
-	    _tcscat_s(buf, buf_cch, _T(" "));
-	_tcscat_s(buf, buf_cch, GetAbbrev());
-	    if (m_units[unit_idx].m_bSpaceAbbrev)
+    if (m_units[unit_idx].m_bSpaceAbbrev)
+    {
+        lstrcat(buf, _T(" "));
+    }
+}
+lstrcat(buf, GetAbbrev());
 	}
 		lstrcat(buf, _T(" "));
 	lstrcat(buf, GetAbbrev());
