@@ -192,6 +192,8 @@ BOOL CWordPadApp::InitInstance()
 		splash.UpdateWindow();
 	}
 
+	m_pluginManager.LoadPlugins(L"plugins");
+
 	LoadAbbrevStrings();
 
 #ifdef CREATE_DEV_NAMES
@@ -533,9 +535,18 @@ void CWordPadApp::PrintTwips(TCHAR* buf, int nValue, int nDec)
 	while (nDec && pVal[nDec] == 0)
 		nDec--;
 
-	_stprintf_s(buf, 10, _T("%.*f"), nDec, (float)nValue/(float)div);
+	// Assuming caller provides capacity via an added parameter 'buf_cch'
+	_stprintf_s(buf, buf_cch, _T("%.*f"), nDec, (float)nValue / (float)div);
 
-	if (m_units[m_nUnits].m_bSpaceAbbrev)
+	int unit_idx = GetUnits();
+	// Assuming caller provides capacity via 'buf_cch'
+    if (m_units[unit_idx].m_bSpaceAbbrev)
+    {
+        lstrcat(buf, _T(" "));
+    }
+}
+lstrcat(buf, GetAbbrev());
+	}
 		lstrcat(buf, _T(" "));
 	lstrcat(buf, GetAbbrev());
 	delete []pVal;
