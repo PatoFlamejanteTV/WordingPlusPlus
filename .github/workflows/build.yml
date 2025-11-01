@@ -16,13 +16,13 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Build the solution
-  run: msbuild.exe WordPad.sln /p:Configuration="Unicode Release" /t:Rebuild /v:diag
+      run: msbuild.exe WordPad.sln /p:Configuration="Unicode Release" /t:Rebuild /v:diag
 
     - name: Upload artifact
-  uses: actions/upload-artifact@v4
-  with:
-    name: wordpad-executable
-    path: Unicode Release/WordPad.exe
+      uses: actions/upload-artifact@v4
+      with:
+        name: wordpad-executable
+        path: Unicode Release/WordPad.exe
 
   test:
     needs: build
