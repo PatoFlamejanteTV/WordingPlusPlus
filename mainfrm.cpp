@@ -863,11 +863,15 @@ void CMainFrame::OnPluginClick(UINT nID)
             }
             else if (info.textRequirement == TEXT_ALL)
             {
-                int len = pView->GetRichEditCtrl().GetTextLength();
+                long len = pView->GetRichEditCtrl().GetTextLength();
                 if (len > 0)
                 {
-                    std::vector<wchar_t> buffer(len + 1, 0);
-                    pView->GetRichEditCtrl().GetWindowText(buffer.data(), len + 1);
+                    std::vector<wchar_t> buffer(len + 2, 0); // +1 for text, +1 for null terminator
+                    TEXTRANGEW tr;
+                    tr.chrg.cpMin = 0;
+                    tr.chrg.cpMax = -1; // Get all text
+                    tr.lpstrText = buffer.data();
+                    pView->GetRichEditCtrl().SendMessage(EM_GETTEXTRANGE, 0, (LPARAM)&tr);
                     text = buffer.data();
                 }
             }
