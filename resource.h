@@ -3,6 +3,9 @@
 // Used by wordpad.rc
 //
 
+#define IDR_BORDER_TYPE        190
+#define IDB_TASKSPANE_TOOLBAR  189
+
 // --------------------------------------------------------------------
 // String and command IDs
 // --------------------------------------------------------------------
