@@ -15,11 +15,18 @@ struct PluginInfo {
     bool wantsFormatted;
 };
 
+// Defines the result of a plugin's execution.
+struct PluginResult {
+    enum class Type { TextReplacement, Information };
+    Type type;
+    std::wstring content;
+};
+
 // Defines the function pointer types that plugins must implement.
 typedef const wchar_t* (*GetPluginNameFunc)();
 typedef PluginInfo (*GetPluginInfoFunc)();
 typedef void (*InitializePluginFunc)();
-typedef void (*ExecutePluginFunc)(const wchar_t* text, bool format);
+typedef PluginResult (*ExecutePluginFunc)(const wchar_t* text, bool format);
 
 // Defines the interface for a plugin.
 struct IPlugin {
@@ -27,5 +34,5 @@ struct IPlugin {
     virtual std::wstring GetName() const = 0;
     virtual PluginInfo GetInfo() const = 0;
     virtual void Initialize() = 0;
-    virtual void Execute(const std::wstring& text, bool format) = 0;
+    virtual PluginResult Execute(const std::wstring& text, bool format) = 0;
 };

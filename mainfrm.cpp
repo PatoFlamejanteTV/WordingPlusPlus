@@ -883,7 +883,16 @@ void CMainFrame::OnPluginClick(UINT nID)
                 }
             }
 
-            plugins[pluginIndex]->Execute(text, info.wantsFormatted);
+            PluginResult result = plugins[pluginIndex]->Execute(text, info.wantsFormatted);
+
+            if (result.type == PluginResult::Type::TextReplacement)
+            {
+                pView->GetRichEditCtrl().ReplaceSel(result.content.c_str(), TRUE);
+            }
+            else if (result.type == PluginResult::Type::Information)
+            {
+                MessageBox(result.content.c_str(), plugins[pluginIndex]->GetName().c_str(), MB_OK | MB_ICONINFORMATION);
+            }
         }
     }
 }
