@@ -93,8 +93,7 @@ BOOL CALLBACK CDateDialog::DateFmtEnumProc(LPTSTR lpszFormatString)
 		return FALSE;
 
 	TCHAR buf[256];
-	if (GetDateFormat(m_id, 0, &m_time, lpszFormatString, buf, 256) == 0)
-		return TRUE;
+	VERIFY(GetDateFormat(m_id, 0, &m_time, lpszFormatString, buf, 256));
 	// we can end up with same format because a format with leading
 	// zeroes may be the same as one without when a number is big enough
 	// e.g. 09/10/94 9/10/94 are different but 10/10/94 and 10/10/94 are
@@ -111,8 +110,7 @@ BOOL CALLBACK CDateDialog::TimeFmtEnumProc(LPTSTR lpszFormatString)
 		return FALSE;
 
 	TCHAR buf[256];
-	if (GetTimeFormat(m_id, 0, &m_time, lpszFormatString, buf, 256) == 0)
-		return TRUE;
+	VERIFY(GetTimeFormat(m_id, 0, &m_time, lpszFormatString, buf, 256));
 	// we can end up with same format because a format with leading
 	// zeroes may be the same as one without when a number is big enough
 	// e.g. 09/10/94 9/10/94 are different but 10/10/94 and 10/10/94 are

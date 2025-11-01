@@ -15,8 +15,6 @@
 #include "ruler.h"
 #include "taskpane.h"
 
-#define ID_FIRST_PLUGIN 50000
-
 class CMainFrame : public CFrameWndEx
 {
 protected: // create from serialization only
@@ -105,6 +103,5 @@ protected:
 	afx_msg LRESULT OnGetDocumentColors(WPARAM,LPARAM);
 	afx_msg void OnDummy();
 	afx_msg void OnAskQuestion();
-	afx_msg void OnPluginClick(UINT nID);
 	DECLARE_MESSAGE_MAP()
 };

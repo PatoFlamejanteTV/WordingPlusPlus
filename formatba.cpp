@@ -95,6 +95,11 @@ void CFormatBar::OnReset ()
 	CMFCColorMenuButton* pColorButton = CreateColorButton ();
 	ReplaceButton (ID_CHAR_COLOR, *pColorButton);
 	delete pColorButton;
+
+	// Insert border type button:
+	CMFCToolBarMenuButton* pBorderTypeButton = CreateBorderTypeButton ();
+	ReplaceButton (ID_BORDER_1, *pBorderTypeButton);
+	delete pBorderTypeButton;
 }
 //***************************************************************************************
 void CFormatBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
@@ -277,3 +282,20 @@ CMFCColorMenuButton* CFormatBar::CreateColorButton ()
 	return pColorButton;
 }
 
+CMFCToolBarMenuButton* CFormatBar::CreateBorderTypeButton ()
+{
+	CMenu menu;
+	VERIFY(menu.LoadMenu (IDR_BORDER_PALETTE));
+
+	CMFCToolBarMenuButton* pBorderType = NULL;
+	CMenu* pPopup = menu.GetSubMenu(0);
+	ASSERT(pPopup != NULL);
+	if (pPopup != NULL)
+	{
+		pBorderType = new CMFCToolBarMenuButton (ID_BORDER_1, pPopup->GetSafeHmenu (), GetCmdMgr ()->GetCmdImage  (ID_BORDER_1, FALSE), _T("Borders"));
+		pBorderType->SetMenuPaletteMode (TRUE, 2 /* Rows number */);
+		pBorderType->SetTearOff (ID_BORDER_TEAROFF);
+	}
+
+	return pBorderType;
+}

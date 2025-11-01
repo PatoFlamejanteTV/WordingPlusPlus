@@ -297,6 +297,25 @@ BEGIN
     END
 END
 
+IDR_BORDER_PALETTE MENU 
+BEGIN
+    POPUP "_BORDER_"
+    BEGIN
+        MENUITEM "Border",                      ID_BORDER_1
+        MENUITEM "Border",                      ID_BORDER_2
+        MENUITEM "Border",                      ID_BORDER_3
+        MENUITEM "Border",                      ID_BORDER_4
+        MENUITEM "Border",                      ID_BORDER_5
+        MENUITEM "Border",                      ID_BORDER_6
+        MENUITEM "Border",                      ID_BORDER_7
+        MENUITEM "Border",                      ID_BORDER_8
+        MENUITEM "Border",                      ID_BORDER_9
+        MENUITEM "Border",                      ID_BORDER_10
+        MENUITEM "Border",                      ID_BORDER_11
+        MENUITEM "Border",                      ID_BORDER_12
+        MENUITEM "Border",                      ID_BORDER_13
+    END
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -617,6 +636,7 @@ IDR_TOOLBAR_IMAGES_HC   BITMAP                  "res\\toolbar_images_hc.bmp"
 IDB_MAINFRAME_HC        BITMAP                  "res\\mainfram_hc.bmp"
 IDB_TASKS_HC            BITMAP                  "res\\tasks_hc.bmp"
 IDB_TASKSPANE_TOOLBAR   BITMAP                  "Res\\taskspanetoolbar.bmp"
+IDR_BORDER_TYPE         BITMAP                  "res\\border_type.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -672,6 +692,22 @@ BEGIN
     BUTTON      ID_INSERT_DATE_TIME
 END
 
+IDR_BORDER_TYPE TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_BORDER_1
+    BUTTON      ID_BORDER_2
+    BUTTON      ID_BORDER_3
+    BUTTON      ID_BORDER_4
+    BUTTON      ID_BORDER_5
+    BUTTON      ID_BORDER_6
+    BUTTON      ID_BORDER_7
+    BUTTON      ID_BORDER_8
+    BUTTON      ID_BORDER_9
+    BUTTON      ID_BORDER_10
+    BUTTON      ID_BORDER_11
+    BUTTON      ID_BORDER_12
+    BUTTON      ID_BORDER_13
+END
 
 
 /////////////////////////////////////////////////////////////////////////////

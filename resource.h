@@ -2,13 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by wordpad.rc
 //
-
-#define IDR_BORDER_TYPE        190
-#define IDB_TASKSPANE_TOOLBAR  189
-
-// --------------------------------------------------------------------
-// String and command IDs
-// --------------------------------------------------------------------
 #define IDC_APPLY                       3
 #define IDR_SRVR_INPLACE                4
 #define IDR_SRVR_EMBEDDED               5
@@ -27,130 +20,129 @@
 #define IDS_DEFAULTTEXTFONT             111
 #define IDS_SAVE_FORMAT_TEXT            112
 #define IDS_SAVE_FORMAT                 113
-#define IDS_SAVING                      114
-#define IDS_CLIP_RTF                    115
-#define IDS_FORMATTING                  116
-#define IDS_LEFT                        117
-#define IDS_CENTER                      118
-#define IDS_RIGHT                       119
-#define IDS_NOWRAP                      120
-#define IDS_MEASUREMENT_RANGE           121
-#define IDS_WRAPTOWINDOW                122
-#define IDS_INVALID_NUMBER              123
-#define IDS_WRAPTORULER                 124
-#define IDS_INVALID_FONTSIZE            125
-#define IDS_INCHES                      126
-#define IDS_CENTIMETERS                 127
-#define IDS_POINTS                      128
-#define IDS_PICAS                       129
-#define IDS_WORD6_WARNING               130
-#define IDS_WORD6_WARNING_BUTTONS       131
-#define IDR_MAINFRAME                   132
-#define IDS_TEXT_DOC                    133
-#define IDS_RICHTEXT_DOC                134
-#define IDB_BITMAP_TT                   135
-#define IDS_WRITE_DOC                   136
-#define IDB_RULER_BLOCK                 137
-#define IDS_ALL_DOC                     138
-#define IDB_RULER_BLOCKM                139
-#define IDS_WINWORD6_DOC                140
-#define IDB_RULER_DOWN                  141
-#define IDS_WINWORD2_DOC                142
-#define IDB_RULER_DOWNM                 143
-#define IDB_RULER_TAB                   144
-#define IDS_EXE_DOC                     145
-#define IDB_RULER_TABM                  146
-#define IDS_FILE_EXISTS                 147
-#define IDB_RULER_UP                    148
-#define IDS_MAPILOAD_FAILED             149
-#define IDS_OEMTEXT_DOC                 150
-#define IDB_RULER_UPM                   151
-#define IDS_CLIP_TEXT                   152
-#define IDB_FORMATBAR                   153
-#define IDS_CLIP_FILENAME               154
-#define IDR_FORMATBAR                   155
-#define IDR_MAINFRAME1                  156
-#define IDB_FORMATBAR_BIG               157
-#define IDR_FORMATBAR_BIG               158
-#define IDR_MAINFRAME_BIG               159
-#define IDD_FORMAT_PARA                 160
-#define IDR_MAINFRAME1_BIG              161
-#define IDR_SRVR_INPLACE_BIG            162
-#define IDD_FORMAT_TAB                  163
-#define IDD_LISTDIALOG                  164
-#define IDD_OPTIONS                     165
-#define IDS_DT1                         166
-#define IDD_PAGE_SETUP_DIALOG           167
-#define IDS_DT2                         168
-#define IDR_MENU1                       169
-#define IDS_DT3                         170
-#define IDD_DATEDIALOG                  171
-#define IDS_DT4                         172
-#define IDR_TEXT_POPUP                  173
-#define IDS_DT5                         174
-#define IDS_DT6                         175
-#define IDI_ICON_DOC                    176
-#define IDS_DT7                         177
-#define IDI_ICON_WRITE                  178
-#define IDS_DT8                         179
-#define IDS_DT9                         180
-#define IDD_SPLASH                      181
-#define IDS_DT10                        182
-#define IDD_OPTIONS_UNITS               183
-#define IDS_DT11                        184
-#define IDD_OPTIONS_WRAP                185
-#define IDS_DT12                        186
-#define IDD_OPTIONS_MARGINS             187
-#define IDD_FILENEWDIALOG               188
-#define IDS_DT13                        189
-#define IDB_BITMAP48                    190
-#define IDB_BITMAP_PRINTER              191
-#define IDS_FINISHED_SEARCH             192
-#define IDC_FONTNAME                    193
-#define IDI_ICON_TEXT                   194
-#define IDC_FONTSIZE                    195
-#define IDS_TITLE_FORMATBAR             196
-#define IDB_PRINTER                     197
-#define IDB_FONTTYPE                    198
-#define IDS_TITLE_TOOLBAR               199
-#define IDS_INCH1_ABBREV                200
-#define IDS_INCH2_ABBREV                201
-#define IDS_INCH3_ABBREV                202
-#define IDS_INCH4_ABBREV                203
-#define IDR_TOOLBAR_IMAGES              204
-#define IDS_CM_ABBREV                   205
-#define IDR_TOOLBAR_IMAGES_BIG          206
-#define IDS_POINT_ABBREV                207
-#define IDS_PICA_ABBREV                 208
-#define IDS_NOMORETABS                  209
-#define IDS_MAPI_FAIL                   210
-#define IDS_ERRSPACE                    211
-#define IDS_CANT_LOAD                   212
-#define IDS_TOOMANYFILES                213
-#define IDD_APP_LOOK                    214
-#define IDS_DIRFULL                     215
-#define IDS_SHAREVIOLATION              216
-#define IDB_TASKS                       217
-#define IDS_TEXT_OPTIONS                218
-#define IDS_RTF_OPTIONS                 219
-#define IDS_WORD6_OPTIONS               220
-#define IDS_OPTIONS                     221
-#define IDR_TOOLBAR_IMAGES_HC           222
-#define IDS_WRITE_OPTIONS               223
-#define IDB_MAINFRAME_HC                224
-#define IDS_EMBEDDED_OPTIONS            225
-#define IDB_TASKS_HC                    226
-#define IDS_TEXT_DOCUMENT               227
-#define IDS_RTF_DOCUMENT                228
-#define IDS_WORD6_DOCUMENT              229
-#define IDS_WRITEPROTECT                230
-#define IDS_TITLE_MENUBAR               231
-#define IDS_ABOUT_INFO                  232
-#define IDS_WRONG_DISPLAY_SETTINGS      233
-
-// --------------------------------------------------------------------
-// Control IDs
-// --------------------------------------------------------------------
+#define IDS_SAVING                      113
+#define IDS_CLIP_RTF                    114
+#define IDS_FORMATTING                  115
+#define IDS_LEFT                        116
+#define IDS_CENTER                      117
+#define IDS_RIGHT                       118
+#define IDS_NOWRAP                      119
+#define IDS_MEASUREMENT_RANGE           119
+#define IDS_WRAPTOWINDOW                120
+#define IDS_INVALID_NUMBER              120
+#define IDS_WRAPTORULER                 121
+#define IDS_INVALID_FONTSIZE            121
+#define IDS_INCHES                      122
+#define IDS_CENTIMETERS                 123
+#define IDS_POINTS                      124
+#define IDS_PICAS                       125
+#define IDS_WORD6_WARNING               126
+#define IDS_WORD6_WARNING_BUTTONS       127
+#define IDR_MAINFRAME                   128
+#define IDS_TEXT_DOC                    129
+#define IDS_RICHTEXT_DOC                130
+#define IDB_BITMAP_TT                   130
+#define IDS_WRITE_DOC                   131
+#define IDB_RULER_BLOCK                 131
+#define IDS_ALL_DOC                     132
+#define IDB_RULER_BLOCKM                132
+#define IDS_WINWORD6_DOC                133
+#define IDB_RULER_DOWN                  133
+#define IDS_WINWORD2_DOC                134
+#define IDB_RULER_DOWNM                 134
+#define IDB_RULER_TAB                   135
+#define IDS_EXE_DOC                     135
+#define IDB_RULER_TABM                  136
+#define IDS_FILE_EXISTS                 136
+#define IDB_RULER_UP                    137
+#define IDS_MAPILOAD_FAILED             137
+#define IDS_OEMTEXT_DOC                 137
+#define IDB_RULER_UPM                   138
+#define IDS_CLIP_TEXT                   138
+#define IDB_FORMATBAR                   139
+#define IDS_CLIP_FILENAME               139
+#define IDR_FORMATBAR                   139
+#define IDR_MAINFRAME1                  140
+#define IDB_FORMATBAR_BIG               141
+#define IDR_FORMATBAR_BIG               141
+#define IDR_MAINFRAME_BIG               142
+#define IDD_FORMAT_PARA                 143
+#define IDR_MAINFRAME1_BIG              143
+#define IDR_SRVR_INPLACE_BIG            144
+#define IDD_FORMAT_TAB                  145
+#define IDD_LISTDIALOG                  147
+#define IDD_OPTIONS                     148
+#define IDS_DT1                         149
+#define IDD_PAGE_SETUP_DIALOG           150
+#define IDS_DT2                         150
+#define IDR_MENU1                       151
+#define IDS_DT3                         151
+#define IDD_DATEDIALOG                  151
+#define IDS_DT4                         152
+#define IDR_TEXT_POPUP                  152
+#define IDS_DT5                         153
+#define IDS_DT6                         154
+#define IDI_ICON_DOC                    154
+#define IDS_DT7                         155
+#define IDI_ICON_WRITE                  155
+#define IDS_DT8                         156
+#define IDS_DT9                         157
+#define IDD_SPLASH                      157
+#define IDS_DT10                        158
+#define IDD_OPTIONS_UNITS               158
+#define IDS_DT11                        159
+#define IDD_OPTIONS_WRAP                159
+#define IDS_DT12                        160
+#define IDD_OPTIONS_MARGINS             160
+#define IDD_FILENEWDIALOG               160
+#define IDS_DT13                        161
+#define IDB_BITMAP48                    162
+#define IDB_BITMAP_PRINTER              163
+#define IDS_FINISHED_SEARCH             164
+#define IDC_FONTNAME                    165
+#define IDI_ICON_TEXT                   165
+#define IDC_FONTSIZE                    166
+#define IDS_TITLE_FORMATBAR             167
+#define IDB_PRINTER                     167
+#define IDB_FONTTYPE                    167
+#define IDS_TITLE_TOOLBAR               168
+#define IDS_INCH1_ABBREV                169
+#define IDS_INCH2_ABBREV                170
+#define IDS_INCH3_ABBREV                171
+#define IDS_INCH4_ABBREV                172
+#define IDR_TOOLBAR_IMAGES              172
+#define IDS_CM_ABBREV                   173
+#define IDR_TOOLBAR_IMAGES_BIG          173
+#define IDS_POINT_ABBREV                174
+#define IDS_PICA_ABBREV                 175
+#define IDS_NOMORETABS                  176
+#define IDS_MAPI_FAIL                   177
+#define IDS_ERRSPACE                    178
+#define IDS_CANT_LOAD                   179
+#define IDS_TOOMANYFILES                180
+#define IDD_APP_LOOK                    180
+#define IDS_DIRFULL                     181
+#define IDS_SHAREVIOLATION              182
+#define IDB_TASKS                       182
+#define IDS_TEXT_OPTIONS                183
+#define IDS_RTF_OPTIONS                 184
+#define IDS_WORD6_OPTIONS               185
+#define IDS_OPTIONS                     186
+#define IDR_TOOLBAR_IMAGES_HC           186
+#define IDS_WRITE_OPTIONS               187
+#define IDB_MAINFRAME_HC                187
+#define IDS_EMBEDDED_OPTIONS            188
+#define IDB_TASKS_HC                    188
+#define IDS_TEXT_DOCUMENT               189
+#define IDB_TASKSPANE_TOOLBAR           189
+#define IDS_RTF_DOCUMENT                190
+#define IDR_BORDER_TYPE                 190
+#define IDS_WORD6_DOCUMENT              191
+#define IDS_WRITEPROTECT                192
+#define IDR_BORDER_PALETTE              192
+#define IDS_TITLE_MENUBAR               193
+#define IDS_ABOUT_INFO                  194
+#define IDS_WRONG_DISPLAY_SETTINGS      195
 #define IDC_EDIT_LEFT                   1000
 #define IDC_EDIT_RIGHT                  1001
 #define IDC_EDIT_FIRST_LINE             1002
@@ -190,18 +182,6 @@
 #define IDC_CHECK_STATUSBAR             1031
 #define IDC_BOXT                        1032
 #define IDC_STYLE2007                   1033
-
-// --------------------------------------------------------------------
-// Fixed identifiers
-// --------------------------------------------------------------------
-#ifndef ID_BORDER_1
-#define ID_BORDER_1                     1001
-#endif
-
-#ifndef ID_OLE_VERB_POPUP
-#define ID_OLE_VERB_POPUP               32811
-#endif
-
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_CANCEL_EDIT_SRVR             32769
 #define ID_PAGE_SETUP                   32771
@@ -225,6 +205,7 @@
 #define ID_PEN_SPACE                    32808
 #define ID_PEN_BACKSPACE                32809
 #define ID_PEN_NEWLINE                  32810
+#define ID_OLE_VERB_POPUP               32811
 #define ID_PEN_TOGGLE                   32812
 #define ID_PEN_LENS                     32813
 #define ID_PEN_TAB                      32814
@@ -243,6 +224,19 @@
 #define ID_VIEW_TOOLBARS                32885
 #define ID_VIEW_TASK_PANE               32886
 #define ID_VIEW_APP_LOOK                32950
+#define ID_BORDER_1                     32952
+#define ID_BORDER_2                     32953
+#define ID_BORDER_3                     32954
+#define ID_BORDER_4                     32955
+#define ID_BORDER_5                     32956
+#define ID_BORDER_6                     32957
+#define ID_BORDER_7                     32958
+#define ID_BORDER_8                     32959
+#define ID_BORDER_9                     32960
+#define ID_BORDER_10                    32961
+#define ID_BORDER_11                    32962
+#define ID_BORDER_12                    32963
+#define ID_BORDER_13                    32964
 #define ID_VIEW_FULL_SCREEN             32965
 #define ID_HELP_FIND                    32968
 #define ID_COLOR_AUTOMATIC              57876
@@ -250,15 +244,14 @@
 #define ID_VIEW_RULER                   59397
 #define ID_DUMMY                        59398
 
-// --------------------------------------------------------------------
 // Next default values for new objects
-// --------------------------------------------------------------------
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS             1
-#define _APS_NEXT_RESOURCE_VALUE     196
-#define _APS_NEXT_COMMAND_VALUE      32969
-#define _APS_NEXT_CONTROL_VALUE      1034
-#define _APS_NEXT_SYMED_VALUE        111
+#define _APS_3D_CONTROLS                     1
+#define _APS_NEXT_RESOURCE_VALUE        196
+#define _APS_NEXT_COMMAND_VALUE         32969
+#define _APS_NEXT_CONTROL_VALUE         1034
+#define _APS_NEXT_SYMED_VALUE           111
 #endif
 #endif

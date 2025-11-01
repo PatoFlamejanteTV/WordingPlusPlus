@@ -136,6 +136,8 @@ BEGIN_MESSAGE_MAP(CWordPadView, CRichEditView)
 	ON_NOTIFY_RANGE(NM_RETURN, AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, OnBarReturn)
 	ON_CBN_SELENDOK(IDC_FONTNAME, OnFontname)
 	ON_CBN_SELENDOK(IDC_FONTSIZE, OnFontsize)
+	ON_COMMAND_RANGE(ID_BORDER_1, ID_BORDER_13, OnBorderType)
+	ON_UPDATE_COMMAND_UI_RANGE(ID_BORDER_1, ID_BORDER_13, OnUpdateBorderType)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -150,6 +152,7 @@ CWordPadView::CWordPadView()
 	m_bInPrint = FALSE;
 	m_nPasteType = 0;
 	m_rectMargin = theApp.m_rectPageMargin;
+	m_nBorderType = ID_BORDER_1;
 }
 
 BOOL CWordPadView::PreCreateWindow(CREATESTRUCT& cs)
@@ -596,7 +599,6 @@ void CWordPadView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		long nStart, nEnd;
 		GetRichEditCtrl().GetSel(nStart, nEnd);
 		CPoint pt = GetRichEditCtrl().GetCharPos(nEnd);
-		GetRichEditCtrl().ClientToScreen(&pt);
 		SendMessage(WM_CONTEXTMENU, (WPARAM)m_hWnd, MAKELPARAM(pt.x, pt.y));
 	}
 
@@ -878,7 +880,7 @@ void CWordPadView::OnRButtonUp(UINT nFlags, CPoint point)
 	if (nEndChar - nStartChar <= 1)
 	{
 		SendMessage (WM_LBUTTONDOWN, nFlags, MAKELPARAM (point.x, point.y));
-		SendMessage (WM_LBUTTONUP, nFlags, MAKELPARAM (point.x, point.y));
+		ReleaseCapture ();
 	}
 
 	CPoint ptScreen = point;
@@ -1022,7 +1024,7 @@ void CWordPadView::OnFontsize()
 	{
 		AfxMessageBox(IDS_INVALID_NUMBER, MB_OK|MB_ICONINFORMATION);
 	}
-	else if (nSize < 20 || nSize > 32760)
+	else if ((nSize >= 0 && nSize < 20) || nSize > 32760)
 	{
 		AfxMessageBox(IDS_INVALID_FONTSIZE, MB_OK|MB_ICONINFORMATION);
 	}
@@ -1035,4 +1037,16 @@ void CWordPadView::OnFontsize()
 		SetCharFormat (cf);
 		SetFocus ();
 	}
+}
+//*********************************************************************************
+void CWordPadView::OnBorderType (UINT id)
+{
+	m_nBorderType = id;
+
+	MessageBox (_T("Add your code here..."));
+}
+//********************************************************************************
+void CWordPadView::OnUpdateBorderType (CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck (pCmdUI->m_nID == m_nBorderType);
 }
