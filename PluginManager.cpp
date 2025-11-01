@@ -58,7 +58,14 @@ void PluginManager::LoadPlugins(const std::wstring& pluginDir) {
                 ExecutePluginFunc execute = (ExecutePluginFunc)GetProcAddress(hModule, "ExecutePlugin");
 
                 if (getName && getInfo && init && execute) {
-                    m_plugins.push_back(std::make_shared<CPlugin>(hModule, getName, getInfo, init, execute));
+                    auto plugin = std::make_shared<CPlugin>(hModule, getName, getInfo, init, execute);
+                    __try {
+                        plugin->Initialize();
+                        m_plugins.push_back(plugin);
+                    }
+                    __except(EXCEPTION_EXECUTE_HANDLER) {
+                        FreeLibrary(hModule);
+                    }
                 } else {
                     FreeLibrary(hModule);
                 }
