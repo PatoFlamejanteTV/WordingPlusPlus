@@ -1,0 +1,40 @@
+name: Build and Test WordPad
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Build the solution
+      run: msbuild.exe WordPad.sln /p:Configuration=Debug /p:Platform="Any CPU" /t:Rebuild /v:diag
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: wordpad-executable
+        path: Debug/WordPad.exe
+
+  test:
+    needs: build
+    runs-on: windows-latest
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: wordpad-executable
+
+    - name: Run smoke test
+      run: |
+        Start-Process -FilePath "./wordpad-executable/WordPad.exe"
+        Start-Sleep -Seconds 5
+        Stop-Process -Name "WordPad"

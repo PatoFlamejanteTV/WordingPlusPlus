@@ -595,34 +595,8 @@ void CWordPadView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		long nStart, nEnd;
 		GetRichEditCtrl().GetSel(nStart, nEnd);
-		long nStart, nEnd;
-		GetRichEditCtrl().GetSel(nStart, nEnd);
-
-		// Ensure the index is valid; fallback to caret or (0,0)
-		long nLen = GetRichEditCtrl().GetTextLength();
-		if (nEnd < 0 || nEnd > nLen)
-		    nEnd = nLen;
-
-		CPoint pt;
-		if (nLen > 0)
-		    pt = GetRichEditCtrl().GetCharPos(nEnd);
-		else
-		    pt = GetCaretPos(); // fallback when document is empty
-
-		// Proceed with mapping and bounds checking (not repeated here)
-
-		// Map from RichEdit client to view client before bounds checking
+		CPoint pt = GetRichEditCtrl().GetCharPos(nEnd);
 		GetRichEditCtrl().ClientToScreen(&pt);
-		ScreenToClient(&pt);
-
-		CRect rect;
-		GetClientRect(▭);
-		if (!rect.PtInRect(pt))
-		{
-		    pt = rect.CenterPoint();
-		}
-
-		ClientToScreen(&pt);
 		SendMessage(WM_CONTEXTMENU, (WPARAM)m_hWnd, MAKELPARAM(pt.x, pt.y));
 	}
 
@@ -1048,7 +1022,7 @@ void CWordPadView::OnFontsize()
 	{
 		AfxMessageBox(IDS_INVALID_NUMBER, MB_OK|MB_ICONINFORMATION);
 	}
-	else if ((nSize >= 0 && nSize < 20) || nSize > 32760)
+	else if (nSize < 20 || nSize > 32760)
 	{
 		AfxMessageBox(IDS_INVALID_FONTSIZE, MB_OK|MB_ICONINFORMATION);
 	}

@@ -21,7 +21,7 @@ extern "C" __declspec(dllexport) void InitializePlugin()
     // No initialization required
 }
 
-extern "C" __declspec(dllexport) PluginResult ExecutePlugin(const wchar_t* text, bool /*format*/)
+extern "C" __declspec(dllexport) void ExecutePlugin(const wchar_t* text, bool /*format*/)
 {
     std::wstring inputText(text);
     std::wstringstream wss(inputText);
@@ -33,5 +33,5 @@ extern "C" __declspec(dllexport) PluginResult ExecutePlugin(const wchar_t* text,
     }
 
     std::wstring result = L"Word count: " + std::to_wstring(count);
-    return { PluginResult::Type::Information, result };
+    MessageBox(NULL, result.c_str(), L"Word Count", MB_OK);
 }

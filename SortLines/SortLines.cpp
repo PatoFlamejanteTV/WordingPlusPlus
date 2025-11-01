@@ -24,7 +24,7 @@ extern "C" __declspec(dllexport) void InitializePlugin()
     // No initialization required
 }
 
-extern "C" __declspec(dllexport) PluginResult ExecutePlugin(const wchar_t* text, bool /*format*/)
+extern "C" __declspec(dllexport) void ExecutePlugin(const wchar_t* text, bool /*format*/)
 {
     std::wstringstream ss(text);
     std::wstring line;
@@ -50,5 +50,18 @@ extern "C" __declspec(dllexport) PluginResult ExecutePlugin(const wchar_t* text,
         }
     }
 
-    return { PluginResult::Type::TextReplacement, sorted_ss.str() };
+    HWND hwnd = GetFocus();
+    if (hwnd != NULL)
+    {
+        HWND hEdit = FindWindowEx(hwnd, NULL, L"RICHEDIT", NULL);
+        if (hEdit == NULL)
+        {
+            hEdit = FindWindowEx(hwnd, NULL, L"RichEdit20W", NULL);
+        }
+
+        if (hEdit != NULL)
+        {
+            SendMessage(hEdit, EM_REPLACESEL, TRUE, (LPARAM)sorted_ss.str().c_str());
+        }
+    }
 }
