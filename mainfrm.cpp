@@ -786,7 +786,9 @@ void CMainFrame::OnChangeLook ()
 	//-----------------------
 	CMFCToolBar::ResetAllImages ();
 
-	m_wndTasksPane.EnableNavigationToolbar(TRUE, IDB_TASKSPANE_TOOLBAR, CSize(16,16), CSize(16,16));
+	
+	m_wndToolBar.LoadBitmap (
+		theApp.m_bHiColorIcons && nBitsPerPixel > 16 ? IDB_MAINFRAME_HC : IDR_MAINFRAME);
 
 	m_wndFormatBar.LoadBitmap (IDR_FORMATBAR);
 
