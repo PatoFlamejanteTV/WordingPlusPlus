@@ -27,8 +27,8 @@ public:
         m_init();
     }
 
-    void Execute(const std::wstring& text, bool format) override {
-        m_execute(text.c_str(), format);
+    PluginResult Execute(const std::wstring& text, bool format) override {
+        return m_execute(text.c_str(), format);
     }
 
 private:
