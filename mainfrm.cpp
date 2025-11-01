@@ -852,14 +852,20 @@ void CMainFrame::OnPluginClick(UINT nID)
 
             if (info.textRequirement == TEXT_SELECTED)
             {
-                CHARRANGE cr;
+                CHARRANGE cr{};
                 pView->GetRichEditCtrl().GetSel(cr);
+                if (cr.cpMax < cr.cpMin) std::swap(cr.cpMax, cr.cpMin);
                 long len = cr.cpMax - cr.cpMin;
                 if (len > 0)
                 {
-                    std::vector<wchar_t> buffer(len + 1, 0);
-                    pView->GetRichEditCtrl().GetSelText(buffer.data());
-                    text = buffer.data();
+                    std::vector<wchar_t> buffer(static_cast<size_t>(len) + 1, L'\0');
+                    // Use EM_GETSELTEXTW for Unicode correctness
+                    LRESULT copied = pView->GetRichEditCtrl().SendMessage(EM_GETSELTEXT, 0, reinterpret_cast<LPARAM>(buffer.data()));
+                    if (copied > 0)
+                    {
+                        buffer[static_cast<size_t>(copied)] = L'\0';
+                        text.assign(buffer.data());
+                    }
                 }
             }
             else if (info.textRequirement == TEXT_ALL)
@@ -867,13 +873,13 @@ void CMainFrame::OnPluginClick(UINT nID)
                 long len = pView->GetRichEditCtrl().GetTextLength();
                 if (len > 0)
                 {
-                    std::vector<wchar_t> buffer(len + 2, 0); // +1 for text, +1 for null terminator
-                    TEXTRANGEW tr;
+                    std::vector<wchar_t> buffer(static_cast<size_t>(len) + 2, L'\0'); // +1 for text, +1 for null terminator
+                    TEXTRANGEW tr{};
                     tr.chrg.cpMin = 0;
                     tr.chrg.cpMax = -1; // Get all text
                     tr.lpstrText = buffer.data();
                     pView->GetRichEditCtrl().SendMessage(EM_GETTEXTRANGE, 0, (LPARAM)&tr);
-                    text = buffer.data();
+                    text.assign(buffer.data());
                 }
             }
 
