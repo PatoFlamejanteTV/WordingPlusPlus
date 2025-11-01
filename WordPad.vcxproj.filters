@@ -295,6 +295,7 @@
     <None Include="res\write.ico">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ReadMe.htm" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="wordpad.rc">
