@@ -1284,7 +1284,7 @@
     <ClInclude Include="Wording\options.h" />
     <ClInclude Include="Wording\optionsh.h" />
     <ClInclude Include="Wording\pageset.h" />
-    <ClInclude Include="Wording\Resource.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="Wording\ruler.h" />
     <ClInclude Include="Wording\splash.h" />
     <ClInclude Include="Wording\srvritem.h" />
