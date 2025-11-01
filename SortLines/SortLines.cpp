@@ -31,6 +31,10 @@ extern "C" __declspec(dllexport) void ExecutePlugin(const wchar_t* text, bool /*
     std::vector<std::wstring> lines;
     while (std::getline(ss, line))
     {
+        if (!line.empty() && line.back() == L'\r')
+        {
+            line.pop_back();
+        }
         lines.push_back(line);
     }
 
