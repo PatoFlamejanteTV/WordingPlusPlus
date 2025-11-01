@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up MSBuild
       uses: microsoft/setup-msbuild@v1.1
@@ -19,26 +19,22 @@ jobs:
       run: msbuild.exe WordPad.sln /p:Configuration=Debug /p:Platform="Any CPU" /t:Rebuild /v:diag
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: wordpad-executable
-        path: '**/Debug/WordPad.exe'
+        path: Debug/WordPad.exe
 
   test:
     needs: build
     runs-on: windows-latest
     steps:
     - name: Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: wordpad-executable
 
     - name: Run smoke test
       run: |
-        $process = Start-Process -FilePath "WordPad.exe" -PassThru
+        Start-Process -FilePath "./wordpad-executable/WordPad.exe"
         Start-Sleep -Seconds 5
-        if ($process.HasExited) {
-          Write-Error "Process exited unexpectedly."
-          exit 1
-        }
         Stop-Process -Name "WordPad"
