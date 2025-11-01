@@ -497,25 +497,48 @@ BOOL CWordPadApp::ParseMeasurement(LPTSTR buf, int& lVal)
 	return FALSE;
 }
 
-void CWordPadApp::PrintTwips(TCHAR* buf, size_t bufSize, int nValue, int nDec)
+void CWordPadApp::PrintTwips(TCHAR* buf, int nValue, int nDec)
 {
 	ASSERT(nDec == 2);
 	int div = GetTPU();
+	int lval = nValue;
+	BOOL bNeg = FALSE;
 
-	buf[0] = _T('\0');
+	int* pVal = new int[nDec+1];
 
-	if (div == 0)
+	if (lval < 0)
 	{
-		lstrcpy(buf, _T("0"));
+		bNeg = TRUE;
+		lval = -lval;
 	}
-	else
+
+	int i = 0;
+
+	for (i=0;i<=nDec;i++)
 	{
-		_stprintf_s(buf, bufSize, _T("%.*f"), nDec, (float)nValue/(float)div);
+		pVal[i] = lval/div; //integer number
+		lval -= pVal[i]*div;
+		lval *= 10;
 	}
+	i--;
+	if (lval >= div/2)
+		pVal[i]++;
+
+	while ((pVal[i] == 10) && (i != 0))
+	{
+		pVal[i] = 0;
+		pVal[--i]++;
+	}
+
+	while (nDec && pVal[nDec] == 0)
+		nDec--;
+
+	_stprintf(buf, _T("%.*f"), nDec, (float)nValue/(float)div);
 
 	if (m_units[m_nUnits].m_bSpaceAbbrev)
 		lstrcat(buf, _T(" "));
 	lstrcat(buf, GetAbbrev());
+	delete []pVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////

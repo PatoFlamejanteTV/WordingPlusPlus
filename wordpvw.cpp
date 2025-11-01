@@ -1025,7 +1025,7 @@ void CWordPadView::OnFontsize()
 	{
 		AfxMessageBox(IDS_INVALID_NUMBER, MB_OK|MB_ICONINFORMATION);
 	}
-	else if ((nSize >= 0 && nSize < 20) || nSize > 32760)
+	else if (nSize < 20 || nSize > 32760)
 	{
 		AfxMessageBox(IDS_INVALID_FONTSIZE, MB_OK|MB_ICONINFORMATION);
 	}
