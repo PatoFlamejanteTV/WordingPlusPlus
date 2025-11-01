@@ -22,7 +22,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: wordpad-executable
-        path: Debug/WordPad.exe
+        path: '**/Debug/WordPad.exe'
 
   test:
     needs: build
