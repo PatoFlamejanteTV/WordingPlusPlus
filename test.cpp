@@ -53,7 +53,7 @@ void TestPrintTwipsBufferOverflow()
     theApp.SetUnits(0); // inches, TPU = 1440
 
     // Call the function that is expected to have a buffer overflow.
-    theApp.PrintTwips(buf, value, 2);
+    theApp.PrintTwips(buf, sizeof(buf)/sizeof(TCHAR), value, 2);
 
     // This assertion checks if the canary value has been corrupted by the overflow.
     // Before the fix, this assertion will fail because the canary is overwritten.
