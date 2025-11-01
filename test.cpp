@@ -72,23 +72,25 @@ void TestMapType()
 
     // Test case 2: RD_EMBEDDED behavior can vary with in-place state; assert consistency.
     int mapped = pDoc->MapType(RD_EMBEDDED);
-    if (mapped == RD_RICHTEXT)
-    {
-        // Not in-place active path
-        assert(mapped == RD_RICHTEXT);
-    }
-    else
-    {
-        // In-place active path must remain RD_EMBEDDED
-        assert(mapped == RD_EMBEDDED);
-    }
-        CTestWordPadDoc() { m_pInPlaceFrame = NULL; } // Ensure clean initial state
-        ~CTestWordPadDoc() { m_pInPlaceFrame = NULL; } // Avoid base destructor issues with dummy pointer
+{
+    // Prefer dynamic allocation to reduce potential MFC lifetime issues in tests
+    CWordPadDoc* pDoc = new CWordPadDoc();
 
-        void SetInPlaceActive(BOOL bActive)
-        {
-            // Set m_pInPlaceFrame to a non-NULL dummy value to simulate in-place activation.
-            // IsInPlaceActive() just checks if this pointer is NULL.
+    // Test case 1: RD_OEMTEXT should be mapped to RD_TEXT.
+    assert(pDoc->MapType(RD_OEMTEXT) == RD_TEXT);
+
+    // Test case 2: RD_EMBEDDED should be mapped to RD_RICHTEXT.
+    // This test assumes that IsInPlaceActive() returns FALSE (not in-place editing).
+    assert(pDoc->MapType(RD_EMBEDDED) == RD_RICHTEXT);
+
+    // Test case 3: Other types should remain unchanged.
+    assert(pDoc->MapType(RD_TEXT) == RD_TEXT);
+    assert(pDoc->MapType(RD_RICHTEXT) == RD_RICHTEXT);
+    assert(pDoc->MapType(RD_WRITE) == RD_WRITE);
+    assert(pDoc->MapType(RD_WINWORD6) == RD_WINWORD6);
+
+    delete pDoc;
+}
             m_pInPlaceFrame = bActive ? (CFrameWnd*)1 : NULL;
         }
     };
