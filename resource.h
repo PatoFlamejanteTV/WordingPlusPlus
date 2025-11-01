@@ -242,11 +242,20 @@
 #define ID_VIEW_RULER                   59397
 #define ID_DUMMY                        59398
 
+// Extra guards to prevent macro redefinitions
+#ifndef ID_OLE_VERB_POPUP
+#define ID_OLE_VERB_POPUP 32811
+#endif
+
+#ifndef ID_BORDER_1
+#define ID_BORDER_1 1001
+#endif
+
 // Next default values for new objects
-//
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                1
+#define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        196
 #define _APS_NEXT_COMMAND_VALUE         32969
 #define _APS_NEXT_CONTROL_VALUE         1034
