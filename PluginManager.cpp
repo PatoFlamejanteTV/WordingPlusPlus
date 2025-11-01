@@ -50,8 +50,7 @@ void PluginManager::LoadPlugins(const std::wstring& pluginDir) {
     do {
         if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
             std::wstring fullPath = pluginDir + L"\\" + findFileData.cFileName;
-            HMODULE hModule = LoadLibrary(fullPath.c_str());
-
+            HMODULE hModule = LoadLibraryEx(fullPath.c_str(), NULL, LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR);
             if (hModule) {
                 GetPluginNameFunc getName = (GetPluginNameFunc)GetProcAddress(hModule, "GetPluginName");
                 GetPluginInfoFunc getInfo = (GetPluginInfoFunc)GetProcAddress(hModule, "GetPluginInfo");
