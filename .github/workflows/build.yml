@@ -35,6 +35,10 @@ jobs:
 
     - name: Run smoke test
       run: |
-        Start-Process -FilePath "WordPad.exe"
+        $process = Start-Process -FilePath "WordPad.exe" -PassThru
         Start-Sleep -Seconds 5
+        if ($process.HasExited) {
+          Write-Error "Process exited unexpectedly."
+          exit 1
+        }
         Stop-Process -Name "WordPad"
