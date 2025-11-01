@@ -65,37 +65,30 @@ void TestPrintTwipsBufferOverflow()
 // Test case for the CWordPadDoc::MapType function.
 void TestMapType()
 {
-    CWordPadDoc doc;
+    // Use the test-specific document consistently for all checks.
+    class CTestWordPadDoc : public CWordPadDoc
+    {
+    public:
+        CTestWordPadDoc() { m_pInPlaceFrame = NULL; }
+        ~CTestWordPadDoc() { m_pInPlaceFrame = NULL; }
+        void SetInPlaceActive(BOOL bActive)
+        {
+            static CFrameWnd s_dummyFrame;
+            m_pInPlaceFrame = bActive ? &s_dummyFrame : NULL;
+        }
+    };
+
+    CTestWordPadDoc doc;
 
     // Test case 1: RD_OEMTEXT should be mapped to RD_TEXT.
     assert(doc.MapType(RD_OEMTEXT) == RD_TEXT);
 
-    // Test case 2: RD_EMBEDDED behavior can vary with in-place state; assert consistency.
-    int mapped = pDoc->MapType(RD_EMBEDDED);
-{
-    public:
-        CTestWordPadDoc() { m_pInPlaceFrame = NULL; }
-        ~CTestWordPadDoc() { m_pInPlaceFrame = NULL; }
-
-        void SetInPlaceActive(BOOL bActive)
-        {
-            // Use a real frame object to avoid invalid sentinel pointers.
-            static CFrameWnd s_dummyFrame;
-            m_pInPlaceFrame = bActive ? &s_dummyFrame : NULL;
-        }
-    // Test case 3: Other types should remain unchanged.
-    assert(pDoc->MapType(RD_TEXT) == RD_TEXT);
-    assert(pDoc->MapType(RD_RICHTEXT) == RD_RICHTEXT);
-    assert(pDoc->MapType(RD_WRITE) == RD_WRITE);
-    assert(pDoc->MapType(RD_WINWORD6) == RD_WINWORD6);
-
-    delete pDoc;
-}
-            m_pInPlaceFrame = bActive ? (CFrameWnd*)1 : NULL;
-        }
-    };
-
     // Test case 2: RD_EMBEDDED behavior based on in-place activation.
+    doc.SetInPlaceActive(FALSE);
+    assert(doc.MapType(RD_EMBEDDED) == RD_RICHTEXT);
+
+    doc.SetInPlaceActive(TRUE);
+    assert(doc.MapType(RD_EMBEDDED) == RD_EMBEDDED);
     CTestWordPadDoc testDoc;
 
     // Case 2a: Not in-place active. Should map to RD_RICHTEXT.
