@@ -15,198 +15,198 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Wording\AppLookDlg.cpp">
+    <ClCompile Include="src\AppLookDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\buttondi.cpp">
+    <ClCompile Include="src\buttondi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\chicdial.cpp">
+    <ClCompile Include="src\chicdial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\cntritem.cpp">
+    <ClCompile Include="src\cntritem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\datedial.cpp">
+    <ClCompile Include="src\datedial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\ddxm.cpp">
+    <ClCompile Include="src\ddxm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\docopt.cpp">
+    <ClCompile Include="src\docopt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\doctype.cpp">
+    <ClCompile Include="src\doctype.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\filenewd.cpp">
+    <ClCompile Include="src\filenewd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\formatba.cpp">
+    <ClCompile Include="src\formatba.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\formatpa.cpp">
+    <ClCompile Include="src\formatpa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\formatta.cpp">
+    <ClCompile Include="src\formatta.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\ipframe.cpp">
+    <ClCompile Include="src\ipframe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\key.cpp">
+    <ClCompile Include="src\key.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\listdlg.cpp">
+    <ClCompile Include="src\listdlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\mainfrm.cpp">
+    <ClCompile Include="src\mainfrm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\multconv.cpp">
+    <ClCompile Include="src\multconv.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\options.cpp">
+    <ClCompile Include="src\options.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\optionsh.cpp">
+    <ClCompile Include="src\optionsh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\pageset.cpp">
+    <ClCompile Include="src\pageset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\ruler.cpp">
+    <ClCompile Include="src\ruler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\splash.cpp">
+    <ClCompile Include="src\splash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\srvritem.cpp">
+    <ClCompile Include="src\srvritem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\stdafx.cpp">
+    <ClCompile Include="src\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\strings.cpp">
+    <ClCompile Include="src\strings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\TaskPane.cpp">
+    <ClCompile Include="src\TaskPane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\unitspag.cpp">
+    <ClCompile Include="src\unitspag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\wordpad.cpp">
+    <ClCompile Include="src\wordpad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\wordpdoc.cpp">
+    <ClCompile Include="src\wordpdoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wording\wordpvw.cpp">
+    <ClCompile Include="src\wordpvw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Wording\AppLookDlg.h">
+    <ClInclude Include="src\AppLookDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\buttondi.h">
+    <ClInclude Include="src\buttondi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\chicdial.h">
+    <ClInclude Include="src\chicdial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\cntritem.h">
+    <ClInclude Include="src\cntritem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\datedial.h">
+    <ClInclude Include="src\datedial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\ddxm.h">
+    <ClInclude Include="src\ddxm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\docopt.h">
+    <ClInclude Include="src\docopt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\doctype.h">
+    <ClInclude Include="src\doctype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\filenewd.h">
+    <ClInclude Include="src\filenewd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\formatba.h">
+    <ClInclude Include="src\formatba.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\formatpa.h">
+    <ClInclude Include="src\formatpa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\formatta.h">
+    <ClInclude Include="src\formatta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\helpids.h">
+    <ClInclude Include="helpids.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\ipframe.h">
+    <ClInclude Include="src\ipframe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\key.h">
+    <ClInclude Include="src\key.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\listdlg.h">
+    <ClInclude Include="src\listdlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\MainFrm.h">
+    <ClInclude Include="src\MainFrm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\mswd6_32.h">
+    <ClInclude Include="src\mswd6_32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\multconv.h">
+    <ClInclude Include="src\multconv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\options.h">
+    <ClInclude Include="src\options.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\optionsh.h">
+    <ClInclude Include="src\optionsh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\pageset.h">
+    <ClInclude Include="src\pageset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\Resource.h">
+    <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\ruler.h">
+    <ClInclude Include="src\ruler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\splash.h">
+    <ClInclude Include="src\splash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\srvritem.h">
+    <ClInclude Include="src\srvritem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\stdafx.h">
+    <ClInclude Include="src\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\strings.h">
+    <ClInclude Include="src\strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\targetver.h">
+    <ClInclude Include="src\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\TaskPane.h">
+    <ClInclude Include="src\TaskPane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\unitspag.h">
+    <ClInclude Include="src\unitspag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\wordpad.h">
+    <ClInclude Include="src\wordpad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\wordpdoc.h">
+    <ClInclude Include="src\wordpdoc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wording\wordpvw.h">
+    <ClInclude Include="src\wordpvw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
