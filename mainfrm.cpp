@@ -61,6 +61,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_REGISTERED_MESSAGE(AFX_WM_GETDOCUMENTCOLORS, OnGetDocumentColors)
 	ON_COMMAND(ID_DUMMY, OnDummy)
 	ON_COMMAND(ID_HELP_FIND, OnAskQuestion)
+	ON_COMMAND_RANGE(ID_FIRST_PLUGIN, ID_FIRST_PLUGIN + 100, &CMainFrame::OnPluginClick)
 END_MESSAGE_MAP()
 
 static UINT BASED_CODE indicators[] =
@@ -272,6 +273,20 @@ BOOL CMainFrame::CreateToolBar()
 	m_wndToolBar.SetWindowText(str);
 
 	m_wndToolBar.EnableCustomizeButton (TRUE, ID_VIEW_CUSTOMIZE, _T("Customize..."));
+
+	const auto& plugins = theApp.m_pluginManager.GetPlugins();
+	if (!plugins.empty())
+	{
+		m_wndToolBar.InsertSeparator();
+		for (size_t i = 0; i < plugins.size(); ++i)
+		{
+			UINT uiCmdID = ID_FIRST_PLUGIN + i;
+			// Using -1 for the image index as we don't have icons for plugins
+			CMFCToolBarButton button(uiCmdID, -1, plugins[i]->GetName().c_str());
+			m_wndToolBar.InsertButton(button);
+		}
+	}
+
 	return TRUE;
 }
 
@@ -819,4 +834,45 @@ void CMainFrame::OnAskQuestion()
 	MessageBox (str);
 
 	SetFocus ();
+}
+
+void CMainFrame::OnPluginClick(UINT nID)
+{
+    int pluginIndex = nID - ID_FIRST_PLUGIN;
+    const auto& plugins = theApp.m_pluginManager.GetPlugins();
+
+    if (pluginIndex >= 0 && pluginIndex < static_cast<int>(plugins.size()))
+    {
+        CWordPadView* pView = static_cast<CWordPadView*>(GetActiveView());
+        if (pView)
+        {
+            PluginInfo info = plugins[pluginIndex]->GetInfo();
+            std::wstring text;
+
+            if (info.textRequirement == TEXT_SELECTED)
+            {
+                CHARRANGE cr;
+                pView->GetRichEditCtrl().GetSel(cr);
+                long len = cr.cpMax - cr.cpMin;
+                if (len > 0)
+                {
+                    std::vector<wchar_t> buffer(len + 1, 0);
+                    pView->GetRichEditCtrl().GetSelText(buffer.data());
+                    text = buffer.data();
+                }
+            }
+            else if (info.textRequirement == TEXT_ALL)
+            {
+                int len = pView->GetRichEditCtrl().GetTextLength();
+                if (len > 0)
+                {
+                    std::vector<wchar_t> buffer(len + 1, 0);
+                    pView->GetRichEditCtrl().GetWindowText(buffer.data(), len + 1);
+                    text = buffer.data();
+                }
+            }
+
+            plugins[pluginIndex]->Execute(text, info.wantsFormatted);
+        }
+    }
 }
