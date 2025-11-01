@@ -595,8 +595,6 @@ void CWordPadView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		long nStart, nEnd;
 		GetRichEditCtrl().GetSel(nStart, nEnd);
-		long nStart, nEnd;
-		GetRichEditCtrl().GetSel(nStart, nEnd);
 
 		// Ensure the index is valid; fallback to caret or (0,0)
 		long nLen = GetRichEditCtrl().GetTextLength();
@@ -616,7 +614,7 @@ void CWordPadView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		ScreenToClient(&pt);
 
 		CRect rect;
-		GetClientRect(▭);
+		GetClientRect(&rect);
 		if (!rect.PtInRect(pt))
 		{
 		    pt = rect.CenterPoint();
