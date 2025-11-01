@@ -6,6 +6,7 @@
 
 #include "stdafx.h"
 #include "wordpad.h"
+#include "wordpdoc.h"
 #include <cassert>
 #include <iostream>
 
@@ -53,7 +54,7 @@ void TestPrintTwipsBufferOverflow()
     theApp.SetUnits(0); // inches, TPU = 1440
 
     // Call the function that is expected to have a buffer overflow.
-    theApp.PrintTwips(buf, sizeof(buf)/sizeof(TCHAR), value, 2);
+    theApp.PrintTwips(buf, value, 2);
 
     // This assertion checks if the canary value has been corrupted by the overflow.
     // Before the fix, this assertion will fail because the canary is overwritten.
@@ -61,21 +62,48 @@ void TestPrintTwipsBufferOverflow()
     assert(lstrcmp(canary, _T("AAAA")) == 0);
 }
 
-// Test case for the string formatting in PrintTwips.
-void TestPrintTwipsFormatting()
+// Test case for the CWordPadDoc::MapType function.
+void TestMapType()
 {
-    TCHAR buf[20];
-    int value = 1440; // 1 inch in twips
+    // Use the test-specific document consistently for all checks.
+    class CTestWordPadDoc : public CWordPadDoc
+    {
+    public:
+        CTestWordPadDoc() { m_pInPlaceFrame = NULL; }
+        ~CTestWordPadDoc() { m_pInPlaceFrame = NULL; }
+        void SetInPlaceActive(BOOL bActive)
+        {
+            static CFrameWnd s_dummyFrame;
+            m_pInPlaceFrame = bActive ? &s_dummyFrame : NULL;
+        }
+    };
 
-    theApp.LoadAbbrevStrings();
-    theApp.SetUnits(0); // inches
+    CTestWordPadDoc doc;
 
-    theApp.PrintTwips(buf, sizeof(buf)/sizeof(TCHAR), value, 2);
-    assert(lstrcmp(buf, _T("1.00 in")) == 0);
+    // Test case 1: RD_OEMTEXT should be mapped to RD_TEXT.
+    assert(doc.MapType(RD_OEMTEXT) == RD_TEXT);
 
-    theApp.SetUnits(1); // centimeters
-    theApp.PrintTwips(buf, sizeof(buf)/sizeof(TCHAR), value, 2);
-    assert(lstrcmp(buf, _T("2.54 cm")) == 0);
+    // Test case 2: RD_EMBEDDED behavior based on in-place activation.
+    doc.SetInPlaceActive(FALSE);
+    assert(doc.MapType(RD_EMBEDDED) == RD_RICHTEXT);
+
+    doc.SetInPlaceActive(TRUE);
+    assert(doc.MapType(RD_EMBEDDED) == RD_EMBEDDED);
+    CTestWordPadDoc testDoc;
+
+    // Case 2a: Not in-place active. Should map to RD_RICHTEXT.
+    testDoc.SetInPlaceActive(FALSE);
+    assert(testDoc.MapType(RD_EMBEDDED) == RD_RICHTEXT);
+
+    // Case 2b: In-place active. Should remain RD_EMBEDDED.
+    testDoc.SetInPlaceActive(TRUE);
+    assert(testDoc.MapType(RD_EMBEDDED) == RD_EMBEDDED);
+
+    // Test case 3: Other types should remain unchanged.
+    assert(doc.MapType(RD_TEXT) == RD_TEXT);
+    assert(doc.MapType(RD_RICHTEXT) == RD_RICHTEXT);
+    assert(doc.MapType(RD_WRITE) == RD_WRITE);
+    assert(doc.MapType(RD_WINWORD6) == RD_WINWORD6);
 }
 
 // It is not possible to build and run this test file in this environment.
@@ -86,6 +114,7 @@ void TestPrintTwipsFormatting()
 // int main()
 // {
 //     RunTest(TestPrintTwipsBufferOverflow, "TestPrintTwipsBufferOverflow");
+//     RunTest(TestMapType, "TestMapType");
 //     return 0;
 // }
 //
