@@ -535,7 +535,7 @@ void CWordPadApp::PrintTwips(TCHAR* buf, int nValue, int nDec)
 
 	_stprintf_s(buf, 10, _T("%.*f"), nDec, (float)nValue/(float)div);
 
-	if (m_units[m_nUnits].m_bSpaceAbbrev)
+	if (m_units[GetUnits()].m_bSpaceAbbrev)
 		lstrcat(buf, _T(" "));
 	lstrcat(buf, GetAbbrev());
 	delete []pVal;
