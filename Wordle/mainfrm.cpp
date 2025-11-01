@@ -1,4 +1,4 @@
-//
+﻿//
 // mainfrm.cpp : implementation of the CMainFrame class
 //
 // This is a part of the Microsoft Foundation Classes C++ library.

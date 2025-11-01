@@ -1,4 +1,4 @@
-//
+﻿//
 // wordpad.cpp : Defines the class behaviors for the application.
 //
 // This is a part of the Microsoft Foundation Classes C++ library.
