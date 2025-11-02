@@ -79,8 +79,10 @@ BOOL CWordPadDoc::OnNewDocument()
 	if (!CRichEditDoc::OnNewDocument())
 		return FALSE;
 
+	m_documentModel.SetContent(L"");
+
 	//correct type already set in theApp.m_nNewDocType;
-	int nDocType = (IsEmbedded()) ? RD_EMBEDDED : theApp.m_nNewDocType;
+	int nDocType = (IsEmbedded()) ? RD_EMBEDDED : theApp.m_appContext.m_nNewDocType;
 
 	GetView()->SetDefaultFont(IsTextType(nDocType));
 	SetDocType(nDocType);
@@ -143,57 +145,71 @@ void CWordPadDoc::ReportSaveLoadException(LPCTSTR lpszPathName,
 
 BOOL CWordPadDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	if (m_lpRootStg != NULL) // we are embedded
-	{
-		// we really want to use the converter on this storage
-		m_nNewDocType = RD_EMBEDDED;
-	}
-	else
-	{
-		if (theApp.cmdInfo.m_bForceTextMode)
-			m_nNewDocType = RD_TEXT;
-		else
-		{
-			CFileException fe;
-			m_nNewDocType = GetDocTypeFromName(lpszPathName, fe);
-			if (m_nNewDocType == -1)
-			{
-				ReportSaveLoadException(lpszPathName, &fe, FALSE,
-					AFX_IDP_FAILED_TO_OPEN_DOC);
-				return FALSE;
-			}
-			if (m_nNewDocType == RD_TEXT && theApp.m_bForceOEM)
-				m_nNewDocType = RD_OEMTEXT;
-		}
-		ScanForConverters();
-		if (!doctypes[m_nNewDocType].bRead)
-		{
-			CString str;
-			CString strName = doctypes[m_nNewDocType].GetString(DOCTYPE_DOCTYPE);
-			AfxFormatString1(str, IDS_CANT_LOAD, strName);
-			AfxMessageBox(str, MB_OK|MB_ICONINFORMATION);
-			return FALSE;
-		}
-	}
+    if (m_lpRootStg != NULL) // we are embedded
+    {
+        // we really want to use the converter on this storage
+        m_nNewDocType = RD_EMBEDDED;
+    }
+    else
+    {
+        if (theApp.cmdInfo.m_bForceTextMode)
+            m_nNewDocType = RD_TEXT;
+        else
+        {
+            CFileException fe;
+            m_nNewDocType = GetDocTypeFromName(lpszPathName, fe);
+            if (m_nNewDocType == -1)
+            {
+                ReportSaveLoadException(lpszPathName, &fe, FALSE,
+                    AFX_IDP_FAILED_TO_OPEN_DOC);
+                return FALSE;
+            }
+            if (m_nNewDocType == RD_TEXT && theApp.m_bForceOEM)
+                m_nNewDocType = RD_OEMTEXT;
+        }
+        ScanForConverters();
+        if (!doctypes[m_nNewDocType].bRead)
+        {
+            CString str;
+            CString strName = doctypes[m_nNewDocType].GetString(DOCTYPE_DOCTYPE);
+            AfxFormatString1(str, IDS_CANT_LOAD, strName);
+            AfxMessageBox(str, MB_OK|MB_ICONINFORMATION);
+            return FALSE;
+        }
+    }
 
-//  SetDocType(nNewDocType);
-	if (!CRichEditDoc::OnOpenDocument(lpszPathName))
-		return FALSE;
-	return TRUE;
+    if (!CRichEditDoc::OnOpenDocument(lpszPathName))
+        return FALSE;
+
+    // After the document is loaded into the RichEdit control, get the content and store it in the model.
+    CString content;
+    GetView()->GetRichEditCtrl().GetWindowText(content);
+    m_documentModel.SetContent(content.GetString());
+
+    return TRUE;
 }
 
 void CWordPadDoc::Serialize(CArchive& ar)
 {
-	COleMessageFilter* pFilter = AfxOleGetMessageFilter();
-	ASSERT(pFilter != NULL);
-	if (pFilter != NULL)
-	{
-		pFilter->EnableBusyDialog(FALSE);
-		if (ar.IsLoading())
-			SetDocType(m_nNewDocType);
-		CRichEditDoc::Serialize(ar);
-		pFilter->EnableBusyDialog(TRUE);
-	}
+    COleMessageFilter* pFilter = AfxOleGetMessageFilter();
+    ASSERT(pFilter != NULL);
+    if (pFilter != NULL)
+    {
+        pFilter->EnableBusyDialog(FALSE);
+        if (ar.IsLoading())
+        {
+            SetDocType(m_nNewDocType);
+            CRichEditDoc::Serialize(ar);
+            CString content;
+            GetView()->GetRichEditCtrl().GetWindowText(content);
+            m_documentModel.SetContent(content.GetString());
+        }
+        else
+        {
+            CRichEditDoc::Serialize(ar);
+        }
+        pFilter->EnableBusyDialog(TRUE);
+    }
 }
 
 BOOL CWordPadDoc::DoSave(LPCTSTR pszPathName, BOOL bReplace /*=TRUE*/)
@@ -305,6 +321,10 @@ BOOL CWordPadDoc::DoSave(LPCTSTR pszPathName, BOOL bReplace /*=TRUE*/)
 		}
 		SetDocType(nDocType, TRUE);
 	}
+
+    CString content;
+    GetView()->GetRichEditCtrl().GetWindowText(content);
+    m_documentModel.SetContent(content.GetString());
 
 	BeginWaitCursor();
 	if (!OnSaveDocument(newName))
