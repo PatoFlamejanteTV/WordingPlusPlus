@@ -86,19 +86,21 @@ BOOL CWordPadDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 ### `Serialize()`
 
-This function is at the heart of the document's persistence mechanism. It is called by the framework to either read the document's data from an archive (loading) or write it to an archive (saving). The implementation in `CWordPadDoc` checks the document type and then calls the appropriate serialization function.
+This function is at the heart of the document's persistence mechanism. It is called by the framework to either read the document's data from an archive (loading) or write it to an archive (saving). The implementation in `CWordPadDoc` delegates the heavy lifting to the base class, `CRichEditDoc`, which handles the actual serialization of the rich text content. The `CWordPadDoc` override primarily manages the OLE message filter to prevent busy dialogs from appearing during the serialization process.
 
 **Example from `wordpdoc.cpp`:**
 ```cpp
 void CWordPadDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
+	COleMessageFilter* pFilter = AfxOleGetMessageFilter();
+	ASSERT(pFilter != NULL);
+	if (pFilter != NULL)
 	{
-		// ... (code for saving the document)
-	}
-	else
-	{
-		// ... (code for loading the document)
+		pFilter->EnableBusyDialog(FALSE);
+		if (ar.IsLoading())
+			SetDocType(m_nNewDocType);
+		CRichEditDoc::Serialize(ar);
+		pFilter->EnableBusyDialog(TRUE);
 	}
 }
 ```

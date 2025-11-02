@@ -27,46 +27,57 @@ The `CWordPadView` class is the view class for the WordPad application. It is de
 
 ### `OnPrint()`
 
-This function is called by the framework to print or preview a page of the document. It is responsible for rendering the specified page to a device context.
+This function is called by the framework to print or preview a page of the document. It is responsible for rendering the specified page to a device context. In `CWordPadView`, this function is also used to draw the page margins when in print preview mode.
 
 **Example from `wordpvw.cpp`:**
 
 ```cpp
 void CWordPadView::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 {
-	// ... (code to prepare for printing)
-
-	// Print the page
 	CRichEditView::OnPrint(pDC, pInfo);
-
-	// ... (code to clean up after printing)
+	if (pInfo != NULL && pInfo->m_bPreview)
+		DrawMargins(pDC);
 }
 ```
 
 ### `OnPreparePrinting()`
 
-This function is called by the framework before printing or print preview begins. It is a good place to initialize the print dialog box and to set the printing parameters.
+This function is called by the framework before printing or print preview begins. It is a good place to initialize the print dialog box and to set the printing parameters. The `CWordPadView` implementation simply calls the `DoPreparePrinting` helper function, which is a part of the MFC framework.
 
 **Example from `wordpvw.cpp`:**
 
 ```cpp
 BOOL CWordPadView::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	// default preparation
 	return DoPreparePrinting(pInfo);
 }
 ```
 
 ### `WrapChanged()`
 
-This function is called when the wrapping settings of the document have changed. It is responsible for updating the view to reflect the new wrapping settings.
+This function is called when the wrapping settings of the document have changed. It is responsible for updating the view to reflect the new wrapping settings. The `CWordPadView` implementation displays a "Formatting" message to the user, calls the base class implementation to perform the actual wrapping, and then restores the idle message.
 
 **Example from `wordpvw.cpp`:**
 
 ```cpp
 void CWordPadView::WrapChanged()
 {
-	// ... (code to update the view)
+	CWaitCursor wait;
+	CFrameWnd* pFrameWnd = GetParentFrame();
+	ASSERT(pFrameWnd != NULL);
+	if (pFrameWnd)
+	{
+		pFrameWnd->SetMessageText(IDS_FORMATTING);
+		CWnd* pBarWnd = pFrameWnd->GetMessageBar();
+		if (pBarWnd != NULL)
+			pBarWnd->UpdateWindow();
+
+		CRichEditView::WrapChanged();
+
+		pFrameWnd->SetMessageText(AFX_IDS_IDLEMESSAGE);
+		if (pBarWnd != NULL)
+			pBarWnd->UpdateWindow();
+	}
 }
 ```
 
