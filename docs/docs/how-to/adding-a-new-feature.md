@@ -10,7 +10,7 @@ This guide will walk you through the process of adding a new feature to the Word
 
 The first step is to add a new menu item to the application's user interface. In WordPad, the menus are defined in the `wordpad.rc` file.
 
-1.  **Open `wordpad.rc`**: Locate and open the `wordpad.rc` file in the `WordPad` directory. This is a resource script file that defines the application's resources, including menus, dialog boxes, and icons.
+1.  **Open `wordpad.rc`**: Locate and open the `wordpad.rc` file in the `Wordle` directory. This is a resource script file that defines the application's resources, including menus, dialog boxes, and icons.
 
 2.  **Find the Main Menu**: Search for the `IDR_MAINFRAME` menu resource in the `wordpad.rc` file. This is the main menu for the application.
 
