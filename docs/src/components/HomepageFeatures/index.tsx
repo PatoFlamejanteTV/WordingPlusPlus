@@ -11,32 +11,29 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Comprehensive Architecture Guide',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Dive deep into the WordPad application's architecture with our detailed guides on the document/view model and other core concepts.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'In-Depth Class Documentation',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Explore the responsibilities and key functions of the core classes, including <code>CWordPadApp</code>, <code>CWordPadDoc</code>, and <code>CWordPadView</code>.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Practical How-To Guides',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Learn how to add new features to WordPad with our step-by-step tutorials, complete with code examples.
       </>
     ),
   },
@@ -61,8 +58,8 @@ export default function HomepageFeatures(): ReactNode {
     <section className={styles.features}>
       <div className="container">
         <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
+          {FeatureList.map((props) => (
+            <Feature key={props.title} {...props} />
           ))}
         </div>
       </div>
