@@ -19,6 +19,7 @@
 #include "splash.h"
 #include "options.h"
 #include "afxtempl.h"
+#include "AppContext.h"
 
 #define WPM_BARSTATE WM_USER
 
@@ -46,13 +47,10 @@ public:
 //Attributes
 	CWordPadCommandLineInfo cmdInfo;
 	CDC m_dcScreen;
-	LOGFONT m_lf;
+	CAppContext m_appContext;
 	int m_nDefFont;
 	static int m_nOpenMsg;
 	static int m_nPrinterChangedMsg;
-	CRect m_rectPageMargin;
-	CRect m_rectInitialFrame;
-	BOOL m_bMaximized;
 	BOOL m_bPromptForType;
 	BOOL m_bWin4;
 	BOOL m_bHiColorIcons;
@@ -61,22 +59,13 @@ public:
 	BOOL m_bWin31;
 #endif
 	BOOL m_bForceTextMode;
-	BOOL m_bWordSel;
 	BOOL m_bForceOEM;
-	int m_nFilterIndex;
-	int m_nNewDocType;
-	CDocOptions m_optionsText;
-	CDocOptions m_optionsRTF;
-	CDocOptions m_optionsWord; //wrap to ruler
-	CDocOptions m_optionsWrite; //wrap to ruler
-	CDocOptions m_optionsIP;    //wrap to ruler
-	CDocOptions m_optionsNull;
 	CList<HWND, HWND> m_listPrinterNotify;
 
 	BOOL IsDocOpen(LPCTSTR lpszFileName);
 
 // Get
-	int GetUnits() {return m_nUnits;}
+	int GetUnits() {return m_appContext.m_nUnits;}
 	int GetTPU() { return GetTPU(m_nUnits);}
 	int GetTPU(int n) { return m_units[n].m_nTPU;}
 	LPCTSTR GetAbbrev() { return m_units[m_nUnits].m_strAbbrev;}
@@ -87,7 +76,7 @@ public:
 
 // Set
 	void SetUnits(int n)
-	{ ASSERT(n>=0 && n <m_nPrimaryNumUnits); m_nUnits = n; }
+	{ ASSERT(n>=0 && n <m_nPrimaryNumUnits); m_appContext.m_nUnits = n; }
 
 // Operations
 	void RegisterFormats();
@@ -130,7 +119,6 @@ public:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
-	int m_nUnits;
 	static const int m_nPrimaryNumUnits;
 	static const int m_nNumUnits;
 	static CUnit m_units[7];

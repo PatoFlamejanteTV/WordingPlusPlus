@@ -11,6 +11,8 @@
 // See these sources for detailed information regarding the
 // Microsoft Foundation Classes product.
 
+#include "DocumentModel.h"
+
 class CFormatBar;
 class CWordPadSrvrItem;
 class CWordPadView;
@@ -23,6 +25,7 @@ protected: // create from serialization only
 
 // Attributes
 public:
+	DocumentModel m_documentModel;
 	int m_nDocType;
 	int m_nNewDocType;
 	void SetDocType(int nDocType, BOOL bNoOptionChange = FALSE);
