@@ -96,14 +96,12 @@ void CWordPadCommandLineInfo::ParseParam(const char* pszParam,BOOL bFlag,BOOL bL
 /////////////////////////////////////////////////////////////////////////////
 // CWordPadApp construction
 
-CWordPadApp::CWordPadApp() : 
-	CWinAppEx (TRUE),
-	m_optionsText(0), m_optionsRTF(1),
-	m_optionsWord(2), m_optionsWrite(2), m_optionsIP(2), m_optionsNull(0)
+CWordPadApp::CWordPadApp() :
+	CWinAppEx(TRUE)
 {
 	_tsetlocale(LC_ALL, _T(""));
 
-	m_nFilterIndex = 1;
+	m_appContext.m_nFilterIndex = 1;
 	DWORD dwVersion = ::GetVersion();
 	m_bWin4 = (BYTE)dwVersion >= 4;
 #ifndef _UNICODE
@@ -150,7 +148,7 @@ BOOL CWordPadApp::InitInstance()
 		return FALSE;
 
 	SetRegistryKey(szRegKey);
-	LoadOptions();
+	m_appContext.Load();
 
 	Enable3dControls();
 	CSplashWnd splash;
@@ -172,7 +170,7 @@ BOOL CWordPadApp::InitInstance()
 			case SW_SHOWNOACTIVATE:
 			case SW_SHOWNORMAL:
 			case SW_SHOWMAXIMIZED:
-				if (m_bMaximized)
+				if (m_appContext.m_bMaximized)
 					m_nCmdShow = SW_SHOWMAXIMIZED;
 				break;
 		}
@@ -374,19 +372,19 @@ CDocOptions& CWordPadApp::GetDocOptions(int nDocType)
 	{
 		case RD_WINWORD6:
 		case RD_WORDPAD:
-			return m_optionsWord;
+			return m_appContext.m_optionsWord;
 		case RD_RICHTEXT:
-			return m_optionsRTF;
+			return m_appContext.m_optionsRTF;
 		case RD_TEXT:
 		case RD_OEMTEXT:
-			return m_optionsText;
+			return m_appContext.m_optionsText;
 		case RD_WRITE:
-			return m_optionsWrite;
+			return m_appContext.m_optionsWrite;
 		case RD_EMBEDDED:
-			return m_optionsIP;
+			return m_appContext.m_optionsIP;
 	}
 	ASSERT(FALSE);
-	return m_optionsNull;
+	return m_appContext.m_optionsNull;
 }
 
 CDockState& CWordPadApp::GetDockState(int nDocType, BOOL bPrimary)
@@ -396,68 +394,12 @@ CDockState& CWordPadApp::GetDockState(int nDocType, BOOL bPrimary)
 
 void CWordPadApp::SaveOptions()
 {
-	WriteProfileInt(szSection, szWordSel, m_bWordSel);
-	WriteProfileInt(szSection, szUnits, GetUnits());
-	WriteProfileInt(szSection, szMaximized, m_bMaximized);
-	WriteProfileBinary(szSection, szFrameRect, (BYTE*)&m_rectInitialFrame,
-		sizeof(CRect));
-	WriteProfileBinary(szSection, szPageMargin, (BYTE*)&m_rectPageMargin,
-		sizeof(CRect));
-	m_optionsText.SaveOptions(szTextSection);
-	m_optionsRTF.SaveOptions(szRTFSection);
-	m_optionsWord.SaveOptions(szWordSection);
-	m_optionsWrite.SaveOptions(szWriteSection);
-	m_optionsIP.SaveOptions(szIPSection);
+	m_appContext.Save();
 }
 
 void CWordPadApp::LoadOptions()
 {
-	BYTE* pb = NULL;
-	UINT nLen = 0;
-
-	HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-	if (hFont == NULL)
-		hFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
-	VERIFY(::GetObject(hFont, sizeof(LOGFONT), &m_lf));
-
-	m_bWordSel = GetProfileInt(szSection, szWordSel, TRUE);
-	TCHAR buf[2];
-	buf[0] = NULL;
-	GetLocaleInfo(GetUserDefaultLCID(), LOCALE_IMEASURE, buf, 2);
-	int nDefUnits = buf[0] == '1' ? 0 : 1;
-	SetUnits(GetProfileInt(szSection, szUnits, nDefUnits));
-	m_bMaximized = GetProfileInt(szSection, szMaximized, (int)FALSE);
-
-	if (GetProfileBinary(szSection, szFrameRect, &pb, &nLen))
-	{
-		ASSERT(nLen == sizeof(CRect));
-		memcpy(&m_rectInitialFrame, pb, sizeof(CRect));
-		delete pb;
-	}
-	else
-		m_rectInitialFrame.SetRect(0,0,0,0);
-
-	CRect rectScreen(0, 0, GetSystemMetrics(SM_CXSCREEN),
-		GetSystemMetrics(SM_CYSCREEN));
-	CRect rectInt;
-	rectInt.IntersectRect(&rectScreen, &m_rectInitialFrame);
-	if (rectInt.Width() < 10 || rectInt.Height() < 10)
-		m_rectInitialFrame.SetRect(0, 0, 0, 0);
-
-	if (GetProfileBinary(szSection, szPageMargin, &pb, &nLen))
-	{
-		ASSERT(nLen == sizeof(CRect));
-		memcpy(&m_rectPageMargin, pb, sizeof(CRect));
-		delete pb;
-	}
-	else
-		m_rectPageMargin.SetRect(1800, 1440, 1800, 1440);
-
-	m_optionsText.LoadOptions(szTextSection);
-	m_optionsRTF.LoadOptions(szRTFSection);
-	m_optionsWord.LoadOptions(szWordSection);
-	m_optionsWrite.LoadOptions(szWriteSection);
-	m_optionsIP.LoadOptions(szIPSection);
+	m_appContext.Load();
 }
 
 void CWordPadApp::LoadAbbrevStrings()
@@ -569,7 +511,7 @@ int CWordPadApp::ExitInstance()
 		FreeLibrary(h);
 	}
 
-	SaveOptions();
+	m_appContext.Save();
 
 	return CWinAppEx::ExitInstance();
 }
@@ -602,7 +544,7 @@ void CWordPadApp::OnFileNew()
 		if (nDocType != RD_TEXT)
 			cmdInfo.m_bForceTextMode = FALSE;
 	}
-	m_nNewDocType = nDocType;
+	m_appContext.m_nNewDocType = nDocType;
 	DocTemplate.OpenDocumentFile(NULL);
 		// if returns NULL, the user has already been alerted
 }
@@ -621,7 +563,7 @@ BOOL CWordPadApp::PromptForFileName(CString& fileName, UINT nIDSTitle,
 	dlgFile.m_ofn.Flags |= dwFlags;
 //  dlgFile.m_ofn.Flags &= ~OFN_SHOWHELP;
 
-	int nIndex = m_nFilterIndex;
+	int nIndex = m_appContext.m_nFilterIndex;
 	if (!bOpenFileDialog)
 	{
 		int nDocType = (pType != NULL) ? *pType : RD_DEFAULT;
@@ -649,7 +591,7 @@ BOOL CWordPadApp::PromptForFileName(CString& fileName, UINT nIDSTitle,
 	if (bRet)
 	{
 		if (bOpenFileDialog)
-			m_nFilterIndex = dlgFile.m_ofn.nFilterIndex;
+			m_appContext.m_nFilterIndex = dlgFile.m_ofn.nFilterIndex;
 		if (pType != NULL)
 		{
 			int nIndex2 = (int)dlgFile.m_ofn.nFilterIndex - 1;
