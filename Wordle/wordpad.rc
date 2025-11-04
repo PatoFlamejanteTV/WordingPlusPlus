@@ -51,7 +51,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "RES\\Wordle.ICO"
+IDR_MAINFRAME           ICON                    "RES\\WORDPAD.ICO"
 IDI_ICON_DOC            ICON                    "RES\\RTFDOC.ICO"
 IDI_ICON_WRITE          ICON                    "res\\write.ico"
 IDI_ICON_TEXT           ICON                    "res\\textdoc.ico"
@@ -75,7 +75,7 @@ END
 
 3 TEXTINCLUDE 
 BEGIN
-    "#include ""res\\Wordle.rc2""  // non-App Studio edited resources\r\n"
+    "#include ""res\\wordpad.rc2""  // non-App Studio edited resources\r\n"
     "\r\n"
     "#include ""afxres.rc""  \t// Standard components\r\n"
     "#include ""afxprint.rc""\t// printing/print preview resources\r\n"
@@ -170,7 +170,7 @@ BEGIN
     BEGIN
         MENUITEM "&Help Topics",                ID_HELP_INDEX
         MENUITEM SEPARATOR
-        MENUITEM "&About Wordle",              ID_APP_ABOUT
+        MENUITEM "&About WordPad",              ID_APP_ABOUT
     END
 END
 
@@ -244,7 +244,7 @@ BEGIN
     BEGIN
         MENUITEM "&Help Topics",                ID_HELP_INDEX
         MENUITEM SEPARATOR
-        MENUITEM "&About Wordle",              ID_APP_ABOUT
+        MENUITEM "&About WordPad",              ID_APP_ABOUT
     END
 END
 
@@ -299,7 +299,7 @@ BEGIN
     BEGIN
         MENUITEM "&Help Topics",                ID_HELP_INDEX
         MENUITEM SEPARATOR
-        MENUITEM "&About Wordle",              ID_APP_ABOUT
+        MENUITEM "&About WordPad",              ID_APP_ABOUT
     END
 END
 
@@ -620,14 +620,14 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "UltimateQuack & Microsoft Corporation"
-            VALUE "FileDescription", "Wordle MFC Application"
-            VALUE "FileVersion", "0.1"
-            VALUE "InternalName", "Wordle"
+            VALUE "CompanyName", "Microsoft Corporation"
+            VALUE "FileDescription", "WordPad MFC Application"
+            VALUE "FileVersion", "1.0"
+            VALUE "InternalName", "wordpad"
             VALUE "LegalCopyright", "Copyright © Microsoft Corp. 1998"
-            VALUE "OriginalFilename", "Wordle.EXE"
-            VALUE "ProductName", "UltimateQuack & Microsoft® Windows (TM) Operating System"
-            VALUE "ProductVersion", "0.1"
+            VALUE "OriginalFilename", "WORDPAD.EXE"
+            VALUE "ProductName", "Microsoft® Windows (TM) Operating System"
+            VALUE "ProductVersion", "4.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -783,7 +783,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Wordle can not continue."
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  WordPad can not continue."
     IDP_FAILED_TO_CREATE    "Failed to create object.  Make sure the object is entered in the system registry."
     IDS_INVALID_MEASUREMENT "This is not a valid measurement."
     IDS_PLEASE_WAIT         "%d%% complete  Formatting ... please wait"
@@ -798,7 +798,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "Wordle\nDocument\nWordle Document\nWord for Windows 6.0 (*.doc)\n.DOC\nWordle.Document.1\nWordle Document"
+    IDR_MAINFRAME           "WordPad\nDocument\nWordPad Document\nWord for Windows 6.0 (*.doc)\n.DOC\nWordPad.Document.1\nWordPad Document"
     IDS_TEXT_DOC            "Text Document\nText Documents (*.txt)\n*.txt\nText Document"
     IDS_RICHTEXT_DOC        "Rich Text Format (RTF)\nRich Text Format (*.rtf)\n*.rtf\nRich Text Document"
     IDS_WRITE_DOC           "Windows Write\nWindows Write (*.wri)\n*.wri\nWrite Document"
@@ -813,7 +813,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    AFX_IDS_APP_TITLE       "Wordle"
+    AFX_IDS_APP_TITLE       "WordPad"
     AFX_IDS_IDLEMESSAGE     "For Help, press F1"
     AFX_IDS_HELPMODEMESSAGE "Select an object you want to get Help on."
 END
@@ -997,13 +997,13 @@ BEGIN
     IDS_CENTIMETERS         "Centimeters"
     IDS_POINTS              "Points"
     IDS_PICAS               "Picas"
-    IDS_WORD6_WARNING       "This document was created by Word 6.0. Wordle does not support all of the features provided by Word 6.0. Therefore, you may lose information by saving this file as a Word file with the same name."
+    IDS_WORD6_WARNING       "This document was created by Word 6.0. WordPad does not support all of the features provided by Word 6.0. Therefore, you may lose information by saving this file as a Word file with the same name."
     IDS_WORD6_WARNING_BUTTONS "&Save\nSave &As...\nCancel"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_FINISHED_SEARCH     "Wordle has finished searching the document."
+    IDS_FINISHED_SEARCH     "WordPad has finished searching the document."
     IDC_FONTNAME            "Changes the font of the selection\nFont"
     IDC_FONTSIZE            "Changes the font size of the selection\nFont Size"
     IDS_TITLE_FORMATBAR     "Formatting"
@@ -1102,7 +1102,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "res\Wordle.rc2"  // non-App Studio edited resources
+#include "res\wordpad.rc2"  // non-App Studio edited resources
 
 #include "afxres.rc"  	// Standard components
 #include "afxprint.rc"	// printing/print preview resources
