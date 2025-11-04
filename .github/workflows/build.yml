@@ -32,4 +32,4 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Build solution
-      run: msbuild.exe ${{ matrix.solution }} /p:Configuration=Debug /p:Platform="Any CPU" /t:Rebuild
+      run: msbuild.exe ${{ matrix.solution }} /p:Configuration=Debug /p:Platform="Win32" /t:Rebuild
