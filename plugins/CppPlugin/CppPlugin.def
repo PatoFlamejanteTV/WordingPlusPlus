@@ -1,0 +1,6 @@
+; CppPlugin.def : Declares the module parameters for the DLL.
+
+LIBRARY      "CppPlugin"
+
+EXPORTS
+    CreatePlugin
