@@ -36,6 +36,7 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	//{{AFX_MSG_MAP(CMainFrame)
+	ON_COMMAND_RANGE(ID_PLUGIN_BASE, ID_PLUGIN_BASE + 20, OnPluginCmd)
 	ON_WM_CREATE()
 	ON_WM_SYSCOLORCHANGE()
 	ON_WM_SIZE()
@@ -226,6 +227,26 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	EnableFullScreenMode (ID_VIEW_FULL_SCREEN);
 	EnableFullScreenMainMenu (FALSE);
+
+	CMenu* pMenu = CMenu::FromHandle(m_wndMenuBar.GetHMenu());
+	if (pMenu)
+	{
+		CMenu pluginsMenu;
+		pluginsMenu.CreatePopupMenu();
+
+		const auto& plugins = ((CWordPadApp*)AfxGetApp())->m_pluginManager.GetPlugins();
+		for (size_t i = 0; i < plugins.size(); ++i)
+		{
+			pluginsMenu.AppendMenu(MF_STRING, ID_PLUGIN_BASE + i, plugins[i].name.c_str());
+		}
+
+		if (plugins.size() > 0)
+		{
+			pMenu->AppendMenu(MF_POPUP, (UINT_PTR)pluginsMenu.m_hMenu, _T("Plugins"));
+			pluginsMenu.Detach();
+		}
+	}
+	DrawMenuBar();
 
 	return 0;
 }
@@ -819,4 +840,10 @@ void CMainFrame::OnAskQuestion()
 	MessageBox (str);
 
 	SetFocus ();
+}
+
+void CMainFrame::OnPluginCmd(UINT nID)
+{
+    int pluginIndex = nID - ID_PLUGIN_BASE;
+    ((CWordPadApp*)AfxGetApp())->m_pluginManager.OnPluginClick(pluginIndex);
 }
