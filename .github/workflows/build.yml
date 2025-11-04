@@ -1,0 +1,35 @@
+name: Build Solutions
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  discover-solutions:
+    runs-on: ubuntu-latest
+    outputs:
+      solutions: ${{ steps.find-solutions.outputs.solutions }}
+    steps:
+    - uses: actions/checkout@v4
+    - id: find-solutions
+      run: |
+        solutions=$(find . -name "*.sln" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+        echo "solutions=$solutions" >> $GITHUB_OUTPUT
+
+  build:
+    needs: discover-solutions
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        solution: ${{ fromJson(needs.discover-solutions.outputs.solutions) }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Build solution
+      run: msbuild.exe ${{ matrix.solution }} /p:Configuration=Debug /p:Platform="Any CPU" /t:Rebuild
