@@ -20,7 +20,7 @@ extern "C" {
 }
 
 // Function pointer types for application callbacks
-typedef void (*GET_SEL_TEXT_FUNC)(char* buffer, int bufferSize);
+typedef int (*GET_SEL_TEXT_FUNC)(char* buffer, int bufferSize);
 typedef void (*REPLACE_SEL_TEXT_FUNC)(const char* newText);
 
 // Struct to hold function pointers from the application

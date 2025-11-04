@@ -2,6 +2,7 @@
 #include "PluginManager.h"
 #include <filesystem>
 #include <shlwapi.h>
+#include <afx.h>
 #pragma comment(lib, "shlwapi.lib")
 
 CPluginManager::CPluginManager()
@@ -42,11 +43,23 @@ void CPluginManager::LoadPlugins(AppFuncs* appFuncs)
                     PathStripPath(buffer);
                     plugin.name = buffer;
                     m_plugins.push_back(plugin);
+                    CString logMessage;
+                    logMessage.Format(_T("Loaded plugin: %s"), plugin.name.c_str());
+                    AfxTrace(logMessage);
                 }
                 else
                 {
+                    CString errorMessage;
+                    errorMessage.Format(_T("Failed to get one or more functions from plugin: %s"), entry.path().c_str());
+                    AfxMessageBox(errorMessage);
                     FreeLibrary(hModule);
                 }
+            }
+            else
+            {
+                CString errorMessage;
+                errorMessage.Format(_T("Failed to load plugin: %s"), entry.path().c_str());
+                AfxMessageBox(errorMessage);
             }
         }
     }

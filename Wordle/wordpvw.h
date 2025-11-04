@@ -50,10 +50,10 @@ public:
 
 // Operations for plugins
 public:
-    void GetSelTxt(char* buffer, int bufferSize);
+    int GetSelTxt(char* buffer, int bufferSize);
     void ReplaceSelTxt(const char* newText);
 
-    static void GetSelTxt_S(char* buffer, int bufferSize);
+    static int GetSelTxt_S(char* buffer, int bufferSize);
     static void ReplaceSelTxt_S(const char* newText);
     static CWordPadView* GetView();
 

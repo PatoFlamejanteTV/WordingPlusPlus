@@ -1065,11 +1065,15 @@ CWordPadView* CWordPadView::GetView()
 	return NULL;
 }
 
-void CWordPadView::GetSelTxt(char* buffer, int bufferSize)
+int CWordPadView::GetSelTxt(char* buffer, int bufferSize)
 {
-    if (!buffer || bufferSize <= 0) return;
     CString selectedText = GetRichEditCtrl().GetSelText();
-    strncpy_s(buffer, bufferSize, selectedText, _TRUNCATE);
+    int len = selectedText.GetLength() + 1;
+    if (buffer && bufferSize >= len)
+    {
+        strcpy_s(buffer, bufferSize, selectedText);
+    }
+    return len;
 }
 
 void CWordPadView::ReplaceSelTxt(const char* newText)
@@ -1078,13 +1082,14 @@ void CWordPadView::ReplaceSelTxt(const char* newText)
     GetRichEditCtrl().ReplaceSel(newText, TRUE);
 }
 
-void CWordPadView::GetSelTxt_S(char* buffer, int bufferSize)
+int CWordPadView::GetSelTxt_S(char* buffer, int bufferSize)
 {
     CWordPadView* pView = GetView();
     if (pView)
     {
-        pView->GetSelTxt(buffer, bufferSize);
+        return pView->GetSelTxt(buffer, bufferSize);
     }
+    return 0;
 }
 
 void CWordPadView::ReplaceSelTxt_S(const char* newText)
