@@ -12,6 +12,8 @@
 // See these sources for detailed information regarding the
 // Microsoft Foundation Classes product.
 
+#include "../PluginAPI/IPlugin.h"
+
 class CWordPadView : public CRichEditView
 {
 protected: // create from serialization only
@@ -45,6 +47,15 @@ public:
 	void SetTextColor (COLORREF color);
 
 	void GetDocumentColors (CList<COLORREF,COLORREF>& lstColors);
+
+// Operations for plugins
+public:
+    void GetSelTxt(char* buffer, int bufferSize);
+    void ReplaceSelTxt(const char* newText);
+
+    static void GetSelTxt_S(char* buffer, int bufferSize);
+    static void ReplaceSelTxt_S(const char* newText);
+    static CWordPadView* GetView();
 
 // Overrides
 	// ClassWizard generated virtual function overrides

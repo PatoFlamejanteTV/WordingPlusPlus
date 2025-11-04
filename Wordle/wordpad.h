@@ -19,6 +19,7 @@
 #include "splash.h"
 #include "options.h"
 #include "afxtempl.h"
+#include "PluginManager.h"
 
 #define WPM_BARSTATE WM_USER
 
@@ -121,6 +122,8 @@ public:
 // Implementation
 	COleTemplateServer m_server;
 		// Server object for document creation
+	CPluginManager m_pluginManager;
+	AppFuncs m_appFuncs;
 
 	//{{AFX_MSG(CWordPadApp)
 	afx_msg void OnAppAbout();

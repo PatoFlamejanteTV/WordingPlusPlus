@@ -1050,3 +1050,48 @@ void CWordPadView::OnUpdateBorderType (CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck (pCmdUI->m_nID == m_nBorderType);
 }
+
+CWordPadView* CWordPadView::GetView()
+{
+	CFrameWnd* pWnd = (CFrameWnd*)AfxGetMainWnd();
+	if (pWnd)
+	{
+		CView* pView = pWnd->GetActiveView();
+		if (pView && pView->IsKindOf(RUNTIME_CLASS(CWordPadView)))
+		{
+			return (CWordPadView*)pView;
+		}
+	}
+	return NULL;
+}
+
+void CWordPadView::GetSelTxt(char* buffer, int bufferSize)
+{
+    if (!buffer || bufferSize <= 0) return;
+    CString selectedText = GetRichEditCtrl().GetSelText();
+    strncpy_s(buffer, bufferSize, selectedText, _TRUNCATE);
+}
+
+void CWordPadView::ReplaceSelTxt(const char* newText)
+{
+    if (!newText) return;
+    GetRichEditCtrl().ReplaceSel(newText, TRUE);
+}
+
+void CWordPadView::GetSelTxt_S(char* buffer, int bufferSize)
+{
+    CWordPadView* pView = GetView();
+    if (pView)
+    {
+        pView->GetSelTxt(buffer, bufferSize);
+    }
+}
+
+void CWordPadView::ReplaceSelTxt_S(const char* newText)
+{
+    CWordPadView* pView = GetView();
+    if (pView)
+    {
+        pView->ReplaceSelTxt(newText);
+    }
+}

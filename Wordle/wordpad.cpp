@@ -210,6 +210,9 @@ BOOL CWordPadApp::InitInstance()
 		AfxMessageBox(IDP_OLE_INIT_FAILED);
 		return FALSE;
 	}
+    m_appFuncs.getSelTxt = &CWordPadView::GetSelTxt_S;
+    m_appFuncs.replaceSelTxt = &CWordPadView::ReplaceSelTxt_S;
+    m_pluginManager.LoadPlugins(&m_appFuncs);
 	RegisterFormats();
 
 	// Initialize RichEdit control
@@ -569,6 +572,7 @@ int CWordPadApp::ExitInstance()
 		FreeLibrary(h);
 	}
 
+	m_pluginManager.UnloadPlugins();
 	SaveOptions();
 
 	return CWinAppEx::ExitInstance();
