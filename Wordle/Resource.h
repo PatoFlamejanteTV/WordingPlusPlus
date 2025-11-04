@@ -243,6 +243,7 @@
 #define ID_VIEW_FORMATBAR               59396
 #define ID_VIEW_RULER                   59397
 #define ID_DUMMY                        59398
+#define ID_PLUGIN_BASE                  59399
 
 // Next default values for new objects
 // 

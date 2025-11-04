@@ -19,6 +19,7 @@
 #include "splash.h"
 #include "options.h"
 #include "afxtempl.h"
+#include "PluginManager.h"
 
 #define WPM_BARSTATE WM_USER
 
@@ -44,6 +45,7 @@ public:
 	virtual void PreLoadState ();
 
 //Attributes
+	PluginManager m_pluginManager;
 	CWordPadCommandLineInfo cmdInfo;
 	CDC m_dcScreen;
 	LOGFONT m_lf;

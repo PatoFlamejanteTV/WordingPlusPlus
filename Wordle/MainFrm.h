@@ -13,6 +13,8 @@
 
 #include "formatba.h"
 #include "ruler.h"
+#include "PluginManager.h"
+#include "PluginManager.h"
 #include "taskpane.h"
 
 class CMainFrame : public CFrameWndEx
@@ -103,5 +105,6 @@ protected:
 	afx_msg LRESULT OnGetDocumentColors(WPARAM,LPARAM);
 	afx_msg void OnDummy();
 	afx_msg void OnAskQuestion();
+	afx_msg void OnExecutePlugin(UINT nID);
 	DECLARE_MESSAGE_MAP()
 };
