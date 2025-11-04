@@ -242,7 +242,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		if (plugins.size() > 0)
 		{
-			pMenu->AppendMenu(MF_POPUP, (UINT_PTR)pluginsMenu.m_hMenu, _T("Plugins"));
+			pMenu->AppendMenu(MF_POPUP | MF_STRING, (UINT_PTR)pluginsMenu.m_hMenu, _T("Plugins"));
 			pluginsMenu.Detach();
 		}
 	}
