@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 10
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WordPad", "WordPad.vcxproj", "{66F9A117-DACA-4D34-8CB8-4FC1D4211C5C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExamplePlugin", "pluginsExamplePluginExamplePlugin.vcxproj", "{E5A1B3B4-2B1B-4B1E-8B1A-9B2D8E6A1B9B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppPlugin", "pluginsCppPluginCppPlugin.vcxproj", "{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug CLR|Win32 = Debug CLR|Win32
@@ -79,6 +83,14 @@ Global
 		{66F9A117-DACA-4D34-8CB8-4FC1D4211C5C}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
 		{66F9A117-DACA-4D34-8CB8-4FC1D4211C5C}.Unicode Release|x64.ActiveCfg = Unicode Release|X64
 		{66F9A117-DACA-4D34-8CB8-4FC1D4211C5C}.Unicode Release|x64.Build.0 = Unicode Release|X64
+		{E5A1B3B4-2B1B-4B1E-8B1A-9B2D8E6A1B9B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E5A1B3B4-2B1B-4B1E-8B1A-9B2D8E6A1B9B}.Debug|Win32.Build.0 = Debug|Win32
+		{E5A1B3B4-2B1B-4B1E-8B1A-9B2D8E6A1B9B}.Release|Win32.ActiveCfg = Release|Win32
+		{E5A1B3B4-2B1B-4B1E-8B1A-9B2D8E6A1B9B}.Release|Win32.Build.0 = Release|Win32
+		{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}.Debug|Win32.Build.0 = Debug|Win32
+		{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}.Release|Win32.ActiveCfg = Release|Win32
+		{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

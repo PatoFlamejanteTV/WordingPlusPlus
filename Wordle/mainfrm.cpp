@@ -18,6 +18,7 @@
 #include "wordpdoc.h"
 #include "wordpvw.h"
 #include "strings.h"
+#include "PluginManager.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -35,6 +36,7 @@ const UINT uiLastUserToolBarId	= uiFirstUserToolBarId + iMaxUserToolbars - 1;
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
+	ON_COMMAND_RANGE(ID_PLUGIN_BASE, ID_PLUGIN_BASE + 100, OnExecutePlugin)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
 	ON_WM_SYSCOLORCHANGE()
@@ -226,6 +228,26 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	EnableFullScreenMode (ID_VIEW_FULL_SCREEN);
 	EnableFullScreenMainMenu (FALSE);
+
+	PluginManager::GetInstance().LoadPlugins(L"plugins");
+
+	if (!PluginManager::GetInstance().GetPlugins().empty())
+	{
+		CMenu* pMenu = GetMenu();
+		if (pMenu)
+		{
+			CMenu pluginMenu;
+			pluginMenu.CreatePopupMenu();
+
+			const auto& plugins = PluginManager::GetInstance().GetPlugins();
+			for (size_t i = 0; i < plugins.size(); ++i)
+			{
+				pluginMenu.AppendMenu(MF_STRING, ID_PLUGIN_BASE + i, plugins[i]->GetName().c_str());
+			}
+			pMenu->AppendMenu(MF_POPUP, (UINT_PTR)pluginMenu.Detach(), _T("Plugins"));
+			DrawMenuBar();
+		}
+	}
 
 	return 0;
 }
@@ -819,4 +841,18 @@ void CMainFrame::OnAskQuestion()
 	MessageBox (str);
 
 	SetFocus ();
+}
+
+void CMainFrame::OnExecutePlugin(UINT nID)
+{
+	int nIndex = nID - ID_PLUGIN_BASE;
+	const auto& plugins = PluginManager::GetInstance().GetPlugins();
+	if (nIndex >= 0 && nIndex < plugins.size())
+	{
+		CWordPadView* pView = (CWordPadView*)GetActiveView();
+		if (pView)
+		{
+			plugins[nIndex]->Execute(pView);
+		}
+	}
 }
