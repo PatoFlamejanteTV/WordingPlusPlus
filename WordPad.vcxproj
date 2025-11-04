@@ -1208,6 +1208,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LuaPlugin.cpp" />
+    <ClCompile Include="PluginManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="Wordle\AppLookDlg.cpp" />
     <ClCompile Include="Wordle\buttondi.cpp" />
     <ClCompile Include="Wordle\chicdial.cpp" />
@@ -1299,6 +1303,11 @@
     <ClInclude Include="Wordle\wordpad.h" />
     <ClInclude Include="Wordle\wordpdoc.h" />
     <ClInclude Include="Wordle\wordpvw.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LuaPlugin.h" />
+    <ClInclude Include="PluginManager.h" />
+    <ClInclude Include="PluginAPI\sol2\sol.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Wordle\ReadMe.htm">
